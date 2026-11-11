@@ -1,0 +1,22 @@
+{
+  "name": "schoemanclinic-website",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "mirror": "node scripts/mirror.mjs",
+    "compare": "node scripts/compare.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.18.2"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.15",
+    "pixelmatch": "^6.0.0",
+    "playwright": "1.49.1",
+    "pngjs": "^7.0.0"
+  }
+}

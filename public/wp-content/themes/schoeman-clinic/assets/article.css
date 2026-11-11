@@ -1,0 +1,646 @@
+/*
+ * Long-form article typography.
+ *
+ * Loaded only on journal articles. site.css is a compiled Tailwind build with
+ * no prose utilities, and article bodies come from the editor as bare HTML, so
+ * the styling has to be attached to the elements themselves rather than to
+ * classes on the markup. Everything below is scoped to .tsc-article and uses
+ * the site's own tokens, so it follows light and dark alike.
+ */
+
+/*
+ * The reading measure. site.css has no max-width near this value and the
+ * comfortable line length is worth being exact about, so it lives here rather
+ * than being rounded to whatever the frozen bundle happens to contain.
+ */
+.tsc-article-measure {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 50rem;
+	/* Anchors the rail, which hangs in the left margin on wide screens. */
+	position: relative;
+}
+
+.tsc-article {
+	color: var(--muted-foreground);
+	font-size: 1.0625rem;
+	line-height: 1.9;
+}
+
+.tsc-article-meta {
+	flex-wrap: wrap;
+}
+
+.tsc-article-meta__author {
+	color: var(--ink);
+	text-decoration: none;
+	transition: color 0.35s ease;
+}
+
+.tsc-article-meta__author:hover {
+	color: var(--bronze);
+}
+
+/* The bundle only carries the positive translate utilities. */
+.tsc-article-back__arrow {
+	transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-article-back:hover .tsc-article-back__arrow {
+	transform: translateX(-0.5rem);
+}
+
+.tsc-article > *:first-child {
+	margin-top: 0;
+}
+
+.tsc-article > *:last-child {
+	margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------- hero image
+ * A 3:2 frame at this width stood almost three quarters of the window tall, so
+ * the article itself opened below the fold. Capping the height against the
+ * viewport keeps the photograph an opening image rather than a page of its own;
+ * the picture is cropped to fit rather than letterboxed.
+ */
+
+.tsc-article-hero {
+	background: var(--muted);
+	/* Height is set rather than derived from a ratio: a ratio with a capped
+	   height narrows the frame instead of cropping it. */
+	height: clamp(14rem, 40vw, 30rem);
+	max-height: 52vh;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+/* -------------------------------------------------------------------- rail
+ * The full byline and share actions close the article. The masthead carries a
+ * compact author credit, while this panel gives the portrait and role enough
+ * room without interrupting the reading column.
+ */
+
+.tsc-rail {
+	margin: 0;
+}
+
+.tsc-rail--author,
+.tsc-rail--footer {
+	border-top: 1px solid var(--border);
+	margin-top: 5rem;
+	padding-top: 2.5rem;
+}
+
+.tsc-rail--share {
+	border-bottom: 1px solid var(--border);
+	margin-bottom: 3rem;
+	padding-bottom: 1.75rem;
+}
+
+.tsc-rail--share .tsc-rail__inner {
+	justify-content: flex-end;
+}
+
+.tsc-rail__inner {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5rem 2.5rem;
+	justify-content: space-between;
+}
+
+.tsc-rail__author {
+	align-items: center;
+	display: flex;
+	gap: 1rem;
+}
+
+.tsc-rail__portrait {
+	background: var(--stone-warm);
+	border-radius: 50%;
+	display: block;
+	flex: none;
+	height: 3.75rem;
+	overflow: hidden;
+	width: 3.75rem;
+}
+
+.tsc-rail__portrait img {
+	height: 100%;
+	margin: 0;
+	object-fit: cover;
+	width: 100%;
+}
+
+.tsc-rail__initials {
+	align-items: center;
+	color: var(--muted-foreground);
+	display: flex;
+	font-family: var(--font-serif);
+	height: 100%;
+	justify-content: center;
+}
+
+.tsc-rail__byline {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.tsc-rail__label {
+	color: var(--muted-foreground);
+	font-size: 0.6rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-rail__name {
+	color: var(--ink);
+	font-family: var(--font-serif);
+	font-size: 1.0625rem;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: color 0.4s ease;
+}
+
+.tsc-rail__name:hover {
+	color: var(--bronze);
+}
+
+.tsc-rail__role {
+	color: var(--muted-foreground);
+	font-size: 0.78rem;
+	line-height: 1.5;
+}
+
+.tsc-rail__share {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	position: relative;
+}
+
+.tsc-rail__icons {
+	display: flex;
+	gap: 0.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.tsc-rail__icons li {
+	margin: 0;
+	padding: 0;
+}
+
+/* The list styling above is generic; the article's dash bullet must not reach
+   in here. */
+.tsc-rail__icons > li::before {
+	content: none;
+}
+
+.tsc-rail__icon {
+	align-items: center;
+	background: none;
+	border: 1px solid color-mix(in oklab, var(--foreground) 15%, transparent);
+	color: var(--muted-foreground);
+	cursor: pointer;
+	display: flex;
+	height: 2.25rem;
+	justify-content: center;
+	padding: 0;
+	transition: color 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
+	width: 2.25rem;
+}
+
+.tsc-rail__icon svg {
+	display: block;
+	height: 0.95rem;
+	margin: 0;
+	width: 0.95rem;
+}
+
+.tsc-rail__icon:hover,
+.tsc-rail__icon:focus-visible {
+	background: var(--ink);
+	border-color: var(--ink);
+	color: var(--background);
+	outline: none;
+}
+
+/* Confirmation for the copy button, which otherwise gives no sign it worked. */
+.tsc-rail__toast {
+	color: var(--bronze);
+	font-size: 0.6rem;
+	letter-spacing: 0.28em;
+	opacity: 0;
+	pointer-events: none;
+	text-transform: uppercase;
+	transition: opacity 0.4s ease;
+	white-space: nowrap;
+}
+
+.tsc-rail__toast.is-visible {
+	opacity: 1;
+}
+
+@media (min-width: 82rem) {
+	.tsc-rail--share {
+		border-bottom: 0;
+		bottom: 0;
+		left: -16.5rem;
+		margin-bottom: 0;
+		padding-bottom: 0;
+		position: absolute;
+		top: 0;
+		width: 12.5rem;
+	}
+
+	.tsc-rail--share .tsc-rail__inner {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		height: 100%;
+	}
+
+	.tsc-rail--share .tsc-rail__share {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 1rem;
+		position: sticky;
+		top: 7.5rem;
+		width: 100%;
+	}
+
+	.tsc-rail--share .tsc-rail__icons {
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 39.99rem) {
+	.tsc-rail--author .tsc-rail__inner,
+	.tsc-rail--footer .tsc-rail__inner {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.tsc-rail--author .tsc-rail__share,
+	.tsc-rail--footer .tsc-rail__share {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
+
+/* ---------------------------------------------------------------- headings */
+
+.tsc-article h2,
+.tsc-article h3,
+.tsc-article h4 {
+	color: var(--ink);
+	font-family: var(--font-serif);
+	letter-spacing: -0.01em;
+}
+
+.tsc-article h2 {
+	font-size: 2rem;
+	line-height: 1.2;
+	margin: 3.5rem 0 1.25rem;
+}
+
+.tsc-article h3 {
+	font-size: 1.5rem;
+	line-height: 1.3;
+	margin: 2.75rem 0 1rem;
+}
+
+.tsc-article h4 {
+	font-size: 1.25rem;
+	line-height: 1.4;
+	margin: 2.25rem 0 0.75rem;
+}
+
+/* A heading straight after another should not inherit the full gap. */
+.tsc-article h2 + h3,
+.tsc-article h3 + h4 {
+	margin-top: 1.5rem;
+}
+
+/* ------------------------------------------------------------- body blocks */
+
+.tsc-article p {
+	margin: 0 0 1.75rem;
+}
+
+.tsc-article .wp-block-buttons {
+	display: flex;
+	justify-content: flex-start;
+	margin: 2.5rem 0 2.25rem;
+}
+
+.tsc-article .wp-block-button {
+	margin: 0;
+}
+
+.tsc-article .wp-block-button__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+	min-height: 3.25rem;
+	border: 1px solid var(--bronze);
+	border-radius: 0;
+	padding: 0.9rem 1.35rem;
+	background: transparent;
+	color: var(--ink);
+	font-family: var(--font-sans);
+	font-size: 0.65rem;
+	font-weight: 500;
+	letter-spacing: 0.22em;
+	line-height: 1.2;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.tsc-article .wp-block-button__link:hover,
+.tsc-article .wp-block-button__link:focus-visible {
+	background: var(--bronze);
+	color: var(--background);
+	outline: none;
+}
+
+.tsc-article .tsc-research-note {
+	margin-top: 0;
+	border-top: 1px solid var(--border);
+	padding-top: 1.5rem;
+	color: var(--muted-foreground);
+	font-size: 0.82rem;
+	line-height: 1.7;
+}
+
+.tsc-article ul,
+.tsc-article ol {
+	margin: 0 0 1.75rem;
+	padding-left: 1.5rem;
+}
+
+.tsc-article ul {
+	list-style: none;
+	padding-left: 1.25rem;
+}
+
+.tsc-article ol {
+	list-style: decimal;
+}
+
+.tsc-article li {
+	margin-bottom: 0.75rem;
+	padding-left: 0.25rem;
+}
+
+.tsc-article li::marker {
+	color: var(--bronze);
+	font-size: 0.9em;
+}
+
+/* Bulleted lists get a hairline dash rather than a disc, matching the eyebrow
+   rules used throughout the site. */
+.tsc-article ul > li {
+	position: relative;
+}
+
+.tsc-article ul > li::before {
+	background: var(--bronze);
+	content: "";
+	height: 1px;
+	left: -1.25rem;
+	position: absolute;
+	top: 0.95em;
+	width: 0.6rem;
+}
+
+.tsc-article blockquote {
+	border-left: 1px solid var(--bronze);
+	color: var(--ink);
+	font-family: var(--font-serif);
+	font-size: 1.5rem;
+	line-height: 1.5;
+	margin: 3rem 0;
+	padding-left: 2rem;
+}
+
+.tsc-article blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+.tsc-article blockquote cite {
+	color: var(--muted-foreground);
+	display: block;
+	font-family: var(--font-sans);
+	font-size: 0.65rem;
+	font-style: normal;
+	letter-spacing: 0.28em;
+	margin-top: 1.25rem;
+	text-transform: uppercase;
+}
+
+/* ----------------------------------------------------------------- tables */
+
+.tsc-article table {
+	border-collapse: collapse;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	margin: 2.75rem 0;
+	table-layout: auto;
+	width: 100%;
+}
+
+.tsc-article th,
+.tsc-article td {
+	border-bottom: 1px solid var(--border);
+	padding: 0.9rem 1.25rem 0.9rem 0;
+	text-align: left;
+	vertical-align: top;
+}
+
+.tsc-article th:last-child,
+.tsc-article td:last-child {
+	padding-right: 0;
+}
+
+.tsc-article thead th {
+	border-bottom-color: color-mix(in oklab, var(--bronze) 45%, transparent);
+	color: var(--bronze);
+	font-size: 0.62rem;
+	font-weight: 400;
+	letter-spacing: 0.28em;
+	padding-bottom: 0.85rem;
+	text-transform: uppercase;
+}
+
+.tsc-article tbody th {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.tsc-article tbody tr:last-child th,
+.tsc-article tbody tr:last-child td {
+	border-bottom: 0;
+}
+
+.tsc-article caption {
+	caption-side: bottom;
+	color: var(--muted-foreground);
+	font-size: 0.8rem;
+	line-height: 1.7;
+	padding-top: 1rem;
+	text-align: left;
+}
+
+.tsc-article hr {
+	background: var(--border);
+	border: 0;
+	height: 1px;
+	margin: 4rem 0;
+}
+
+/* --------------------------------------------------------------- inline ---- */
+
+.tsc-article a {
+	color: var(--ink);
+	text-decoration: underline;
+	text-decoration-color: var(--bronze);
+	text-underline-offset: 0.25em;
+	transition: color 0.4s ease;
+}
+
+.tsc-article a:hover {
+	color: var(--bronze);
+}
+
+.tsc-article strong,
+.tsc-article b {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.tsc-article code {
+	background: color-mix(in oklab, var(--foreground) 6%, transparent);
+	border-radius: var(--radius);
+	font-size: 0.9em;
+	padding: 0.15em 0.4em;
+}
+
+.tsc-article pre {
+	background: color-mix(in oklab, var(--foreground) 6%, transparent);
+	border-radius: var(--radius);
+	margin: 2.5rem 0;
+	overflow-x: auto;
+	padding: 1.5rem;
+}
+
+.tsc-article pre code {
+	background: none;
+	padding: 0;
+}
+
+/* ----------------------------------------------------------------- media -- */
+
+.tsc-article figure,
+.tsc-article img {
+	margin: 3rem 0;
+}
+
+.tsc-article img {
+	display: block;
+	height: auto;
+	max-width: 100%;
+}
+
+.tsc-article figure img {
+	margin: 0;
+}
+
+.tsc-article figcaption {
+	color: var(--muted-foreground);
+	font-size: 0.8rem;
+	line-height: 1.7;
+	margin-top: 1rem;
+	text-align: center;
+}
+
+/* Editor alignment classes, which the block editor emits on images. */
+.tsc-article .alignwide {
+	margin-left: -3rem;
+	margin-right: -3rem;
+	max-width: calc(100% + 6rem);
+}
+
+.tsc-article .aligncenter {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 48rem) {
+	.tsc-article h2 {
+		font-size: 1.75rem;
+	}
+
+	.tsc-article h3 {
+		font-size: 1.375rem;
+	}
+
+	.tsc-article blockquote {
+		font-size: 1.25rem;
+		padding-left: 1.5rem;
+	}
+
+	.tsc-article .alignwide {
+		margin-left: 0;
+		margin-right: 0;
+		max-width: 100%;
+	}
+
+	/* Editors paste bare tables, so the scroll container has to be the table
+	   itself rather than a wrapper that will not be there. Only narrow screens
+	   need it; a block table cannot stretch its columns to the measure. */
+	.tsc-article table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	.tsc-article thead th {
+		white-space: nowrap;
+	}
+}
+
+/*
+ * Newsletter signup under the article. The form brings its own heading and
+ * fields; this only sits it on the reading measure with a rule above.
+ */
+.tsc-article-newsletter {
+	margin-top: 3.5rem;
+	padding-top: 2.5rem;
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+.tsc-article-newsletter iframe {
+	display: block;
+	width: 100%;
+	height: 37.5rem;
+	border: 0;
+	background: transparent;
+}
+
+@media (max-width: 47.99rem) {
+	.tsc-article-newsletter {
+		margin-top: 2.5rem;
+		padding-top: 2rem;
+	}
+
+	.tsc-article-newsletter iframe {
+		height: 42rem;
+	}
+}

@@ -1,0 +1,16 @@
+---
+import Page, { type PageData } from "../layouts/Page.astro";
+
+export function getStaticPaths() {
+  const pages = import.meta.glob<PageData>("../data/pages/*.json", { eager: true, import: "default" });
+  return Object.values(pages)
+    .filter((page) => page.path !== "/404/")
+    .map((page) => ({
+      params: { slug: page.path === "/" ? undefined : page.path.replace(/^\/|\/$/g, "") },
+      props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+---
+<Page page={page} />

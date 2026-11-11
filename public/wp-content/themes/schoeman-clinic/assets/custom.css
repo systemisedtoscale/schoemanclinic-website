@@ -1,0 +1,6025 @@
+/*
+ * Bespoke overrides, loaded after assets/site.css.
+ *
+ * site.css is a compiled Tailwind build generated from the static pages, so it
+ * only contains the utilities those pages happened to use. Any class the
+ * templates introduce afterwards has to be defined here, otherwise it silently
+ * does nothing.
+ */
+
+/*
+ * The footer link columns are conditional - a column disappears when its menu
+ * has no items - so Contact can no longer rely on being pushed to the last
+ * two columns by the ones before it. Pinning its start keeps it hard right
+ * however many link columns are present. Matches the md: breakpoint (48rem).
+ */
+@media (min-width: 48rem) {
+	.md\:col-start-11 {
+		grid-column-start: 11;
+	}
+}
+
+/* ------------------------------------------------------------------- buttons
+ * Every CTA fills from the top on hover, the way the header's Book Now does,
+ * so the motion reads as one family. The generated bundle gave each variant
+ * its own idea of the gesture - the two solid buttons wiped up from below and
+ * the outlined one washed in sideways - so direction, easing and the outlined
+ * variant's fill are corrected here.
+ */
+
+.btn-luxe::before,
+.btn-luxe-invert::before,
+.btn-ghost-luxe::before {
+	transform: translateY(-101%);
+	transition: transform 700ms cubic-bezier(0.7, 0, 0.15, 1);
+}
+
+.btn-luxe:hover::before,
+.btn-luxe-invert:hover::before,
+.btn-ghost-luxe:hover::before {
+	transform: translateY(0);
+}
+
+/* The outlined variant is the header button's twin, so it takes the same
+   bronze fill and flips its label instead of washing faintly over itself. */
+.btn-ghost-luxe::before {
+	background: var(--bronze);
+	opacity: 1;
+}
+
+.btn-ghost-luxe:hover::before {
+	opacity: 1;
+}
+
+.btn-ghost-luxe:hover {
+	color: var(--background);
+	border-color: var(--bronze);
+}
+
+/* Two calls to action offered together. Side by side each takes the width of
+   its own words, which is right in a row; wrapped onto separate lines on a
+   phone it left one button visibly narrower than the other, as though the
+   shorter label mattered less. Stacked, they share the measure equally. */
+.tsc-cta-pair {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+	.tsc-cta-pair {
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: center;
+	}
+}
+
+/* ---------------------------------------------------------------- methodology
+ * Utilities introduced by methodology.html that the frozen Tailwind bundle
+ * never collected. Kept here (not inlined) so the WordPress template and the
+ * static page share one source of truth.
+ */
+
+.pt-24 { padding-top: 6rem; }
+.mb-24 { margin-bottom: 6rem; }
+.min-h-\[520px\] { min-height: 520px; }
+.max-w-\[1100px\] { max-width: 1100px; }
+.leading-\[1\.12\] { line-height: 1.12; }
+
+/* Full-bleed hero image: stretch from the column's left edge to the viewport's
+ * right edge, so the photo kisses the browser chrome.
+ *
+ * The export wrote this as right:calc(50% - 50vw), which only lands on the
+ * viewport edge when the element is centred in it. This one sits in the
+ * right-hand column, so it overshot by ~390px at 1440 and gave the whole page
+ * a horizontal scrollbar. The real distance to the edge is the container's
+ * side padding plus half of whatever falls outside its 1440px cap. 100vw
+ * counts the scrollbar, so the hero section also clips, which costs nothing
+ * when the sums are exact.
+ */
+.hero-bleed-right { right: calc(-1 * (1.5rem + max(0px, (100vw - 1440px) / 2))); }
+
+@media (min-width: 48rem) {
+	.hero-bleed-right { right: calc(-1 * (3rem + max(0px, (100vw - 1440px) / 2))); }
+	.md\:pt-32 { padding-top: 8rem; }
+	.md\:pt-56 { padding-top: 14rem; }
+	.md\:pr-0 { padding-right: 0; }
+	.md\:pr-10 { padding-right: 2.5rem; }
+	.md\:pr-20 { padding-right: 5rem; }
+	.md\:pl-20 { padding-left: 5rem; }
+	.md\:mb-32 { margin-bottom: 8rem; }
+	.md\:gap-0 { gap: 0; }
+	.md\:min-h-\[720px\] { min-height: 720px; }
+	.md\:text-left { text-align: left; }
+	.md\:text-right { text-align: right; }
+}
+
+@media (min-width: 64rem) {
+	.lg\:col-span-7 { grid-column: span 7 / span 7; }
+	.lg\:pt-40 { padding-top: 10rem; }
+	.lg\:pr-16 { padding-right: 4rem; }
+	.lg\:pl-16 { padding-left: 4rem; }
+	.lg\:gap-20 { gap: 5rem; }
+	.lg\:min-h-\[820px\] { min-height: 820px; }
+}
+
+/* ------------------------------------------------------------ hormone health
+ * Utilities introduced by hormone-health.html.
+ */
+
+.h-\[86vh\] { height: 86vh; }
+.min-h-\[620px\] { min-height: 620px; }
+.h-32 { height: 8rem; }
+.max-w-\[1000px\] { max-width: 1000px; }
+.ml-2 { margin-left: 0.5rem; }
+.mt-2\.5 { margin-top: 0.625rem; }
+.gap-x-4 { column-gap: 1rem; }
+.gap-y-3 { row-gap: 0.75rem; }
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-y-reverse: 0;
+	margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+	margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+.opacity-80 { opacity: 0.8; }
+.leading-\[1\.25\] { line-height: 1.25; }
+.leading-\[1\.3\] { line-height: 1.3; }
+.leading-\[1\.45\] { line-height: 1.45; }
+.text-\[3\.2rem\] { font-size: 3.2rem; }
+.text-\[clamp\(3rem\,7vw\,5\.4rem\)\] {
+	font-size: clamp(3rem, 7vw, 5.4rem);
+}
+.text-\[color\:color-mix\(in_oklab\,var\(--background\)_88\%\,transparent\)\] {
+	color: color-mix(in oklab, var(--background) 88%, transparent);
+}
+.font-sans { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+.group:hover .group-hover\:text-\[color\:var\(--foreground\)\] {
+	color: var(--foreground);
+}
+.group:hover .group-hover\:text-\[color\:var\(--ink\)\] {
+	color: var(--ink);
+}
+
+@media (min-width: 48rem) {
+	.md\:col-span-9 { grid-column: span 9 / span 9; }
+}
+
+/* ------------------------------------------------------------------ marquee
+ * A slow, continuous drift of the conditions we treat. The track holds two
+ * identical groups and travels exactly half its width, so the loop is seamless;
+ * the second group is hidden from assistive tech. Motion pauses on hover and on
+ * keyboard focus, and gives way to a plain scrollable row when the visitor asks
+ * for reduced motion.
+ */
+
+.tsc-marquee {
+	position: relative;
+	overflow: hidden;
+	padding-block: 1.4rem;
+	-webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+	mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+/* Runs to the page gutters; the frozen bundle has no negative margin utilities. */
+.tsc-marquee-bleed {
+	margin-inline: -1.5rem;
+}
+
+@media (min-width: 48rem) {
+	.tsc-marquee-bleed {
+		margin-inline: -3rem;
+	}
+}
+
+.tsc-marquee__track {
+	display: flex;
+	width: max-content;
+	animation: tsc-marquee-left 110s linear infinite;
+	will-change: transform;
+}
+
+.tsc-marquee--reverse .tsc-marquee__track {
+	animation-name: tsc-marquee-right;
+	animation-duration: 130s;
+}
+
+.tsc-marquee:hover .tsc-marquee__track,
+.tsc-marquee:focus-within .tsc-marquee__track {
+	animation-play-state: paused;
+}
+
+.tsc-marquee__group {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tsc-marquee__item {
+	display: inline-flex;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.tsc-marquee__label {
+	font-family: var(--font-serif);
+	font-size: clamp(1.2rem, 1.5vw, 1.65rem);
+	line-height: 1.2;
+	letter-spacing: -0.005em;
+	color: var(--foreground);
+	transition: color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-marquee__item:hover .tsc-marquee__label {
+	color: var(--bronze);
+}
+
+.tsc-marquee__sep {
+	flex: none;
+	width: 5px;
+	height: 5px;
+	margin-inline: 2.4rem;
+	background: var(--bronze);
+	opacity: 0.55;
+	transform: rotate(45deg);
+}
+
+@keyframes tsc-marquee-left {
+	from { transform: translate3d(0, 0, 0); }
+	to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes tsc-marquee-right {
+	from { transform: translate3d(-50%, 0, 0); }
+	to { transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-marquee {
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+
+	.tsc-marquee::-webkit-scrollbar {
+		display: none;
+	}
+
+	.tsc-marquee__track {
+		animation: none;
+	}
+
+	.tsc-marquee__group[aria-hidden="true"] {
+		display: none;
+	}
+}
+
+/* ------------------------------------------------------------- founder quote
+ * Quote-led: display type on the stone band with the doorbell detail held to a
+ * square beside it. The photograph is a macro, so it is deliberately small.
+ */
+
+.tsc-quote__media {
+	overflow: hidden;
+	margin-top: 2.5rem;
+	/* The hand and bell span 68% of the frame, so the crop has to stay wide. */
+	aspect-ratio: 3 / 2;
+}
+
+.tsc-quote__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	/* The subject sits hard left in the frame, so the crop keeps that edge. */
+	object-position: left center;
+}
+
+.tsc-quote__text {
+	margin-top: 1.75rem;
+	font-size: 1.45rem;
+	font-weight: 400;
+	line-height: 1.36;
+	letter-spacing: -0.012em;
+	/* Hangs the opening quote mark so the first line stays optically flush. */
+	text-indent: -0.42em;
+}
+
+.tsc-quote__by {
+	margin-top: 2.25rem;
+}
+
+.tsc-quote__by::before {
+	display: block;
+	width: 3rem;
+	height: 1px;
+	margin-bottom: 1.5rem;
+	background: var(--bronze);
+	content: "";
+}
+
+.tsc-quote__name {
+	font-size: 1.3rem;
+	line-height: 1.2;
+	letter-spacing: -0.005em;
+}
+
+.tsc-quote__role {
+	margin-top: 0.55rem;
+	font-size: 0.6rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--bronze);
+}
+
+@media (min-width: 64rem) {
+	.tsc-quote {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+		align-items: center;
+		gap: 0 4rem;
+	}
+
+	.tsc-quote__media {
+		margin-top: 0;
+	}
+
+	.tsc-quote__text {
+		margin-top: 2rem;
+		font-size: 1.75rem;
+	}
+
+	.tsc-quote__by {
+		margin-top: 2.75rem;
+	}
+}
+
+@media (min-width: 80rem) {
+	.tsc-quote {
+		gap: 0 5rem;
+	}
+
+	.tsc-quote__text {
+		margin-top: 2.25rem;
+		font-size: 2.05rem;
+	}
+
+	.tsc-quote__name {
+		font-size: 1.4rem;
+	}
+}
+
+/* ------------------------------------------------------- location card areas
+ * The list of neighbourhoods each clinic serves: a quiet caption rather than a
+ * second heading, with middots tied to the preceding word so a wrapped line
+ * never opens on a separator.
+ */
+
+.tsc-card-areas {
+	/* Owned here rather than by a utility: the frozen Tailwind bundle has no
+	   pt-5, so the caption was sitting on the rule. */
+	padding-top: 1.35rem;
+	font-size: 0.6rem;
+	letter-spacing: 0.18em;
+	line-height: 2;
+	text-transform: uppercase;
+	color: color-mix(in oklab, var(--ink) 58%, transparent);
+}
+
+.tsc-card-areas__sep {
+	color: color-mix(in oklab, var(--bronze) 60%, transparent);
+}
+
+/* -------------------------------------------------------------- credentials
+ * The accreditation register beneath the specialists on a service page: a
+ * label opposite the bodies and frameworks filed under it.
+ */
+
+.tsc-creds {
+	margin-top: 2.5rem;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 25%, transparent);
+}
+
+.tsc-creds__row {
+	display: grid;
+	gap: 0.6rem;
+	padding: 1.1rem 0;
+}
+
+.tsc-creds__row + .tsc-creds__row {
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+.tsc-creds__row:last-child {
+	padding-bottom: 0;
+}
+
+.tsc-creds__label {
+	font-family: var(--font-sans);
+	font-size: 0.6rem;
+	font-weight: 500;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	color: var(--bronze);
+	line-height: 1.6;
+}
+
+.tsc-creds__list {
+	display: grid;
+	gap: 0.4rem 2.5rem;
+}
+
+.tsc-creds__list li {
+	position: relative;
+	padding-left: 0.85rem;
+	font-size: 0.83rem;
+	line-height: 1.6;
+	color: var(--muted-foreground);
+}
+
+.tsc-creds__list li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.62em;
+	width: 3px;
+	height: 3px;
+	border-radius: 50%;
+	background: color-mix(in oklab, var(--bronze) 55%, transparent);
+}
+
+@media (min-width: 40rem) {
+	.tsc-creds__row {
+		grid-template-columns: 12rem minmax(0, 1fr);
+		align-items: baseline;
+		gap: 1.5rem;
+	}
+}
+
+@media (min-width: 64rem) {
+	/* Both registers side by side, so they read across the full measure. */
+	.tsc-creds {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 4rem;
+		padding-top: 2.25rem;
+	}
+
+	.tsc-creds__row {
+		align-content: start;
+		grid-template-columns: none;
+		gap: 1.1rem;
+		padding: 0;
+	}
+
+	.tsc-creds__row + .tsc-creds__row {
+		border-top: 0;
+	}
+}
+
+/* ---------------------------------------------------------------- team band
+ * The specialists on a service page, in the portrait-card pattern used by the
+ * band on the home page, running in the scroll track below.
+ */
+
+.tsc-team__photo {
+	aspect-ratio: 4 / 5;
+}
+
+/* Gina's and Nathan's portraits are taller than the 4:5 frame — his by 23% of
+ * the source height, hers by 8% — so a centred crop splits that overflow top
+ * and bottom and shaves the top of the head off. Both source images have
+ * headroom to spare, so anchoring to the top takes the loss from the bottom
+ * of the frame instead, where there is nothing but lap and floor.
+ *
+ * The other three portraits are either exactly 4:5 or wider, so they crop at
+ * the sides if at all and want to stay centred.
+ *
+ * Scoped to the two 4:5 contexts — the homepage team band and the specialists
+ * grid — since the same files appear on the individual profile pages in frames
+ * that crop differently. */
+.tsc-team__photo img[src*="specialist-gina"],
+.tsc-team__photo img[src*="specialist-nathan"],
+#tsc-team-grid img[src*="specialist-gina"],
+#tsc-team-grid img[src*="specialist-nathan"] {
+	object-position: center top;
+}
+
+.tsc-team__all {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.7rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--ink);
+	transition: color 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-team__all span {
+	display: inline-block;
+	transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-team__all:hover {
+	color: var(--bronze);
+}
+
+.tsc-team__all:hover span {
+	transform: translateX(4px);
+}
+
+@media (min-width: 64rem) {
+	/* Three across a 1440 measure, a 4:5 crop would run past 500px tall, so the
+	   cards square off at this width. */
+	.tsc-team__photo {
+		aspect-ratio: 1 / 1;
+	}
+}
+
+/* ------------------------------------------------------- specialists in a row
+ * A doctor's card in the scroll track, so all five carry the same weight and
+ * none has to be dropped to make the row fit. The widths match the cards in the
+ * "Who this is for" track above, since they share its viewport and arrows; only
+ * the panel styling is left off, because a portrait is the frame here.
+ *
+ * The title is the longest line on the card and has to hold one line, so it is
+ * sized against the card rather than the window: the cards step from one across
+ * to three at breakpoints, so no viewport rule would track them.
+ */
+
+.tsc-person-card {
+	container-type: inline-size;
+	flex: 0 0 82%;
+	scroll-snap-align: start;
+}
+
+@media (min-width: 48rem) {
+	.tsc-person-card {
+		flex-basis: calc((100% - 1.5rem) / 2 - 1.75rem);
+	}
+}
+
+@media (min-width: 64rem) {
+	.tsc-person-card {
+		flex-basis: calc((100% - 3rem) / 3 - 1.75rem);
+	}
+}
+
+/* Sentence case, not the letterspaced caps these cards used in a fixed grid:
+ * "Longevity & Functional Medicine Specialist" set in caps needs more than 380px
+ * and the narrowest card here is 265px, so it could only ever have wrapped. */
+.tsc-person-card__role,
+.tsc-person-card__field {
+	line-height: 1.6;
+	color: var(--muted-foreground);
+}
+
+.tsc-person-card__role {
+	margin-top: 0.75rem;
+	font-size: clamp(0.78rem, 4.6cqi, 0.9rem);
+}
+
+.tsc-person-card__field {
+	margin-top: 0.15rem;
+	font-size: clamp(0.72rem, 4.15cqi, 0.81rem);
+}
+
+/* ---------------------------------------------------------------------- faq
+ * Heading column on the left that stays put while the accordion scrolls past
+ * on the right. The frozen Tailwind bundle has no lg: grid or sticky
+ * utilities, so the two columns are described here instead.
+ */
+
+.tsc-faq {
+	display: grid;
+	gap: 3.5rem;
+}
+
+.tsc-faq__prompt {
+	margin-top: 2.5rem;
+	padding-top: 2rem;
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+@media (min-width: 64rem) {
+	.tsc-faq {
+		grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+		gap: 5.5rem;
+	}
+
+	/* The column stretches to the height of the accordion; the inner block is
+	   what sticks, which is where the travel comes from. */
+	.tsc-faq__sticky {
+		position: sticky;
+		/* Clears the fixed header with a little air. */
+		top: 8.5rem;
+	}
+}
+
+/* ----------------------------------------------------------------- chapters
+ * The chapter links on the FAQs page pin beneath the fixed header so a reader
+ * deep in one chapter can move to another without scrolling back up. Sticky,
+ * z-index and scroll-margin are all described here because the frozen
+ * Tailwind bundle ships none of those utilities.
+ */
+
+.tsc-chapters {
+	position: sticky;
+	/* The fixed header measures 6rem, so the bar tucks under its hairline. */
+	top: 6rem;
+	/* Above the page, below the header (z-80) and the enquiry selects (z-40). */
+	z-index: 30;
+	background: var(--background);
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+	border-bottom: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+/* On phones the chapters run along a single line that scrolls sideways, so a
+   long list never swallows the screen while pinned. */
+.tsc-chapters__grid {
+	display: flex;
+	gap: 1.75rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scrollbar-width: none;
+	/* An edge softens to say there is another chapter that way. Both are set by
+	   the script and only when there is: a row that fits should not look as
+	   though its last word has been cut off. */
+	--tsc-chapters-fade-l: 0px;
+	--tsc-chapters-fade-r: 0px;
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 var(--tsc-chapters-fade-l),
+		#000 calc(100% - var(--tsc-chapters-fade-r)),
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 var(--tsc-chapters-fade-l),
+		#000 calc(100% - var(--tsc-chapters-fade-r)),
+		transparent 100%
+	);
+}
+
+.tsc-chapters__grid::-webkit-scrollbar {
+	display: none;
+}
+
+.tsc-chapters__link {
+	position: relative;
+	display: flex;
+	flex: none;
+	align-items: baseline;
+	gap: 1rem;
+	padding: 0.9rem 0;
+	white-space: nowrap;
+	transition: color 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-chapters__label {
+	font-size: 0.78rem;
+	text-transform: uppercase;
+	letter-spacing: 0.26em;
+}
+
+@media (max-width: 39.999rem) {
+	/* A chapter parked off the end of a bar that is pinned for the whole page is
+	   a filter the reader never finds, so the chapters the page carries are sized
+	   to fit a phone rather than left to the sideways scroll. Letterspacing is
+	   what costs the most: at the setting above, these two labels want 435px and a
+	   phone offers about 340. The scroll stays for a list too long to fit. */
+	.tsc-chapters__grid {
+		gap: 1.25rem;
+	}
+
+	.tsc-chapters__label {
+		font-size: 0.63rem;
+		letter-spacing: 0.13em;
+	}
+}
+
+/* The bar is pinned for the whole page, so the chapter being read is marked
+ * rather than left to guesswork. The rule sits on the bar's own bottom
+ * hairline, which is what makes a cell read as a tab rather than a stray link.
+ */
+.tsc-chapters__link::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: -1px;
+	height: 1px;
+	background: var(--bronze);
+	opacity: 0;
+	transform: scaleX(0.25);
+	transform-origin: left;
+	transition: opacity 400ms ease, transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-chapters__link:hover {
+	color: var(--bronze);
+}
+
+.tsc-chapters__link:hover::after {
+	opacity: 0.4;
+	transform: scaleX(1);
+}
+
+.tsc-chapters__link[aria-current] {
+	color: var(--bronze);
+}
+
+.tsc-chapters__link[aria-current]::after {
+	opacity: 1;
+	transform: scaleX(1);
+}
+
+/* Phones scroll the row sideways, where a count would only crowd it. */
+.tsc-chapters__count {
+	display: none;
+}
+
+@media (min-width: 48rem) {
+	/* With room to breathe the chapters divide the width between them. The track
+	   keeps its own overflow here rather than letting it show: a row wider than
+	   the bar used to push past the page and give the whole document a sideways
+	   scroll, where now it simply scrolls within the bar as it does on a phone. */
+	.tsc-chapters__grid {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 1fr;
+		gap: 0;
+	}
+
+	.tsc-chapters__link {
+		padding: 1.1rem 0;
+	}
+
+	/* Keeps a count clear of the next divider. The last one has no divider to
+	   clear, so its count lands on the page's right gutter. */
+	.tsc-chapters__link:not(:last-child) {
+		padding-right: 2.5rem;
+	}
+
+	.tsc-chapters__link + .tsc-chapters__link {
+		padding-left: 2.5rem;
+		border-left: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+	}
+}
+
+@media (min-width: 64rem) {
+	/* A cell is a whole column wide, so without something holding its far edge
+	 * the label trails off into empty bar. The count anchors it and earns the
+	 * width, however few chapters the page has. It waits until here because a
+	 * label and its count on one line need 773px between these two chapters,
+	 * which is more than a tablet has to give.
+	 */
+	.tsc-chapters__count {
+		display: block;
+		margin-left: auto;
+		padding-left: 1.5rem;
+		font-size: 0.6rem;
+		text-transform: uppercase;
+		letter-spacing: 0.28em;
+		color: color-mix(in oklab, currentColor 55%, transparent);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-chapters__link::after {
+		transition-duration: .01ms;
+	}
+}
+
+/* Anchor jumps have to clear both the header and the pinned bar. */
+.tsc-faq-section {
+	scroll-margin-top: 10rem;
+}
+
+.tsc-faq-answer > * + * {
+	margin-top: 0.75rem;
+}
+
+.tsc-faq-answer ul {
+	padding-left: 1.25rem;
+	list-style: disc;
+}
+
+.tsc-faq-answer li + li {
+	margin-top: 0.25rem;
+}
+
+@media (min-width: 48rem) {
+	/* The chapter heading parks below the pinned bar rather than behind it. */
+	.tsc-faq-section__heading {
+		top: 11rem;
+	}
+}
+
+/* ------------------------------------------------------------------- slider
+ * Scroll-snap carousel driven by native overflow, so it stays usable by touch
+ * and keyboard even if the arrow script never runs. One card on phones, two on
+ * tablets, three from large screens.
+ */
+
+/* Registered so the mask edges can transition when the script swaps them. */
+@property --tsc-fade-l {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+@property --tsc-fade-r {
+	syntax: "<length>";
+	inherits: false;
+	initial-value: 0px;
+}
+
+.tsc-slider__viewport {
+	display: flex;
+	gap: 1.5rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	/* Cards dissolve at whichever edge has more track beyond it, instead of
+	   being sliced off by the scroll container.
+
+	   Each dissolve has to stay in the margin around the card that is snapped
+	   into place, or it reaches over the one being read. Those two margins are
+	   nothing alike: a snapped card sits one gutter in from the leading edge, so
+	   there is only 20px to work with there, while everything past its trailing
+	   edge is the next card and its track. On a phone a card takes 82% of the
+	   width, which leaves about 80px behind it — a fade wide enough for a desktop
+	   row would wash out the name and title. */
+	--tsc-fade-in: var(--tsc-gutter);
+	--tsc-fade-out: 3.5rem;
+	--tsc-fade-l: 0px;
+	--tsc-fade-r: var(--tsc-fade-out);
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 var(--tsc-fade-l),
+		#000 calc(100% - var(--tsc-fade-r)),
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		#000 var(--tsc-fade-l),
+		#000 calc(100% - var(--tsc-fade-r)),
+		transparent 100%
+	);
+	transition: --tsc-fade-l 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+		--tsc-fade-r 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+	/* Room for the hover lift and its shadow, which the scroll container
+	   would otherwise clip. The negative margin pulls the track back to the
+	   text edge, and scroll-padding keeps the snap points aligned with it. */
+	--tsc-gutter: 1.25rem;
+	padding: 0.5rem var(--tsc-gutter) 2.5rem;
+	margin: -0.5rem calc(var(--tsc-gutter) * -1) -2.5rem;
+	scroll-padding-left: var(--tsc-gutter);
+}
+
+@media (min-width: 48rem) {
+	/* Two or three cards across from here, so the track running past the last of
+	   them is wide enough to carry the longer dissolve the design asks for. */
+	.tsc-slider__viewport {
+		--tsc-fade-out: 7rem;
+	}
+}
+
+.tsc-slider__viewport::-webkit-scrollbar {
+	display: none;
+}
+
+.tsc-slider__card {
+	position: relative;
+	scroll-snap-align: start;
+	flex: 0 0 82%;
+	display: flex;
+	flex-direction: column;
+	gap: 1.15rem;
+	padding: 2.1rem 1.9rem;
+	border: 1px solid color-mix(in oklab, var(--bronze) 18%, transparent);
+	background: linear-gradient(
+		168deg,
+		color-mix(in oklab, var(--card) 94%, var(--champagne)) 0%,
+		var(--card) 46%
+	);
+	transition: border-color 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		box-shadow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Bronze rule that draws itself across the top edge on hover. */
+.tsc-slider__card::after {
+	content: "";
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	height: 1px;
+	width: 0;
+	background: var(--bronze);
+	transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-slider__card:hover {
+	transform: translateY(-6px);
+	border-color: color-mix(in oklab, var(--bronze) 38%, transparent);
+	box-shadow: 0 30px 70px color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+.tsc-slider__card:hover::after {
+	width: calc(100% + 2px);
+}
+
+/* A sliver of the following card stays visible so the row reads as a
+   continuing sequence rather than a finished grid. */
+@media (min-width: 48rem) {
+	.tsc-slider__card {
+		flex-basis: calc((100% - 1.5rem) / 2 - 1.75rem);
+		padding: 2.4rem 2.2rem;
+	}
+}
+
+@media (min-width: 64rem) {
+	.tsc-slider__card {
+		flex-basis: calc((100% - 3rem) / 3 - 1.75rem);
+	}
+}
+
+.tsc-slider__index {
+	font-family: var(--font-sans);
+	font-size: 0.62rem;
+	font-weight: 500;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--bronze);
+}
+
+.tsc-slider__title {
+	font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+	font-size: 1.35rem;
+	font-weight: 400;
+	line-height: 1.22;
+	letter-spacing: -0.005em;
+	color: var(--ink);
+	padding-bottom: 1.15rem;
+	border-bottom: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+	transition: border-color 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-slider__card:hover .tsc-slider__title {
+	border-color: color-mix(in oklab, var(--bronze) 45%, transparent);
+}
+
+.tsc-slider__text {
+	font-size: 0.95rem;
+	line-height: 1.8;
+	color: var(--muted-foreground);
+}
+
+.tsc-slider__nav {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+}
+
+/* Hairline progress rail: the thumb is sized to the visible fraction of the
+   track and travels with it, so it doubles as a "how much is left" cue. */
+.tsc-slider__rail {
+	position: relative;
+	display: none;
+	height: 1px;
+	width: 7rem;
+	overflow: hidden;
+	background: color-mix(in oklab, var(--foreground) 15%, transparent);
+}
+
+.tsc-slider__rail span {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 33%;
+	background: var(--bronze);
+	transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+		width 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 48rem) {
+	.tsc-slider__rail {
+		display: block;
+	}
+}
+
+.tsc-slider__btn {
+	position: relative;
+	width: 3.25rem;
+	height: 3.25rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid color-mix(in oklab, var(--foreground) 20%, transparent);
+	background: transparent;
+	color: var(--foreground);
+	cursor: pointer;
+	overflow: hidden;
+	transition: color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+		border-color 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+		opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Ink wash that rises from the bottom on hover. */
+.tsc-slider__btn::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: var(--ink);
+	transform: translateY(101%);
+	transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-slider__btn svg {
+	position: relative;
+	transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-slider__btn:hover:not(:disabled) {
+	color: var(--background);
+	border-color: var(--ink);
+}
+
+.tsc-slider__btn:hover:not(:disabled)::before {
+	transform: translateY(0);
+}
+
+.tsc-slider__btn:hover:not(:disabled) svg {
+	transform: translateX(0.2rem);
+}
+
+.tsc-slider__btn[data-slider-prev]:hover:not(:disabled) svg,
+.tsc-slider__btn[data-conditions-prev]:hover:not(:disabled) svg {
+	transform: translateX(-0.2rem);
+}
+
+.tsc-slider__btn:focus-visible {
+	outline: 1px solid var(--bronze);
+	outline-offset: 4px;
+}
+
+.tsc-slider__btn[disabled] {
+	opacity: 0.22;
+	cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-slider__viewport {
+		scroll-behavior: auto;
+	}
+
+	.tsc-slider__card,
+	.tsc-slider__card::after,
+	.tsc-slider__title,
+	.tsc-slider__btn,
+	.tsc-slider__btn::before,
+	.tsc-slider__btn svg,
+	.tsc-slider__rail span {
+		transition: none;
+	}
+}
+
+/* ------------------------------------------------ hormone health refinement
+ * The supplied service export was excessively tall and treated the four-step
+ * pathway as full-width text rows. These scoped rules preserve the content
+ * while giving the page a tighter editorial rhythm.
+ *
+ * They name the sections they mean. An earlier pass counted them by position,
+ * and the count drifted as sections were added: the padding meant for a band
+ * that wraps its contents in one div landed on the related services, which
+ * pads the section itself and holds two divs, so both header and cards were
+ * pushed apart by an extra 6.5rem.
+ */
+
+:is(.page-template-hormone-health, .hormone-health-page) #content > section:first-child {
+	height: clamp(42rem, 78vh, 51rem);
+	min-height: 42rem;
+}
+
+/* Bands that carry their own padding on the section. */
+:is(.page-template-hormone-health, .hormone-health-page) #overview,
+:is(.page-template-hormone-health, .hormone-health-page) #pathway,
+:is(.page-template-hormone-health, .hormone-health-page) #fees {
+	padding-top: 7rem;
+	padding-bottom: 7rem;
+}
+
+/* Bands that carry it on an inner wrapper instead. */
+:is(.page-template-hormone-health, .hormone-health-page) #differs > div,
+:is(.page-template-hormone-health, .hormone-health-page) #conditions > div,
+:is(.page-template-hormone-health, .hormone-health-page) #clinician > div,
+:is(.page-template-hormone-health, .hormone-health-page) #faqs > div {
+	padding-top: 6.5rem;
+	padding-bottom: 6.5rem;
+}
+
+:is(.page-template-hormone-health, .hormone-health-page) #fees > div:nth-child(2) {
+	margin-top: 4.5rem;
+}
+
+/* FAQs and locations were visually loose. */
+:is(.page-template-hormone-health, .hormone-health-page) #faqs > div > div:last-child,
+:is(.page-template-hormone-health, .hormone-health-page) #locations > div > div:last-child {
+	margin-top: 3.5rem;
+}
+
+:is(.page-template-hormone-health, .hormone-health-page) #faqs button {
+	padding-top: 1.35rem;
+	padding-bottom: 1.35rem;
+}
+
+/* The pathway image is locked to 4:5, which leaves it hanging well below the
+ * accordion beside it. Let it absorb the leftover column height instead so
+ * both halves of the split end level. The bounds keep it from collapsing to a
+ * sliver with every panel shut, or cropping the landscape source into a tower
+ * with every panel open.
+ */
+@media (min-width: 48rem) {
+	:is(.page-template-hormone-health, .hormone-health-page) #pathway > div > div:first-child {
+		display: flex;
+		flex-direction: column;
+	}
+
+	:is(.page-template-hormone-health, .hormone-health-page) #pathway > div > div:first-child > div:last-child {
+		flex: 1 1 auto;
+		aspect-ratio: auto;
+		min-height: 14rem;
+		max-height: 26rem;
+	}
+}
+
+@media (max-width: 47.999rem) {
+	:is(.page-template-hormone-health, .hormone-health-page) #content > section:first-child {
+		height: auto;
+		min-height: 42rem;
+	}
+
+	:is(.page-template-hormone-health, .hormone-health-page) #overview,
+	:is(.page-template-hormone-health, .hormone-health-page) #pathway,
+	:is(.page-template-hormone-health, .hormone-health-page) #fees {
+		padding-top: 5rem;
+		padding-bottom: 5rem;
+	}
+
+	:is(.page-template-hormone-health, .hormone-health-page) #differs > div,
+	:is(.page-template-hormone-health, .hormone-health-page) #conditions > div,
+	:is(.page-template-hormone-health, .hormone-health-page) #clinician > div,
+	:is(.page-template-hormone-health, .hormone-health-page) #faqs > div {
+		padding-top: 5rem;
+		padding-bottom: 5rem;
+	}
+
+}
+
+/* --------------------------------------------------------- service page hero
+ * The same editorial band as the hormone health hero: a fixed height on a
+ * desktop, growing to fit its copy once the headline and breadcrumb wrap on a
+ * phone.
+ */
+
+:is(.page-template-longevity-functional, .longevity-page, .page-template-diagnostics, .diagnostics-page) #content > section:first-child {
+	height: clamp(42rem, 78vh, 51rem);
+	min-height: 42rem;
+}
+
+@media (max-width: 47.999rem) {
+	:is(.page-template-longevity-functional, .longevity-page, .page-template-diagnostics, .diagnostics-page) #content > section:first-child {
+		height: auto;
+		min-height: 46rem;
+	}
+
+	/* The hero copy is bottom-aligned, so it needs headroom to clear the fixed
+	 * header rather than tucking the breadcrumb beneath it. */
+	:is(.page-template-longevity-functional, .longevity-page, .page-template-diagnostics, .diagnostics-page) #content > section:first-child > div:last-child {
+		padding-top: 8rem;
+	}
+}
+
+/* The hero photograph hands over to the page beneath it. These images are close
+ * to black at the foot and the page is cream, so wherever the two meet there is
+ * grey: the more distance the handover is given, the wider that grey field. The
+ * old one took 128px and began on a straight ramp from nothing, which put both a
+ * visible line across the picture and a wash of grey below it.
+ *
+ * So the fade is kept short and eased instead. Short, because the photograph
+ * should hold its dark almost to the foot and only the seam wants softening;
+ * eased, because a straight ramp announces where it starts, while this one opens
+ * at 2% and gathers pace only over the last third, by which point the section
+ * below is already cream. Nothing in it is strong enough to reach the hero copy,
+ * which sits above this layer in any case.
+ */
+
+.tsc-service-hero__fade {
+	height: 4.5rem;
+	background: linear-gradient(
+		180deg,
+		color-mix(in oklab, var(--background) 0%, transparent) 0%,
+		color-mix(in oklab, var(--background) 2%, transparent) 24%,
+		color-mix(in oklab, var(--background) 7%, transparent) 40%,
+		color-mix(in oklab, var(--background) 15%, transparent) 53%,
+		color-mix(in oklab, var(--background) 28%, transparent) 64%,
+		color-mix(in oklab, var(--background) 47%, transparent) 75%,
+		color-mix(in oklab, var(--background) 69%, transparent) 85%,
+		color-mix(in oklab, var(--background) 88%, transparent) 93%,
+		var(--background) 100%
+	);
+}
+
+@media (min-width: 48rem) {
+	/* A little more room on a hero that stands taller. */
+	.tsc-service-hero__fade {
+		height: 6rem;
+	}
+}
+
+/* ----------------------------------------------------------- reading measure
+ * Once a two-column section stacks, its body column would otherwise run the
+ * full container width and lines grow past a comfortable measure.
+ */
+
+.tsc-measure {
+	max-width: 42rem;
+}
+
+@media (min-width: 64rem) {
+	.tsc-measure {
+		max-width: none;
+	}
+}
+
+/* -------------------------------------------------------- service section art
+ * A portrait crop beside the accordion, but a landscape one once the columns
+ * stack and the image would otherwise run the height of a phone screen.
+ */
+
+.tsc-service-media {
+	aspect-ratio: 16 / 10;
+}
+
+@media (min-width: 64rem) {
+	.tsc-service-media {
+		aspect-ratio: 4 / 5;
+	}
+}
+
+/* The service accordion runs far longer than the column beside it, which left
+ * a tall empty gap under the button. The intro travels with it instead. */
+
+@media (min-width: 64rem) {
+	.lg\:col-start-6 {
+		grid-column-start: 6;
+	}
+
+	.tsc-service-aside {
+		position: sticky;
+		/* Clears the fixed header with a little air. */
+		top: 7rem;
+		align-self: start;
+	}
+
+	/* A sticky column taller than the window cannot travel, so the portrait
+	   crop gives way to a landscape one that fits alongside the copy. */
+	.tsc-service-aside .tsc-service-media {
+		aspect-ratio: 4 / 3;
+		max-height: calc(100vh - 32rem);
+	}
+}
+
+/* ----------------------------------------------------------- search results
+ * The matched words are marked in the snippet so the reason a page came back
+ * is visible at a glance.
+ */
+
+/* Safari and Chrome decorate search inputs with a blue clear button that has
+ * nothing to do with the palette. */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+	appearance: none;
+}
+
+/* Journal search — deliberately quieter than the site-wide search overlay so
+ * it reads as part of the archive rather than a second navigation layer. */
+
+.tsc-journal-card {
+	min-width: 0;
+}
+
+.tsc-journal-card-link {
+	display: block;
+	height: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+
+.tsc-journal-card-link:focus-visible {
+	outline: 1px solid var(--bronze);
+	outline-offset: 0.75rem;
+}
+
+.tsc-journal-card__research-cover {
+	position: relative;
+	display: flex;
+	overflow: hidden;
+	aspect-ratio: 3 / 2;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+	padding: 1.6rem;
+	background:
+		radial-gradient(circle at 78% 24%, rgb(174 139 97 / 22%), transparent 30%),
+		linear-gradient(145deg, var(--ink), color-mix(in srgb, var(--ink) 84%, var(--bronze)));
+	color: var(--background);
+}
+
+.tsc-journal-card__research-cover::before,
+.tsc-journal-card__research-cover::after {
+	position: absolute;
+	border: 1px solid rgb(255 255 255 / 12%);
+	border-radius: 50%;
+	content: "";
+	inset: 18% -10% -75% 32%;
+	transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-journal-card__research-cover::after {
+	inset: 32% 8% -88% 18%;
+}
+
+.tsc-journal-card__research-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	z-index: 1;
+	width: clamp(4.5rem, 8vw, 6.25rem);
+	height: auto;
+	color: color-mix(in srgb, var(--bronze) 78%, white);
+	filter: drop-shadow(0 0 1.5rem rgb(174 139 97 / 22%));
+	opacity: 0.95;
+	transform: translate(-50%, -56%);
+	transition: color 500ms ease, transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-journal-card:hover .tsc-journal-card__research-icon {
+	color: color-mix(in srgb, var(--bronze) 58%, white);
+	transform: translate(-50%, -56%) scale(1.045);
+}
+
+.tsc-journal-card:hover .tsc-journal-card__research-cover::before {
+	transform: translate3d(-3%, -4%, 0) scale(1.04);
+}
+
+.tsc-journal-card__research-cover span,
+.tsc-journal-card__research-cover strong {
+	position: relative;
+	z-index: 1;
+	font-size: 0.62rem;
+	font-weight: 500;
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+}
+
+.tsc-journal-card__research-cover strong {
+	color: color-mix(in srgb, var(--bronze) 70%, white);
+	font-family: var(--font-serif);
+	font-size: 1.1rem;
+	font-weight: 400;
+	letter-spacing: 0.08em;
+}
+
+.tsc-journal-card__read {
+	position: relative;
+	border-top: 0 !important;
+	padding-top: 3.5rem !important;
+}
+
+.tsc-journal-card__read::before {
+	position: absolute;
+	top: 2rem;
+	right: 0;
+	left: 0;
+	height: 1px;
+	background: var(--border);
+	content: "";
+}
+
+.tsc-journal-heading {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(24rem, 34rem);
+	align-items: end;
+	gap: clamp(3rem, 7vw, 7rem);
+	margin-top: 1.5rem;
+}
+
+.tsc-journal-heading--single {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.tsc-journal-filters {
+	display: flex;
+	align-items: center;
+	gap: clamp(1.75rem, 4vw, 3.5rem);
+	margin-top: 4rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.tsc-journal-filters a {
+	position: relative;
+	flex: 0 0 auto;
+	padding: 0 0 1.15rem;
+	color: var(--muted-foreground);
+	font-size: 0.66rem;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	transition: color 300ms ease;
+}
+
+.tsc-journal-filters a::after {
+	position: absolute;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	height: 1px;
+	background: var(--bronze);
+	content: "";
+	transform: scaleX(0);
+	transform-origin: right;
+	transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-journal-filters a:hover,
+.tsc-journal-filters a[aria-current="page"] {
+	color: var(--ink);
+}
+
+.tsc-journal-filters a:hover::after,
+.tsc-journal-filters a[aria-current="page"]::after {
+	transform: scaleX(1);
+	transform-origin: left;
+}
+
+.tsc-journal-search-wrap {
+	min-width: 0;
+}
+
+.tsc-journal-search {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
+	border-bottom: 1px solid var(--border);
+	padding-bottom: 0.9rem;
+	transition: border-color 350ms ease;
+}
+
+.tsc-journal-search:focus-within {
+	border-color: var(--bronze);
+}
+
+.tsc-journal-search svg {
+	width: 1.15rem;
+	height: 1.15rem;
+	flex: 0 0 auto;
+	color: var(--bronze);
+}
+
+.tsc-journal-search input {
+	min-width: 0;
+	flex: 1 1 auto;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	color: var(--ink);
+	font-family: var(--font-serif);
+	font-size: 1.35rem;
+	font-weight: 300;
+}
+
+.tsc-journal-search input::placeholder {
+	color: var(--muted-foreground);
+	font-style: italic;
+	opacity: 0.72;
+}
+
+.tsc-journal-search button {
+	border: 0;
+	background: transparent;
+	color: var(--bronze);
+	cursor: pointer;
+	font-size: 0.65rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	transition: color 300ms ease;
+}
+
+.tsc-journal-search button:hover {
+	color: var(--ink);
+}
+
+.tsc-journal-search__status {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	min-height: 1.5rem;
+	max-width: 44rem;
+	margin-top: 1.25rem;
+	color: var(--muted-foreground);
+	font-size: 0.75rem;
+}
+
+.tsc-journal-search__status.is-empty {
+	visibility: hidden;
+}
+
+.tsc-journal-search__status a {
+	color: var(--bronze);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.tsc-journal-heading + .mt-16 {
+	margin-top: 5rem;
+}
+
+.tsc-journal-search__empty {
+	margin-top: 4rem;
+}
+
+.tsc-journal-search__empty p {
+	color: var(--muted-foreground);
+	font-size: 1rem;
+}
+
+.tsc-journal-search__empty a {
+	margin-top: 2rem;
+}
+
+@media (max-width: 63.99rem) {
+	.tsc-journal-heading {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 2.75rem;
+	}
+
+	.tsc-journal-search-wrap {
+		max-width: 44rem;
+	}
+}
+
+@media (max-width: 39.99rem) {
+	.tsc-journal-filters {
+		position: sticky;
+		top: 6rem;
+		z-index: 30;
+		overflow-x: auto;
+		margin-left: -1.5rem;
+		margin-right: -1.5rem;
+		padding: 1rem 1.5rem 0;
+		background: color-mix(in oklab, var(--background) 96%, transparent);
+		backdrop-filter: blur(18px);
+		-webkit-backdrop-filter: blur(18px);
+		scrollbar-width: none;
+	}
+
+	.tsc-journal-filters::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/* ---------------------------------------------------- patient testimonials */
+
+.tsc-testimonials__hero,
+.tsc-testimonials__film,
+.tsc-testimonials__reviews,
+.tsc-testimonials__cta {
+	width: min(100% - 3rem, 1240px);
+	margin-inline: auto;
+}
+
+.tsc-testimonials__hero {
+	width: min(100% - 3rem, 1100px);
+	padding: 10.5rem 0 6rem;
+	text-align: center;
+}
+
+.tsc-testimonials__eyebrow {
+	color: var(--bronze);
+	font-size: 0.7rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-testimonials__hero h1 {
+	margin-top: 1.75rem;
+	font-family: var(--font-serif);
+	font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+	font-weight: 300;
+	letter-spacing: -0.015em;
+	line-height: 1.05;
+}
+
+.tsc-testimonials__intro {
+	max-width: 37rem;
+	margin: 1.75rem auto 0;
+	color: var(--muted-foreground);
+	font-size: 1rem;
+	line-height: 1.8;
+}
+
+.tsc-testimonials__rating {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	margin-top: 2rem;
+}
+
+.tsc-testimonials__rating > span {
+	color: var(--bronze);
+	font-size: 0.8rem;
+	letter-spacing: 0.12em;
+}
+
+.tsc-testimonials__rating small {
+	color: var(--muted-foreground);
+	font-size: 0.65rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+}
+
+.tsc-testimonials__film {
+	padding-bottom: 7rem;
+}
+
+.tsc-testimonials__poster {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 16 / 9;
+	background: var(--muted);
+}
+
+.tsc-testimonials__poster img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Pia's poster is far lighter than the homepage still, so it needs a base scrim
+   on top of the shared bottom gradient for the play button rings to read. */
+.tsc-testimonials__poster-veil {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background:
+		linear-gradient(to top, rgba(20, 15, 12, 0.45), transparent 60%),
+		rgba(20, 15, 12, 0.3);
+	pointer-events: none;
+	transition: opacity 700ms ease;
+}
+
+/* Wimbledon clinic */
+.tsc-clinic {
+	--clinic-rule: color-mix(in oklab, var(--bronze) 20%, transparent);
+	color: var(--ink);
+}
+
+.tsc-clinic__shell {
+	width: min(100% - 3rem, 1344px);
+	margin-inline: auto;
+}
+
+.tsc-clinic__hero {
+	padding: 9.5rem 0 7rem;
+}
+
+.tsc-clinic__crumb {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+	color: var(--muted-foreground);
+	font-size: 0.62rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-clinic__crumb a {
+	transition: color 300ms ease;
+}
+
+.tsc-clinic__crumb a:hover,
+.tsc-clinic__crumb strong {
+	color: var(--ink);
+}
+
+.tsc-clinic__crumb strong {
+	font-weight: 400;
+}
+
+.tsc-clinic__crumb span[aria-hidden] {
+	color: var(--bronze);
+}
+
+.tsc-clinic__hero-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: clamp(3rem, 6vw, 6.5rem);
+	align-items: center;
+	margin-top: 3.5rem;
+}
+
+.tsc-clinic__hero-copy h1 {
+	margin-top: 0;
+	font-family: var(--font-serif);
+	font-size: clamp(3.4rem, 6vw, 5.6rem);
+	font-weight: 300;
+	letter-spacing: -0.025em;
+	line-height: 0.95;
+}
+
+.tsc-clinic__hero-copy address {
+	margin-top: 2rem;
+	color: var(--muted-foreground);
+	font-size: 0.92rem;
+	font-style: normal;
+	line-height: 1.9;
+}
+
+.tsc-clinic__lede {
+	max-width: 31rem;
+	margin-top: 2rem;
+	color: var(--muted-foreground);
+	font-family: var(--font-serif);
+	font-size: clamp(1.3rem, 2vw, 1.7rem);
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+.tsc-clinic__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.9rem;
+	margin-top: 2.4rem;
+}
+
+.tsc-clinic__hero-image {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 4 / 3;
+	background: var(--stone-warm);
+}
+
+.tsc-clinic__hero-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 48%;
+}
+
+.tsc-clinic__hero-image > span {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(20, 15, 12, 0.24), transparent 56%);
+	pointer-events: none;
+}
+
+.tsc-clinic__hero-image--virtual img {
+	filter: saturate(0.72) contrast(0.96) brightness(0.82) sepia(0.08);
+	object-position: 50% 50%;
+}
+
+.tsc-clinic__hero-image--virtual > span {
+	background:
+		linear-gradient(to top, rgba(20, 15, 12, 0.36), transparent 58%),
+		linear-gradient(125deg, rgba(44, 33, 27, 0.18), rgba(174, 139, 97, 0.07) 52%, rgba(20, 15, 12, 0.2));
+}
+
+.tsc-clinic__section {
+	padding: clamp(5.5rem, 9vw, 9rem) 0;
+	border-top: 1px solid var(--clinic-rule);
+}
+
+.tsc-clinic__section--stone {
+	background: var(--stone-warm);
+}
+
+.tsc-clinic__fees {
+	border-color: var(--clinic-rule);
+	background: var(--background);
+}
+
+.tsc-clinic__detail-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 7fr) minmax(20rem, 4fr);
+	gap: clamp(4rem, 8vw, 9rem);
+	align-items: start;
+}
+
+.tsc-clinic__prose h2,
+.tsc-clinic__split-heading h2,
+.tsc-clinic__locations h2 {
+	max-width: 40rem;
+	margin-top: 1.5rem;
+	font-family: var(--font-serif);
+	font-size: clamp(2.35rem, 4vw, 3.7rem);
+	font-weight: 300;
+	letter-spacing: -0.018em;
+	line-height: 1.06;
+}
+
+.tsc-clinic__prose > p {
+	max-width: 47rem;
+	margin-top: 1.6rem;
+	color: var(--muted-foreground);
+	font-size: 1rem;
+	line-height: 1.95;
+}
+
+.tsc-clinic__services-band {
+	padding: clamp(4.5rem, 7vw, 7rem) 0;
+	border-block: 1px solid var(--clinic-rule);
+	background: var(--background);
+}
+
+.tsc-clinic__services-heading {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 3rem;
+}
+
+.tsc-clinic__services-heading > p {
+	max-width: 31rem;
+	color: var(--muted-foreground);
+	font-size: 0.92rem;
+	line-height: 1.8;
+	text-align: right;
+}
+
+.tsc-clinic__services {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: clamp(1.25rem, 2.5vw, 2.5rem);
+	margin-top: 3.5rem;
+}
+
+.tsc-clinic__services li {
+	min-width: 0;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 32%, transparent);
+}
+
+.tsc-clinic__services a {
+	display: block;
+	min-height: 6.25rem;
+	padding: 1.35rem 0.5rem 1rem 0;
+	font-family: var(--font-serif);
+	font-size: clamp(1.05rem, 1.45vw, 1.28rem);
+	line-height: 1.4;
+	transition: color 350ms ease, transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-clinic__services a:hover {
+	color: var(--bronze);
+	transform: translateY(-3px);
+}
+
+.tsc-clinic__info {
+	padding: clamp(2rem, 4vw, 3rem);
+	border: 1px solid var(--clinic-rule);
+	background: color-mix(in oklab, var(--stone-warm) 45%, var(--background));
+}
+
+.tsc-clinic__info section + section {
+	margin-top: 2.4rem;
+	padding-top: 2.4rem;
+	border-top: 1px solid var(--border);
+}
+
+.tsc-clinic__info h3 {
+	margin-top: 0;
+}
+
+.tsc-clinic__hours,
+.tsc-clinic__travel,
+.tsc-clinic__info section:last-child {
+	margin-top: 1.35rem;
+}
+
+.tsc-clinic__hours > div {
+	display: flex;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: 0.4rem 0;
+	font-size: 0.82rem;
+}
+
+.tsc-clinic__hours dt,
+.tsc-clinic__travel dd {
+	color: var(--muted-foreground);
+}
+
+.tsc-clinic__travel > div + div {
+	margin-top: 1.25rem;
+}
+
+.tsc-clinic__travel dt {
+	font-family: var(--font-serif);
+	font-size: 1.05rem;
+}
+
+.tsc-clinic__travel dd {
+	margin-top: 0.35rem;
+	font-size: 0.84rem;
+	line-height: 1.75;
+}
+
+.tsc-clinic__info section:last-child a {
+	display: block;
+	margin-top: 0.55rem;
+	font-size: 0.86rem;
+	transition: color 300ms ease;
+}
+
+.tsc-clinic__info section:last-child a:hover {
+	color: var(--bronze);
+}
+
+.tsc-clinic__split-heading {
+	display: grid;
+	grid-template-columns: minmax(16rem, 4fr) minmax(0, 8fr);
+	gap: clamp(4rem, 8vw, 9rem);
+	align-items: start;
+}
+
+.tsc-clinic__split-heading > div:first-child > p {
+	max-width: 29rem;
+	margin-top: 1.5rem;
+	color: var(--muted-foreground);
+	line-height: 1.85;
+}
+
+.tsc-clinic__journey {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 2rem;
+}
+
+.tsc-clinic__journey--four {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	column-gap: clamp(2rem, 4vw, 4rem);
+	row-gap: 3rem;
+}
+
+.tsc-clinic__suitability {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem;
+}
+
+.tsc-clinic__suitability li {
+	display: grid;
+	min-height: 10.5rem;
+	grid-template-columns: auto 1fr;
+	gap: 1.25rem;
+	align-content: start;
+	padding: 1.75rem;
+	border: 1px solid var(--clinic-rule);
+	background: color-mix(in oklab, var(--background) 62%, transparent);
+}
+
+.tsc-clinic__suitability li > span {
+	width: 0.45rem;
+	height: 0.45rem;
+	margin-top: 0.45rem;
+	border-radius: 50%;
+	background: var(--bronze);
+}
+
+.tsc-clinic__suitability h3 {
+	font-family: var(--font-serif);
+	font-size: 1.35rem;
+	font-weight: 300;
+	line-height: 1.2;
+}
+
+.tsc-clinic__suitability p {
+	margin-top: 0.75rem;
+	color: var(--muted-foreground);
+	font-size: 0.9rem;
+	line-height: 1.75;
+}
+
+.tsc-clinic__journey article {
+	padding-top: 2rem;
+	border-top: 1px solid var(--clinic-rule);
+}
+
+.tsc-clinic__journey article > span {
+	color: var(--bronze);
+	font-family: var(--font-serif);
+	font-size: 2.2rem;
+	line-height: 1;
+}
+
+.tsc-clinic__journey h3,
+.tsc-clinic__location-list h3 {
+	margin-top: 1rem;
+	font-family: var(--font-serif);
+	font-size: 1.45rem;
+	font-weight: 300;
+	line-height: 1.2;
+}
+
+.tsc-clinic__journey p,
+.tsc-clinic__location-list article > div:last-child p {
+	margin-top: 0.8rem;
+	color: var(--muted-foreground);
+	font-size: 0.9rem;
+	line-height: 1.8;
+}
+
+.tsc-clinic__accreditations {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+}
+
+.tsc-clinic__accreditations > div {
+	display: flex;
+	min-height: 10.5rem;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	border: 1px solid var(--clinic-rule);
+	transition: border-color 350ms ease, background 350ms ease;
+}
+
+.tsc-clinic__accreditations > div:hover {
+	border-color: var(--champagne);
+	background: var(--stone-warm);
+}
+
+.tsc-clinic__accreditations img {
+	width: auto;
+	height: 3rem;
+	object-fit: contain;
+}
+
+.tsc-clinic__accreditations span {
+	margin-top: 1.1rem;
+	color: var(--muted-foreground);
+	font-size: 0.58rem;
+	letter-spacing: 0.2em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.tsc-clinic__map {
+	padding-bottom: clamp(5.5rem, 9vw, 9rem);
+}
+
+.tsc-clinic__map iframe {
+	display: block;
+	width: 100%;
+	height: clamp(22rem, 36vw, 30rem);
+	border: 1px solid var(--clinic-rule);
+	filter: grayscale(1) contrast(0.92) sepia(0.12);
+}
+
+.tsc-clinic__locations {
+	background: var(--stone-warm);
+}
+
+.tsc-clinic__locations header {
+	max-width: 56rem;
+	margin-inline: auto;
+	text-align: center;
+}
+
+.tsc-clinic__locations header h2 {
+	margin-inline: auto;
+}
+
+.tsc-clinic__locations header .eyebrow {
+	justify-content: center;
+}
+
+.tsc-clinic__location-list {
+	display: grid;
+	gap: 1px;
+	margin-top: clamp(3.5rem, 6vw, 5.5rem);
+	background: var(--clinic-rule);
+}
+
+.tsc-clinic__location-list article {
+	display: grid;
+	grid-template-columns: 14rem minmax(13rem, 3fr) minmax(0, 5fr);
+	gap: clamp(2rem, 5vw, 4.5rem);
+	align-items: center;
+	padding: 2rem;
+	background: var(--background);
+}
+
+.tsc-clinic__location-list img {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+}
+
+.tsc-clinic__location-list h3 {
+	margin-top: 0;
+}
+
+.tsc-clinic__location-address {
+	margin-top: 0.8rem;
+	color: var(--bronze);
+	font-size: 0.62rem;
+	letter-spacing: 0.22em;
+	line-height: 1.7;
+	text-transform: uppercase;
+}
+
+.tsc-clinic__location-list article > div:last-child p {
+	margin-top: 0;
+}
+
+.tsc-clinic__location-list a {
+	display: inline-block;
+	margin-top: 1.1rem;
+	font-size: 0.65rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	transition: color 300ms ease;
+}
+
+.tsc-clinic__location-list a:hover {
+	color: var(--bronze);
+}
+
+.tsc-clinic__faq [data-accordion] {
+	border-top: 1px solid var(--clinic-rule);
+}
+
+.tsc-clinic__faq-item {
+	border-bottom: 1px solid var(--clinic-rule);
+}
+
+.tsc-clinic__faq-item button {
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 1.6rem 0;
+	border: 0;
+	background: transparent;
+	color: var(--ink);
+	cursor: pointer;
+	font-family: var(--font-serif);
+	font-size: clamp(1.2rem, 2vw, 1.55rem);
+	text-align: left;
+	transition: color 300ms ease;
+}
+
+.tsc-clinic__faq-item button:hover {
+	color: var(--bronze);
+}
+
+.tsc-clinic__faq-item i {
+	position: relative;
+	width: 0.9rem;
+	height: 0.9rem;
+	flex: 0 0 auto;
+	margin-top: 0.35rem;
+}
+
+.tsc-clinic__faq-item i b {
+	position: absolute;
+	display: block;
+	background: var(--bronze);
+	transition: transform 400ms ease;
+}
+
+.tsc-clinic__faq-item i b:first-child {
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 1px;
+}
+
+.tsc-clinic__faq-item i b:last-child {
+	top: 0;
+	left: 50%;
+	width: 1px;
+	height: 100%;
+}
+
+.tsc-clinic__faq-item button[aria-expanded="true"] i b:last-child {
+	transform: scaleY(0);
+}
+
+.tsc-clinic__faq-answer {
+	display: grid;
+	overflow: hidden;
+	transition: grid-template-rows 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-clinic__faq-answer > div {
+	min-height: 0;
+}
+
+.tsc-clinic__faq-answer p {
+	max-width: 43rem;
+	padding: 0 3rem 1.8rem 0;
+	color: var(--muted-foreground);
+	font-size: 0.95rem;
+	line-height: 1.85;
+}
+
+.tsc-clinic__faq-cta {
+	padding-top: 2.5rem;
+}
+
+@media (max-width: 63.99rem) {
+	.tsc-clinic__detail-grid,
+	.tsc-clinic__split-heading {
+		grid-template-columns: 1fr;
+	}
+
+	.tsc-clinic__detail-grid,
+	.tsc-clinic__split-heading {
+		gap: 3.5rem;
+	}
+
+	.tsc-clinic__services {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.tsc-clinic__location-list article {
+		grid-template-columns: 11rem minmax(12rem, 3fr) minmax(0, 5fr);
+		gap: 2rem;
+	}
+}
+
+@media (max-width: 47.99rem) {
+	.tsc-clinic__shell {
+		width: min(100% - 2rem, 1344px);
+	}
+
+	.tsc-clinic__hero {
+		padding: 8.25rem 0 5rem;
+	}
+
+	.tsc-clinic__crumb {
+		gap: 0.55rem;
+		font-size: 0.54rem;
+		letter-spacing: 0.2em;
+	}
+
+	.tsc-clinic__hero-grid {
+		grid-template-columns: 1fr;
+		gap: 3rem;
+		margin-top: 2.5rem;
+	}
+
+	.tsc-clinic__hero-image {
+		aspect-ratio: 4 / 3;
+	}
+
+	.tsc-clinic__hero-copy h1 {
+		font-size: clamp(3rem, 16vw, 4.5rem);
+	}
+
+	.tsc-clinic__actions {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.tsc-clinic__actions a {
+		justify-content: center;
+		text-align: center;
+	}
+
+	.tsc-clinic__section {
+		padding: 5rem 0;
+	}
+
+	.tsc-clinic__info {
+		padding: 1.6rem;
+	}
+
+	.tsc-clinic__services-heading {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.tsc-clinic__services-heading > p {
+		max-width: 28rem;
+		text-align: left;
+	}
+
+	.tsc-clinic__services {
+		grid-template-columns: 1fr;
+		gap: 0;
+		margin-top: 2.5rem;
+	}
+
+	.tsc-clinic__services a {
+		min-height: 0;
+		padding: 1.2rem 0;
+	}
+
+	.tsc-clinic__hours > div {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.tsc-clinic__journey,
+	.tsc-clinic__suitability,
+	.tsc-clinic__accreditations {
+		grid-template-columns: 1fr;
+	}
+
+	.tsc-clinic__journey {
+		gap: 2.5rem;
+	}
+
+	.tsc-clinic__accreditations {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.tsc-clinic__accreditations > div {
+		min-height: 9rem;
+		padding: 1rem;
+	}
+
+	.tsc-clinic__location-list article {
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+		padding: 1.25rem;
+	}
+
+	.tsc-clinic__location-list img {
+		aspect-ratio: 16 / 10;
+	}
+}
+
+.tsc-testimonials__film-caption {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 2rem;
+	border-bottom: 1px solid var(--border);
+	padding: 1.5rem 0;
+}
+
+.tsc-testimonials__film-caption h2 {
+	font-family: var(--font-serif);
+	font-size: 1.45rem;
+	font-weight: 300;
+	line-height: 1.2;
+}
+
+.tsc-testimonials__film-caption p {
+	margin-top: 0.35rem;
+	color: var(--muted-foreground);
+	font-size: 0.75rem;
+}
+
+.tsc-testimonials__film-caption > button {
+	border: 0;
+	background: transparent;
+	color: var(--ink);
+	cursor: pointer;
+	font-size: 0.65rem;
+	font-weight: 500;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	transition: color 300ms ease;
+}
+
+.tsc-testimonials__film-caption > button:hover {
+	color: var(--bronze);
+}
+
+.tsc-testimonials__reviews {
+	width: min(100% - 3rem, 1100px);
+	padding-bottom: 7rem;
+}
+
+.tsc-testimonials__stage {
+	min-height: 34rem;
+}
+
+.tsc-testimonial {
+	position: relative;
+	max-width: 58rem;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.tsc-testimonial[hidden] {
+	display: none;
+}
+
+.tsc-testimonial__mark {
+	position: relative;
+	z-index: 2;
+	display: block;
+	height: 4.5rem;
+	margin-bottom: 1rem;
+	color: var(--bronze);
+	font-family: var(--font-serif);
+	font-size: 7rem;
+	line-height: 0.85;
+	opacity: 0.16;
+	text-align: center;
+	pointer-events: none;
+}
+
+.tsc-testimonial blockquote {
+	position: relative;
+	z-index: 1;
+}
+
+.tsc-testimonial blockquote p {
+	display: -webkit-box;
+	overflow: hidden;
+	font-family: var(--font-serif);
+	font-size: clamp(1.65rem, 3vw, 2.45rem);
+	font-style: italic;
+	font-weight: 300;
+	letter-spacing: -0.01em;
+	line-height: 1.52;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+}
+
+.tsc-testimonial.is-expanded blockquote p {
+	display: block;
+	overflow: visible;
+}
+
+.tsc-testimonial > button {
+	position: relative;
+	z-index: 1;
+	margin-top: 2rem;
+	border: 0;
+	background: transparent;
+	color: var(--bronze);
+	cursor: pointer;
+	font-size: 0.65rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-testimonial figcaption {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 3rem;
+}
+
+.tsc-testimonial figcaption > span:last-child {
+	text-align: center;
+}
+
+.tsc-testimonial figcaption strong {
+	display: block;
+	font-family: var(--font-serif);
+	font-size: 1.1rem;
+	font-weight: 400;
+}
+
+.tsc-testimonial figcaption small {
+	display: block;
+	margin-top: 0.35rem;
+	color: var(--muted-foreground);
+	font-size: 0.62rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.tsc-testimonial figcaption small span {
+	margin-right: 0.5rem;
+	color: var(--bronze);
+	letter-spacing: 0.05em;
+}
+
+.tsc-testimonials__controls {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	margin-top: 2.5rem;
+}
+
+.tsc-testimonials__controls > div {
+	display: flex;
+	gap: 0.75rem;
+}
+
+.tsc-testimonials__controls button {
+	display: grid;
+	width: 3rem;
+	height: 3rem;
+	place-items: center;
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	background: transparent;
+	color: var(--ink);
+	cursor: pointer;
+	transition: border-color 300ms ease, color 300ms ease;
+}
+
+.tsc-testimonials__controls button:hover {
+	border-color: var(--bronze);
+	color: var(--bronze);
+}
+
+.tsc-testimonials__controls p {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	color: var(--muted-foreground);
+	font-size: 0.65rem;
+	font-style: normal;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-testimonials__controls strong {
+	color: var(--ink);
+	font-weight: 500;
+}
+
+.tsc-testimonials__controls p span {
+	width: 3rem;
+	height: 1px;
+	background: var(--border);
+}
+
+.tsc-testimonials__controls em {
+	font-style: normal;
+}
+
+.tsc-testimonials__progress {
+	height: 1px;
+	margin-top: 2rem;
+	background: var(--border);
+}
+
+.tsc-testimonials__progress span {
+	display: block;
+	height: 1px;
+	background: var(--bronze);
+	transition: width 350ms ease;
+}
+
+.tsc-testimonials__cta {
+	width: min(100% - 3rem, 1100px);
+	padding-bottom: 7rem;
+	text-align: center;
+}
+
+.tsc-testimonials__cta > p {
+	max-width: 37rem;
+	margin: 0 auto;
+	color: var(--muted-foreground);
+	font-size: 1rem;
+	line-height: 1.8;
+}
+
+.tsc-testimonials__cta > div {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+@media (max-width: 47.99rem) {
+	.tsc-testimonials__hero,
+	.tsc-testimonials__film,
+	.tsc-testimonials__reviews,
+	.tsc-testimonials__cta {
+		width: min(100% - 3rem, 1100px);
+	}
+
+	.tsc-testimonials__hero {
+		padding: 9rem 0 4.5rem;
+	}
+
+	.tsc-testimonials__hero h1 br {
+		display: none;
+	}
+
+	.tsc-testimonials__film,
+	.tsc-testimonials__reviews,
+	.tsc-testimonials__cta {
+		padding-bottom: 5rem;
+	}
+
+	.tsc-testimonials__stage {
+		min-height: 38rem;
+	}
+
+	.tsc-testimonial blockquote p {
+		font-size: 1.55rem;
+		-webkit-line-clamp: 7;
+	}
+
+	.tsc-testimonial figcaption {
+		flex-direction: column;
+	}
+
+	.tsc-testimonial figcaption > span:last-child {
+		text-align: center;
+	}
+}
+
+/* Overlay autocomplete — suggested pages as the visitor types. */
+
+.tsc-search__suggest {
+	list-style: none;
+	margin: 0.85rem 0 0;
+	padding: 0;
+	max-height: min(18rem, 48vh);
+	overflow-y: auto;
+}
+
+.tsc-search__suggest[hidden] {
+	display: none;
+}
+
+.tsc-search__option {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+	padding: 0.7rem 0.15rem;
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+	cursor: pointer;
+	transition: color .35s ease, padding .35s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tsc-search__option:first-child {
+	border-top: 0;
+}
+
+.tsc-search__option:hover,
+.tsc-search__option.is-active {
+	color: var(--bronze);
+	padding-left: 0.4rem;
+}
+
+.tsc-search__option-kind {
+	flex: 0 0 4.75rem;
+	font-size: 0.55rem;
+	font-weight: 500;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--bronze);
+}
+
+.tsc-search__option-title {
+	flex: 1 1 auto;
+	font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+	font-size: 1.1rem;
+	font-weight: 300;
+	line-height: 1.3;
+	color: var(--ink);
+}
+
+.tsc-search__option:hover .tsc-search__option-title,
+.tsc-search__option.is-active .tsc-search__option-title {
+	color: var(--bronze);
+}
+
+.tsc-search__option-title mark {
+	background: color-mix(in oklab, var(--bronze) 22%, transparent);
+	color: inherit;
+	padding: 0 0.08em;
+}
+
+.tsc-search-hit {
+	background: color-mix(in oklab, var(--bronze) 24%, transparent);
+	color: var(--ink);
+	padding: 0 0.12em;
+}
+
+/* WordPress supplies the pagination markup for search and the journal, so the
+ * styling lives here rather than in the page templates. */
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+.navigation.pagination {
+	margin-top: 4.5rem;
+}
+
+.navigation.pagination .nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 22px;
+	font-size: 0.68rem;
+	text-transform: uppercase;
+	letter-spacing: 0.28em;
+}
+
+.navigation.pagination .page-numbers {
+	padding-bottom: 5px;
+	border-bottom: 1px solid transparent;
+	color: var(--muted-foreground);
+	transition: color .4s ease, border-color .4s ease;
+}
+
+.navigation.pagination a.page-numbers:hover {
+	color: var(--bronze);
+	border-bottom-color: color-mix(in oklab, var(--bronze) 50%, transparent);
+}
+
+.navigation.pagination .page-numbers.current {
+	color: var(--ink);
+	border-bottom-color: var(--bronze);
+}
+
+/* ------------------------------------------------------------ hero breadcrumb
+ * Three crumbs in letter-spaced caps do not survive a phone width, so only the
+ * page you are on keeps its place there.
+ *
+ * The champagne colour class is not in the frozen Tailwind bundle, so crumbs
+ * were inheriting ink and vanishing on the dark service photographs.
+ */
+
+.tsc-service-hero .tsc-crumb,
+.tsc-service-hero .tsc-crumb a,
+.tsc-conditions-hero .tsc-crumb,
+.tsc-conditions-hero .tsc-crumb a,
+.tsc-conditions-hero .tsc-crumb span {
+	color: #fff;
+}
+
+.tsc-crumb > * {
+	white-space: nowrap;
+}
+
+@media (max-width: 47.999rem) {
+	.tsc-crumb > :not(:last-child) {
+		display: none;
+	}
+}
+
+/* --------------------------------------------------------------- home journey
+ * The home page journey rows use py-12, which is not in the frozen Tailwind
+ * bundle.
+ */
+
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+
+/* ------------------------------------------------- longevity page utilities
+ * Spacing and the bronze lozenge bullet the frozen Tailwind bundle does not
+ * carry.
+ */
+
+.pt-5 { padding-top: 1.25rem; }
+.pt-7 { padding-top: 1.75rem; }
+.pt-12 { padding-top: 3rem; }
+.gap-x-12 { column-gap: 3rem; }
+.gap-y-10 { row-gap: 2.5rem; }
+.h-\[5px\] { height: 5px; }
+.w-\[5px\] { width: 5px; }
+
+/* Alignment utilities the search form needs, likewise absent from the bundle. */
+
+/* Accordion heading size below md, which the bundle also omits, so those
+ * titles were dropping to the body size on phones. */
+.text-\[1\.3rem\] { font-size: 1.3rem; }
+
+/* ------------------------------------------------------- header breakpoint
+ * Logo, links, icons and the Book Now CTA need roughly 1050px, but the header
+ * nav appeared from lg (1024px), where the logo overlapped the first link and
+ * the CTA wrapped onto two lines. It now appears from xl (1280px), which also
+ * leaves room for the menu to gain an item, since it is editable. The frozen
+ * Tailwind bundle has no xl:flex, so it is defined here.
+ */
+
+@media (min-width: 80rem) {
+	.xl\:flex {
+		display: flex;
+	}
+
+	/* The dot-grid button opens the side panel, which exists to carry the
+	   navigation while the header bar has none. Once the bar appears the panel
+	   duplicates it, so the way in goes with it. */
+	.xl\:hidden {
+		display: none;
+	}
+
+	.xl\:grid-cols-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.xl\:gap-10 {
+		gap: 2.5rem;
+	}
+}
+
+/* "Book a Discovery Call" is three times the length of the old "Book Now".
+   Between xl and 90rem the links close up so the bar still clears the logo,
+   and on the narrowest phones the CTA and logo give a little so they share the
+   row. */
+@media (min-width: 80rem) and (max-width: 89.999rem) {
+	header nav > .xl\:flex {
+		gap: 1.5rem;
+	}
+}
+
+@media (max-width: 24.999rem) {
+	header nav > a img {
+		max-height: 2.8rem;
+	}
+
+	.tsc-header-cta {
+		padding-left: 0.9rem;
+		padding-right: 0.9rem;
+		font-size: 0.6rem;
+		letter-spacing: 0.16em;
+	}
+}
+
+/* site.css hides the mega panels below lg; keep them with their triggers. */
+@media (max-width: 79.999rem) {
+	.mega {
+		display: none;
+	}
+}
+
+/* Below 1440px the link columns start closer to the lead, so its title has
+   less room than the 280px it is set at. */
+@media (max-width: 89.999rem) {
+	.mega-lead .mega-title {
+		font-size: 1.2rem;
+	}
+}
+
+/* ---------------------------------------------------------- side panel nav
+ * With the header nav gone below xl, the side panel carries the navigation on
+ * phones and tablets. Above xl the mega menu takes over again and this stack
+ * is redundant, so it is hidden rather than shown twice.
+ */
+
+/* The panel shared its spare height out between every block, which left the
+ * profiles and the contact details drifting in the middle of it. Collecting
+ * that space under the pages instead gathers the three utility blocks at the
+ * foot, where they read as one group. The margin below falls back to the
+ * blocks' own spacing once the panel is taller than the screen. */
+.tsc-menu__panel {
+	justify-content: flex-start;
+}
+
+.tsc-menu__nav {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin: 34px 0 auto;
+}
+
+/* The header search button is desktop-only, so the panel carries the way in to
+ * search on phones and tablets. It sits last: the pages are what the menu is
+ * opened for, and search is the fallback when none of them is the answer. */
+
+.tsc-menu__search {
+	margin-top: 30px;
+}
+
+.tsc-menu__search svg {
+	width: 17px;
+	height: 17px;
+	flex-shrink: 0;
+}
+
+.tsc-menu__nav-link,
+.tsc-menu__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	width: 100%;
+	padding: 15px 0;
+	border: 0;
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+	background: none;
+	font-family: var(--font-serif, "Cormorant Garamond", Georgia, serif);
+	font-size: 1.2rem;
+	font-weight: 300;
+	line-height: 1.3;
+	text-align: left;
+	color: var(--foreground);
+	cursor: pointer;
+	transition: color .4s ease, padding .45s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tsc-menu__nav > :last-child .tsc-menu__toggle,
+.tsc-menu__nav > :last-child.tsc-menu__nav-link {
+	border-bottom: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+
+.tsc-menu__nav-link:hover,
+.tsc-menu__toggle:hover,
+.tsc-menu__toggle[aria-expanded="true"] {
+	color: var(--bronze);
+}
+
+.tsc-menu__nav-link:hover,
+.tsc-menu__toggle:hover {
+	padding-left: 8px;
+}
+
+/* Horizontal bar plus a vertical one that retracts when the group opens,
+ * matching the accordions elsewhere on the site. */
+.tsc-menu__plus {
+	position: relative;
+	flex: none;
+	width: 13px;
+	height: 13px;
+	color: var(--bronze);
+}
+
+.tsc-menu__plus::before,
+.tsc-menu__plus::after {
+	content: "";
+	position: absolute;
+	background: currentColor;
+}
+
+.tsc-menu__plus::before {
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	transform: translateY(-50%);
+}
+
+.tsc-menu__plus::after {
+	top: 0;
+	left: 50%;
+	width: 1px;
+	height: 100%;
+	transform: translateX(-50%) scaleY(1);
+	transition: transform .5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-menu__toggle[aria-expanded="true"] .tsc-menu__plus::after {
+	transform: translateX(-50%) scaleY(0);
+}
+
+.tsc-menu__sub {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows .5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-menu__toggle[aria-expanded="true"] + .tsc-menu__sub {
+	grid-template-rows: 1fr;
+}
+
+.tsc-menu__sub-inner {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	overflow: hidden;
+}
+
+/* An open group is one unbroken list of pages, gathered by a single rule down
+ * its left edge. The rule is drawn per link so that hovering one lights only
+ * its own stretch of the line. */
+.tsc-menu__sublink {
+	padding: 11px 0 11px 15px;
+	border-left: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+	font-size: .9rem;
+	line-height: 1.5;
+	color: var(--muted-foreground);
+	transition: color .4s ease, border-color .4s ease;
+}
+
+/* Without a heading to open the group, the list sets its own distance from the
+ * row it belongs to and from the row that follows. */
+.tsc-menu__sublink:first-child {
+	margin-top: 13px;
+}
+
+.tsc-menu__sublink:last-child {
+	margin-bottom: 21px;
+}
+
+.tsc-menu__sublink:hover {
+	color: var(--bronze);
+	border-color: var(--bronze);
+}
+
+/* Opening the panel moves focus to its close button, so the ring is on show
+ * often enough to be worth dressing. */
+.tsc-menu__close:focus-visible,
+.tsc-menu__toggle:focus-visible,
+.tsc-menu__nav-link:focus-visible,
+.tsc-menu__sublink:focus-visible {
+	outline: 1px solid var(--bronze);
+	outline-offset: 4px;
+}
+
+/* The profiles were three full-width rows carrying a word each, which cost more
+ * height than the pages above them. As a single row of icons - the same ones
+ * the footer uses - they take one row and read as a set. */
+
+.tsc-menu__social {
+	flex-direction: row;
+	gap: .5rem;
+	width: auto;
+	margin-top: 30px;
+}
+
+.tsc-menu__social a {
+	position: relative;
+	display: grid;
+	place-items: center;
+	width: 2.375rem;
+	height: 2.375rem;
+	padding: 0;
+	border: 1px solid var(--border);
+	color: var(--muted-foreground);
+}
+
+/* The rows used to be separated by hairlines, the last one closing the stack. */
+.tsc-menu__social a:last-child {
+	border-bottom: 1px solid var(--border);
+}
+
+/* Nudging the label on hover made sense for a row; a fixed box has to hold
+ * still, so only the colours move. */
+.tsc-menu__social a:hover {
+	padding-left: 0;
+	color: var(--bronze);
+	border-color: color-mix(in oklab, var(--bronze) 55%, transparent);
+}
+
+.tsc-menu__social svg {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+}
+
+/* Each profile is now an unlabelled icon, so its name stays for screen readers
+ * and for anyone navigating by voice. */
+.tsc-menu__social span {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+/* Phone, email and the two clinics, tightened so the whole panel clears a
+ * small phone screen without scrolling. */
+
+.tsc-menu__contact {
+	margin-top: 22px;
+}
+
+.tsc-menu__phone {
+	font-size: 1.4rem;
+}
+
+.tsc-menu__email {
+	margin-top: 7px;
+}
+
+.tsc-menu__addr {
+	margin-top: 15px;
+	letter-spacing: .22em;
+	line-height: 1.7;
+}
+
+/* The nav makes the panel taller than a phone screen. */
+.tsc-menu__panel {
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+@media (max-width: 30rem) {
+	.tsc-menu__panel {
+		padding: 34px 28px 30px;
+	}
+
+	.tsc-menu__close {
+		top: 24px;
+		right: 20px;
+	}
+
+	.tsc-menu__logo {
+		width: 128px;
+	}
+}
+
+@media (min-width: 80rem) {
+	.tsc-menu__nav {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-menu__nav-link,
+	.tsc-menu__toggle,
+	.tsc-menu__sub,
+	.tsc-menu__plus::after {
+		transition-duration: .01ms;
+	}
+}
+
+/* ------------------------------------------------------------------- enquiry
+ * Location and Area of Interest are choices rather than free text, so both are
+ * selects. site.js replaces each one with the .tsc-select listbox below; these
+ * rules dress the native control for the moment before that runs, and for the
+ * no-JavaScript case where it never does.
+ */
+.luxe-select {
+	-webkit-appearance: none;
+	appearance: none;
+	border-radius: 0;
+	cursor: pointer;
+	padding-right: 1.75rem;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5l5-5' stroke='%23d2bb9c' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right .15rem center;
+	background-size: .7rem auto;
+}
+
+/* Match the placeholder treatment on the text inputs while nothing is chosen.
+ * In the color property currentColor resolves to the inherited value, so this
+ * fades against the form's text colour rather than itself. */
+.luxe-select:has(option[value=""]:checked) {
+	color: color-mix(in oklab, currentColor 45%, transparent);
+}
+
+/* The dropdown list is painted by the OS, which does not inherit the dark
+ * section behind it. */
+.luxe-select option {
+	color: #1a1712;
+	background: #fff;
+}
+
+/* A multiple select renders as a list box, so the single-line chrome above
+ * would only crowd it. */
+.luxe-select[multiple] {
+	background-image: none;
+	padding-right: 0;
+}
+
+/* ---- the enhanced listbox ---- *
+ * Sits on the dark enquiry panel, so everything is drawn from the inherited
+ * text colour plus champagne accents rather than fixed greys.
+ */
+.tsc-select {
+	position: relative;
+}
+
+/* The real select stays in the flow of the form for submission, out of the
+ * tab order and off screen. */
+.tsc-select__native {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Matches .luxe-input: no box, one hairline underline. */
+.tsc-select__button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	width: 100%;
+	padding: 1rem 0;
+	font-family: var(--font-sans);
+	font-size: .95rem;
+	line-height: 1.5;
+	text-align: left;
+	color: inherit;
+	background: none;
+	border: 0;
+	border-bottom: 1px solid color-mix(in oklab, currentColor 25%, transparent);
+	border-radius: 0;
+	cursor: pointer;
+	transition: border-color .4s ease;
+}
+
+.tsc-select__button:hover {
+	border-color: color-mix(in oklab, currentColor 45%, transparent);
+}
+
+.tsc-select__button:focus-visible,
+.tsc-select.is-open .tsc-select__button {
+	outline: none;
+	border-color: var(--champagne);
+}
+
+.tsc-select__value {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Reads as a placeholder until something is chosen. */
+.tsc-select.is-empty .tsc-select__value {
+	color: color-mix(in oklab, currentColor 45%, transparent);
+	letter-spacing: .02em;
+}
+
+.tsc-select__chevron {
+	flex: none;
+	display: block;
+	width: .7rem;
+	color: var(--champagne);
+	transition: transform .45s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tsc-select__chevron svg {
+	display: block;
+	width: 100%;
+}
+
+.tsc-select.is-open .tsc-select__chevron {
+	transform: rotate(180deg);
+}
+
+.tsc-select__panel {
+	position: absolute;
+	z-index: 40;
+	top: calc(100% + 10px);
+	left: 0;
+	right: 0;
+	max-height: 21rem;
+	margin: 0;
+	padding: .45rem 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	list-style: none;
+	/* The enquiry panel's own background, so the menu reads as part of the
+	 * form rather than a card floating over it. */
+	background: #1a1712;
+	border: 1px solid color-mix(in oklab, var(--champagne) 20%, transparent);
+	box-shadow: 0 34px 60px -32px rgb(0 0 0 / .95);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-8px);
+	transition: opacity .38s cubic-bezier(.16, 1, .3, 1),
+		transform .48s cubic-bezier(.16, 1, .3, 1),
+		visibility 0s linear .48s;
+}
+
+/* Flipped above the field when the page has run out of room below it. */
+.tsc-select.is-up .tsc-select__panel {
+	top: auto;
+	bottom: calc(100% + 10px);
+	transform: translateY(8px);
+}
+
+.tsc-select.is-open .tsc-select__panel {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	transition: opacity .4s cubic-bezier(.16, 1, .3, 1),
+		transform .55s cubic-bezier(.16, 1, .3, 1),
+		visibility 0s;
+}
+
+.tsc-select__option {
+	display: flex;
+	align-items: center;
+	gap: .8rem;
+	padding: .66rem 1.1rem;
+	font-size: .88rem;
+	line-height: 1.45;
+	color: color-mix(in oklab, currentColor 78%, transparent);
+	cursor: pointer;
+	transition: color .3s ease, background-color .3s ease;
+}
+
+.tsc-select__option.is-active,
+.tsc-select__option:hover {
+	color: var(--champagne);
+	background: color-mix(in oklab, var(--champagne) 9%, transparent);
+}
+
+.tsc-select__option[aria-selected="true"] {
+	color: var(--champagne);
+}
+
+.tsc-select__text {
+	flex: 1 1 auto;
+}
+
+/* Single select: a tick appears on the right of the chosen row. */
+.tsc-select__tick {
+	flex: none;
+	display: block;
+	width: .7rem;
+	opacity: 0;
+	transform: scale(.7);
+	transition: opacity .3s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+}
+
+.tsc-select__option[aria-selected="true"] .tsc-select__tick {
+	opacity: 1;
+	transform: scale(1);
+}
+
+/* Multi select: a checkbox on the left, so it reads as "pick any". */
+.tsc-select__box {
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: .8rem;
+	height: .8rem;
+	color: transparent;
+	border: 1px solid color-mix(in oklab, currentColor 40%, transparent);
+	transition: border-color .3s ease, background-color .3s ease, color .3s ease;
+}
+
+.tsc-select__option[aria-selected="true"] .tsc-select__box {
+	color: #1a1712;
+	background: var(--champagne);
+	border-color: var(--champagne);
+}
+
+.tsc-select__tick svg,
+.tsc-select__box svg {
+	display: block;
+	width: .58rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-select__panel,
+	.tsc-select__chevron,
+	.tsc-select__tick,
+	.tsc-select__option {
+		transition-duration: .01ms;
+	}
+}
+
+/* ------------------------------------------------------------ footer social
+ * Icon-only profiles under the footer CTA, matching the row in the side panel.
+ * The label is carried by aria-label and the row stays quiet enough not to
+ * compete with the link columns.
+ */
+
+.tsc-foot__social {
+	display: flex;
+	align-items: center;
+	gap: .5rem;
+	margin-top: 2.25rem;
+}
+
+.tsc-foot__social a {
+	display: grid;
+	place-items: center;
+	position: relative;
+	overflow: hidden;
+	width: 2.375rem;
+	height: 2.375rem;
+	color: var(--muted-foreground);
+	border: 1px solid var(--border);
+	transition: color 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
+		border-color 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* The bronze wipes down from above on hover, the same gesture and timing the
+   Book Now button in the header uses. Done as a pseudo-element rather than the
+   header's extra <span>, since these icons are rendered from a shared helper. */
+.tsc-foot__social a::before {
+	background: var(--bronze);
+	content: "";
+	inset: 0;
+	position: absolute;
+	transform: translateY(-100%);
+	transition: transform 700ms cubic-bezier(0.7, 0, 0.15, 1);
+	z-index: 0;
+}
+
+.tsc-foot__social a:hover::before {
+	transform: translateY(0);
+}
+
+.tsc-foot__social a:hover {
+	color: var(--background);
+	border-color: var(--bronze);
+}
+
+.tsc-foot__social svg {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	/* Keeps the glyph above the wipe. */
+	position: relative;
+	z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-foot__social a,
+	.tsc-foot__social a::before {
+		transition-duration: .01ms;
+	}
+}
+
+/* -------------------------------------------------------------- footer row
+ * Brand block, the link lists and the contact column. A twelve-column grid
+ * gave each column the same track but a different amount of slack inside it,
+ * so the gutters looked uneven — the brand block filled its track while a list
+ * of short labels left half of its own empty. Sizing the lists to their
+ * longest label and distributing what is left over makes every gutter equal.
+ *
+ * Between the two the row wraps rather than squeezing, so a column is never
+ * narrower than its own labels: the columns that no longer fit move down to
+ * another line and are spread across it the same way.
+ */
+
+/* On a phone one stacked block per menu ran the footer to roughly 1.7 screens,
+   so the link lists — the short blocks — pair up two to a row. The brand and
+   contact blocks keep the full width; their lines are too long to halve. */
+.tsc-foot__top {
+	display: grid;
+	gap: 2.75rem 1.5rem;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tsc-foot__brand,
+.tsc-foot__contact-col {
+	grid-column: 1 / -1;
+}
+
+/* ------------------------------------------------- footer groups on phones
+ * Stacked, every menu open, the footer ran to over two screens. On a phone the
+ * headings become toggles and each list collapses behind them; the row layout
+ * above 48rem is untouched, and without JavaScript the lists simply stay open.
+ */
+
+@media (max-width: 47.99rem) {
+	/* Collapsed rows read as one list, so they sit flush against each other and
+	   the blocks above and below carry the spacing instead of the grid gap. */
+	.tsc-foot__top.is-collapsible {
+		row-gap: 0;
+	}
+
+	.tsc-foot__top.is-collapsible .tsc-foot__brand {
+		margin-bottom: 2.5rem;
+	}
+
+	.tsc-foot__top.is-collapsible .tsc-foot__contact-col {
+		margin-top: 2.5rem;
+	}
+
+	.tsc-foot__top.is-collapsible .tsc-foot__col {
+		border-top: 1px solid var(--border);
+		grid-column: 1 / -1;
+	}
+
+	.tsc-foot__top.is-collapsible .tsc-foot__col:nth-last-child(2) {
+		border-bottom: 1px solid var(--border);
+	}
+
+	.tsc-foot__toggle {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		padding: 1.05rem 0;
+		text-align: left;
+		width: 100%;
+	}
+
+	/* Two strokes, the vertical one dropped on open: the same plus-to-minus
+	   the accordions elsewhere use. */
+	.tsc-foot__toggle-icon {
+		display: block;
+		height: 9px;
+		position: relative;
+		width: 9px;
+	}
+
+	.tsc-foot__toggle-icon::before,
+	.tsc-foot__toggle-icon::after {
+		background: currentColor;
+		content: "";
+		inset: 4px 0 auto;
+		position: absolute;
+	}
+
+	.tsc-foot__toggle-icon::before {
+		height: 1px;
+	}
+
+	.tsc-foot__toggle-icon::after {
+		height: 9px;
+		inset: 0 auto auto 4px;
+		transform-origin: center;
+		transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+		width: 1px;
+	}
+
+	.tsc-foot__toggle[aria-expanded="true"] .tsc-foot__toggle-icon::after {
+		transform: scaleY(0);
+	}
+
+	.is-collapsible .tsc-foot__panel {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+	}
+
+	/* visibility, not just the clipped row: links inside a collapsed group must
+	   also drop out of the tab order. */
+	.is-collapsible .tsc-foot__panel > ul {
+		margin-top: 0;
+		min-height: 0;
+		overflow: hidden;
+		transition: visibility 0s linear 420ms;
+		visibility: hidden;
+	}
+
+	.tsc-foot__toggle[aria-expanded="true"] ~ .tsc-foot__panel {
+		grid-template-rows: 1fr;
+	}
+
+	.tsc-foot__toggle[aria-expanded="true"] ~ .tsc-foot__panel > ul {
+		padding-bottom: 1.35rem;
+		transition-delay: 0s;
+		visibility: visible;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.is-collapsible .tsc-foot__panel,
+		.tsc-foot__toggle-icon::after {
+			transition-duration: 0.01ms;
+		}
+	}
+
+	/* No JavaScript: the lists stay open, two groups to a row. An odd number of
+	   groups leaves the last one paired with an empty half, so it takes the
+	   full width and splits its own links in two instead. The brand block is
+	   always first and contact always last, which is what makes "even-numbered
+	   child, second from the end" the orphan. */
+	:not(.is-collapsible) > .tsc-foot__col:nth-child(even):nth-last-child(2) {
+		grid-column: 1 / -1;
+	}
+
+	:not(.is-collapsible) > .tsc-foot__col:nth-child(even):nth-last-child(2) ul {
+		display: grid;
+		gap: 0.75rem 1.5rem;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	:not(.is-collapsible) > .tsc-foot__col:nth-child(even):nth-last-child(2) ul > * {
+		margin-top: 0;
+	}
+
+	/* The footer's own frame reads as composure on a wide screen and as dead
+	   scroll on a narrow one. The wrapper is the footer's only child, so it
+	   needs no class of its own. */
+	footer > div:first-child {
+		padding-bottom: 3.5rem;
+		padding-top: 3.5rem;
+	}
+
+	.tsc-foot__social {
+		margin-top: 1.5rem;
+	}
+}
+
+@media (min-width: 48rem) {
+	.tsc-foot__top {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		gap: 4rem 3rem;
+	}
+
+	.tsc-foot__top > * {
+		flex: 0 0 auto;
+	}
+
+	.tsc-foot__brand {
+		flex: 0 1 20rem;
+	}
+
+	/* Held wide enough for the email address, which is the longest line in the
+	   footer and the one that used to overflow. */
+	.tsc-foot__contact-col {
+		flex: 0 0 18rem;
+	}
+}
+
+/* ----------------------------------------------------------- footer contact
+ * Two clinic addresses plus a phone and an email. Run together they read as
+ * one block of grey, so each address keeps its own two lines and the two ways
+ * of reaching us sit below a hairline, where they are also finally links.
+ */
+
+.tsc-foot__contact {
+	margin-top: 1.5rem;
+	font-size: .875rem;
+	line-height: 1.75;
+	color: var(--muted-foreground);
+}
+
+.tsc-foot__contact address {
+	font-style: normal;
+}
+
+.tsc-foot__contact address + address {
+	margin-top: 1.1rem;
+}
+
+.tsc-foot__contact-direct {
+	display: grid;
+	justify-items: start;
+	gap: .35rem;
+	margin-top: 1.4rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid var(--border);
+}
+
+.tsc-foot__contact-direct a {
+	transition: color 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-foot__contact-direct a:hover {
+	color: var(--bronze);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-foot__contact-direct a {
+		transition-duration: .01ms;
+	}
+}
+
+/* ---------------------------------------------------------------- about hero
+ * The banner ran a 2:3 portrait of the Harley Street entrance through a
+ * landscape half-column, so all that survived the crop was a strip of railings
+ * in a 39rem band that filled neither the window nor the eye. The band now
+ * stands close to the height of the window, which lets the doorway be seen as
+ * it was photographed, and the copy is set against it with the eyebrow,
+ * hairline and caption the rest of the page already speaks in.
+ */
+
+.tsc-about-hero__inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.tsc-about-hero__copy {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	/* Clears the 97px fixed header with roughly 2rem of air beneath it. */
+	padding: 8rem 1.5rem 3.5rem;
+}
+
+.tsc-about-hero__title {
+	font-size: clamp(2.4rem, 1.2rem + 3.6vw, 4.3rem);
+	letter-spacing: -0.02em;
+	line-height: 1.04;
+	margin-top: 0;
+}
+
+/* The standfirst size the about banner set. Pulled out of the hero rule so
+   other page ledes can sit at the same level without the figure being typed
+   out twice and drifting apart. */
+.tsc-lede,
+.tsc-about-hero__lede {
+	font-size: 1.02rem;
+	line-height: 1.85;
+}
+
+.tsc-about-hero__lede {
+	color: var(--muted-foreground);
+	margin-top: 1.75rem;
+	max-width: 34rem;
+}
+
+@media (min-width: 48rem) {
+	.tsc-lede,
+	.tsc-about-hero__lede {
+		font-size: 1.1rem;
+	}
+}
+
+.tsc-about-hero__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 2.75rem;
+}
+
+.tsc-about-hero__media {
+	/* Stacked under the copy until the columns split, where the row height
+	   takes over. */
+	height: clamp(18rem, 52vw, 28rem);
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+}
+
+/* Absolute, so the portrait's own height cannot set the height of the band. */
+.tsc-about-hero__media img {
+	height: 100%;
+	inset: 0;
+	/* Holds the doorway and its arch in frame as the column changes shape. */
+	object-fit: cover;
+	object-position: 62% 40%;
+	position: absolute;
+	width: 100%;
+}
+
+/* Weighted to the last third, where the photograph is at its brightest and the
+   address caption sits. */
+.tsc-about-hero__scrim {
+	background: linear-gradient(
+		180deg,
+		transparent 42%,
+		color-mix(in oklab, var(--ink) 28%, transparent) 70%,
+		color-mix(in oklab, var(--ink) 82%, transparent) 100%
+	);
+	inset: 0;
+	position: absolute;
+}
+
+.tsc-about-hero__caption {
+	align-items: center;
+	bottom: 2rem;
+	color: oklch(0.95 0.008 75);
+	display: flex;
+	font-size: 0.6rem;
+	gap: 0.85rem;
+	left: 1.5rem;
+	letter-spacing: 0.32em;
+	position: absolute;
+	right: 1.5rem;
+	text-transform: uppercase;
+}
+
+.tsc-about-hero__caption::before {
+	background: var(--champagne);
+	content: "";
+	flex: none;
+	height: 1px;
+	width: 2.25rem;
+}
+
+@media (min-width: 48rem) {
+	.tsc-about-hero__copy {
+		padding: 8.5rem 3rem 4.5rem;
+	}
+
+	.tsc-about-hero__caption {
+		bottom: 3rem;
+		left: 3rem;
+		right: 3rem;
+	}
+}
+
+/* The columns only split once the narrower one still holds the headline on two
+   lines; below this the photograph runs full width beneath the copy. */
+@media (min-width: 80rem) {
+	.tsc-about-hero__inner {
+		/* The headline, lede and buttons come to ~23rem, so a taller band only
+		   adds dead space above and below them. */
+		grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+		min-height: min(72vh, 44rem);
+	}
+
+	.tsc-about-hero__media {
+		height: auto;
+	}
+
+	.tsc-about-hero__copy {
+		/* Aligns with the 1440px measure the rest of the page is set to. */
+		/* Top padding also carries the fixed header, so it outweighs the
+		   bottom. */
+		padding: 8rem 5rem 5rem max(3rem, calc((100vw - 1440px) / 2 + 3rem));
+	}
+
+	.tsc-about-hero__caption {
+		left: 2.5rem;
+		right: 2.5rem;
+	}
+}
+
+/* --------------------------------------------------------------- about stats
+ * The three figures were stacked inside the five-column headline block, which
+ * left them at 30px in 158px lanes with every label broken over two lines,
+ * while the right-hand column ran out of copy well above them. They now take a
+ * row of their own across the full measure, divided by hairlines, at a size
+ * that carries the width.
+ */
+
+.tsc-about-stats {
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+	display: grid;
+	grid-column: 1 / -1;
+	grid-template-columns: minmax(0, 1fr);
+	margin-top: 1rem;
+	padding-top: 2rem;
+}
+
+/* Three tracking-heavy labels will not sit side by side on a phone. */
+.tsc-about-stats__item + .tsc-about-stats__item {
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+	margin-top: 1.75rem;
+	padding-top: 1.75rem;
+}
+
+.tsc-about-stats__num {
+	color: var(--foreground);
+	font-family: var(--font-serif);
+	font-size: clamp(2.2rem, 1.4rem + 1.7vw, 3.4rem);
+	font-weight: 300;
+	letter-spacing: -0.01em;
+	line-height: 1;
+}
+
+.tsc-about-stats__label {
+	color: var(--bronze);
+	font-size: 0.65rem;
+	letter-spacing: 0.28em;
+	line-height: 1.6;
+	margin-top: 1.1rem;
+	text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+	.tsc-about-stats {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		margin-top: 2rem;
+		padding-top: 3.5rem;
+	}
+
+	.tsc-about-stats__item + .tsc-about-stats__item {
+		border-left: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+		border-top: 0;
+		margin-top: 0;
+		padding-left: 3rem;
+		padding-top: 0;
+	}
+}
+
+/* --------------------------------------------------- enquiry confirmation
+ * The four contact channels sit two-up on phones and four across from md.
+ * The frozen Tailwind bundle carries no md:grid-cols-4.
+ */
+
+@media (min-width: 48rem) {
+	.md\:grid-cols-4 {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+/* Ken Burns runs on a fixed 28s/14s cycle, so two photographs side by side
+ * scale and drift in lockstep and the motion cancels out visually. A negative
+ * delay drops the second one into a different part of the same cycle. */
+.tsc-kenburns--offset {
+	animation-delay: -11s, -5s;
+}
+
+.tsc-kenburns--offset-late {
+	animation-delay: -19s, -9s;
+}
+
+/* ------------------------------------------------------- homepage preloader
+ * The reveal's centre block is absolutely positioned from the left edge, so
+ * the width available to it is only half the viewport. On phones that squeezed
+ * the logo below its intended size and, once Wimbledon joined the caption,
+ * wrapped the caption onto a second line against the rule.
+ */
+
+.tsc-pre__center {
+	width: max-content;
+	max-width: calc(100vw - 3rem);
+}
+
+.tsc-pre__cap {
+	white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- form consent
+ * The enquiry forms sit on the dark panel, where a native checkbox renders as
+ * a bright system control. The input stays in the page rather than being
+ * display:none, so it keeps its place in the tab order and its required
+ * validation, and the square beside it is what actually gets painted. Styling
+ * follows the multi-select's box: hairline border, champagne fill when set.
+ */
+
+.tsc-consent {
+	align-items: flex-start;
+	cursor: pointer;
+	display: flex;
+	gap: 0.75rem;
+}
+
+.tsc-consent__input {
+	height: 1px;
+	opacity: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.tsc-consent__box {
+	align-items: center;
+	border: 1px solid color-mix(in oklab, oklch(0.9 0.008 75) 40%, transparent);
+	color: transparent;
+	display: flex;
+	flex: none;
+	height: 0.95rem;
+	justify-content: center;
+	margin-top: 0.2rem;
+	transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+	width: 0.95rem;
+}
+
+.tsc-consent:hover .tsc-consent__box {
+	border-color: color-mix(in oklab, var(--champagne) 70%, transparent);
+}
+
+.tsc-consent__input:checked + .tsc-consent__box {
+	background: var(--champagne);
+	border-color: var(--champagne);
+	color: #1a1712;
+}
+
+.tsc-consent__input:focus-visible + .tsc-consent__box {
+	outline: 2px solid var(--champagne);
+	outline-offset: 2px;
+}
+
+.tsc-consent__box svg {
+	display: block;
+	width: 0.62rem;
+}
+
+.tsc-consent__text {
+	color: oklch(0.9 0.008 75 / 0.62);
+	font-size: 0.75rem;
+	line-height: 1.7;
+}
+
+.tsc-consent__text a {
+	color: oklch(0.9 0.045 78);
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+	transition: color 0.3s ease;
+}
+
+.tsc-consent__text a:hover {
+	color: oklch(0.97 0.008 80);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-consent__box,
+	.tsc-consent__text a {
+		transition-duration: 0.01ms;
+	}
+}
+
+/* ------------------------------------------------------------ enquiry panel
+ * The dark half of the Book page is a grid cell rather than a band of its
+ * own, so past 1440px it stopped where the container did and left a strip of
+ * page showing between it and the screen edge - a slab with a piece missing.
+ * It now runs to the edge, handing back as padding whatever width it gains
+ * so its content stays on the 1440px measure: the arrangement the contact
+ * band and the about hero already use. The few pixels 100vw counts for the
+ * scrollbar are clipped by the section's own overflow.
+ */
+@media (min-width: 48rem) {
+	.tsc-enquiry {
+		margin-right: calc(-1 * max(0px, (100vw - 1440px) / 2));
+		padding-right: max(3rem, calc((100vw - 1440px) / 2 + 3rem));
+	}
+}
+
+/* The bleed above needs the section to clip, but overflow:hidden would make it
+   a scroll container and the sticky rail below would stop holding. Clip does
+   the same job without that side effect. */
+.tsc-book {
+	overflow: clip;
+}
+
+/* LeadConnector wraps its frame in a rounded box, styled inline, and
+   everything else on the page is squared off. */
+.tsc-enquiry .ep-wrapper,
+.tsc-enquiry iframe,
+.tsc-enquiry-band__form .ep-wrapper,
+.tsc-enquiry-band__form iframe {
+	border-radius: 0 !important;
+}
+
+/* ------------------------------------------------------------ book: one door
+ * The free call leads; writing in and messaging sit beneath it as quiet lines.
+ */
+.tsc-book__door {
+	width: min(100%, 36rem);
+	margin-inline: auto;
+	padding: 9rem 1.5rem 5rem;
+	text-align: center;
+}
+
+@media (min-width: 48rem) {
+	.tsc-book__door {
+		padding: 11rem 3rem 6rem;
+	}
+}
+
+.tsc-book__title {
+	font-size: 2.25rem;
+	font-weight: 300;
+	line-height: 1.08;
+	letter-spacing: -0.02em;
+}
+
+/* On phones the italic half takes its own line, as in the design. */
+.tsc-book__title em {
+	display: block;
+}
+
+@media (min-width: 48rem) {
+	.tsc-book__title {
+		font-size: 3rem;
+	}
+
+	.tsc-book__title em {
+		display: inline;
+	}
+}
+
+.tsc-book__intro {
+	margin: 1.5rem auto 0;
+	max-width: 28rem;
+	font-size: 15px;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-book__card {
+	margin-top: 3rem;
+	padding: 2rem;
+	border: 1px solid var(--border);
+	background: color-mix(in oklab, var(--stone-warm) 40%, transparent);
+	text-align: left;
+}
+
+.tsc-book__eyebrow {
+	font-size: 0.62rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--bronze);
+}
+
+.tsc-book__card-title {
+	margin-top: 1rem;
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+.tsc-book__card-text {
+	margin-top: 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-book__cta {
+	margin-top: 1.75rem;
+	width: 100%;
+}
+
+@media (max-width: 47.999rem) {
+	.tsc-book__card {
+		padding: 1.75rem 1.25rem;
+	}
+
+	.tsc-book__cta {
+		padding-inline: 0.75rem;
+		letter-spacing: 0.18em;
+		white-space: nowrap;
+	}
+}
+
+.tsc-book__alts {
+	margin-top: 2.5rem;
+}
+
+.tsc-book__alt {
+	font-size: 0.875rem;
+	color: var(--foreground);
+}
+
+.tsc-book__alt-link {
+	text-decoration: underline;
+	text-decoration-color: var(--bronze);
+	text-underline-offset: 4px;
+	transition: color 0.4s ease;
+	cursor: pointer;
+}
+
+.tsc-book__alt-link:hover,
+.tsc-book__alt-link:focus-visible {
+	color: var(--bronze);
+}
+
+.tsc-book__reply {
+	margin-top: 0.6rem;
+	font-size: 0.75rem;
+	color: var(--muted-foreground);
+}
+
+.tsc-book__alt--message {
+	margin-top: 1.75rem;
+	padding-top: 1.75rem;
+	border-top: 1px solid var(--border);
+	font-size: 0.8rem;
+}
+
+.tsc-book__alt-value {
+	display: none;
+	color: var(--muted-foreground);
+}
+
+@media (min-width: 48rem) {
+	.tsc-book__alt-value {
+		display: inline;
+	}
+}
+
+/* Collapsed by height, not display:none, so the frame keeps its real width. */
+.tsc-book__write {
+	display: grid;
+	grid-template-rows: 0fr;
+	visibility: hidden;
+	transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.7s;
+}
+
+.tsc-book__write.is-open {
+	grid-template-rows: 1fr;
+	visibility: visible;
+	transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+}
+
+.tsc-book__write-inner {
+	min-height: 0;
+	overflow: hidden;
+}
+
+.tsc-book__form.tsc-enquiry {
+	position: relative;
+	width: min(100%, 48rem);
+	margin: 0 auto 6rem;
+	padding: 3rem 1.5rem;
+}
+
+.tsc-book__form h2 {
+	padding-right: 6rem;
+}
+
+.tsc-book__close {
+	position: absolute;
+	top: 1.25rem;
+	right: 1.25rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.6rem 0.75rem;
+	font-size: 0.62rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: oklch(0.94 0.008 75 / 0.75);
+	border: 1px solid oklch(0.94 0.008 75 / 0.25);
+	cursor: pointer;
+	transition: color 0.4s ease, border-color 0.4s ease;
+}
+
+.tsc-book__close:hover,
+.tsc-book__close:focus-visible {
+	color: var(--bronze);
+	border-color: var(--bronze);
+}
+
+@media (min-width: 48rem) {
+	.tsc-book__form.tsc-enquiry {
+		margin-right: auto;
+		padding: 3.5rem 3rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-book__write,
+	.tsc-book__write.is-open {
+		transition: none;
+	}
+}
+
+/* ----------------------------------------------------- patient calendars
+ * The editorial introduction and compact Semble hand-off share one considered
+ * composition: copy on the left, a dark booking card on the right.
+ */
+.tsc-calendar-booking__intro {
+	padding: clamp(9rem, 13vw, 12rem) 3rem clamp(5rem, 8vw, 7rem);
+	background: var(--background);
+}
+
+.tsc-calendar-booking__inner {
+	width: min(100%, 90rem);
+	margin-inline: auto;
+}
+
+.tsc-calendar-booking__layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1.12fr) minmax(22rem, 0.88fr);
+	gap: clamp(3rem, 6vw, 7rem);
+	align-items: start;
+}
+
+.tsc-calendar-booking__narrative h1 {
+	margin: 0;
+	max-width: 38rem;
+	font-size: clamp(2.75rem, 5vw, 5rem);
+	font-weight: 300;
+	line-height: 0.98;
+	letter-spacing: -0.025em;
+}
+
+.tsc-calendar-booking__narrative h1 em {
+	display: block;
+	margin-top: 0.15em;
+	color: color-mix(in oklab, var(--foreground) 72%, transparent);
+	font-weight: 300;
+}
+
+.tsc-calendar-booking__copy {
+	max-width: 43rem;
+	margin-top: clamp(2.5rem, 5vw, 4rem);
+	color: var(--muted-foreground);
+	font-size: 0.95rem;
+	line-height: 1.85;
+}
+
+.tsc-calendar-booking__copy p {
+	margin: 0;
+}
+
+.tsc-calendar-booking__copy p + p {
+	margin-top: 1.3rem;
+}
+
+.tsc-calendar-booking__copy p:first-child {
+	padding-bottom: 1.5rem;
+	border-bottom: 1px solid var(--border);
+	color: var(--foreground);
+	font-family: var(--font-serif);
+	font-size: clamp(1.35rem, 2vw, 1.8rem);
+	font-weight: 300;
+	line-height: 1.35;
+}
+
+.tsc-calendar-booking__contact {
+	display: grid;
+	grid-template-columns: minmax(10rem, 0.72fr) minmax(0, 1.55fr);
+	gap: clamp(4rem, 8vw, 9rem);
+	margin-top: clamp(4rem, 7vw, 7rem);
+	border-top: 1px solid var(--border);
+	padding-top: 2rem;
+}
+
+.tsc-calendar-booking__contact-label,
+.tsc-calendar-booking__eyebrow,
+.tsc-calendar-booking__channel-label {
+	color: var(--bronze);
+	font-size: 0.6rem;
+	font-weight: 500;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-calendar-booking__channels {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1.5rem 2rem;
+}
+
+.tsc-calendar-booking__channels > a {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	min-width: 0;
+}
+
+.tsc-calendar-booking__channel-mark {
+	display: flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 1px solid color-mix(in oklab, var(--bronze) 30%, transparent);
+	border-radius: 999px;
+	color: var(--bronze);
+}
+
+.tsc-calendar-booking__channel-label,
+.tsc-calendar-booking__channel-value,
+.tsc-calendar-booking__channel-note {
+	display: block;
+}
+
+.tsc-calendar-booking__channel-value {
+	margin-top: 0.25rem;
+	overflow-wrap: anywhere;
+	font-family: var(--font-serif);
+	font-size: 1rem;
+	transition: color 400ms ease;
+}
+
+.tsc-calendar-booking__channels > a:hover .tsc-calendar-booking__channel-value {
+	color: var(--bronze);
+}
+
+.tsc-calendar-booking__channel-note {
+	margin-top: 0.2rem;
+	color: var(--muted-foreground);
+	font-size: 0.7rem;
+}
+
+.tsc-calendar-booking__card {
+	position: sticky;
+	top: 7.5rem;
+	scroll-margin-top: 7rem;
+	padding: clamp(2.25rem, 4vw, 3.75rem);
+	background: #1a1712;
+	color: oklch(0.94 0.008 75);
+	box-shadow: 0 2rem 6rem oklch(0 0 0 / 0.12);
+}
+
+.tsc-calendar-booking__portal-heading {
+	display: block;
+}
+
+.tsc-calendar-booking__portal-heading h2 {
+	margin-top: 0;
+	font-size: clamp(2.15rem, 3.5vw, 3.5rem);
+	font-weight: 300;
+	line-height: 1.05;
+	letter-spacing: -0.02em;
+}
+
+.tsc-calendar-booking__portal-heading > p {
+	max-width: 28rem;
+	margin-top: 1.5rem;
+	color: oklch(0.9 0.008 75 / 0.7);
+	font-size: 0.9rem;
+	line-height: 1.8;
+}
+
+.tsc-calendar-booking__action {
+	margin-top: clamp(2rem, 4vw, 3rem);
+	border: 1px solid color-mix(in oklab, var(--bronze) 38%, transparent);
+	background: color-mix(in oklab, var(--background) 4%, transparent);
+}
+
+.tsc-calendar-booking__steps {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.tsc-calendar-booking__steps > div {
+	display: grid;
+	grid-template-columns: 2rem 1fr;
+	gap: 1rem;
+	align-items: center;
+	padding: 1.25rem 1.5rem;
+}
+
+.tsc-calendar-booking__steps > div + div {
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 26%, transparent);
+}
+
+.tsc-calendar-booking__steps span,
+.tsc-calendar-booking__steps strong {
+	display: block;
+}
+
+.tsc-calendar-booking__steps span {
+	color: var(--bronze);
+	font-size: 0.62rem;
+	letter-spacing: 0.2em;
+}
+
+.tsc-calendar-booking__steps strong {
+	margin-top: 0;
+	font-family: var(--font-serif);
+	font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+	font-weight: 300;
+	line-height: 1.3;
+}
+
+.tsc-calendar-booking__action-footer {
+	display: block;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 26%, transparent);
+	padding: 1.5rem;
+}
+
+.tsc-calendar-booking__action-footer p {
+	color: oklch(0.9 0.008 75 / 0.62);
+	font-size: 0.78rem;
+}
+
+.tsc-calendar-booking__action-footer .btn-ghost-luxe {
+	display: flex;
+	width: 100%;
+	margin-top: 1rem;
+}
+
+@media (max-width: 63.99rem) {
+	.tsc-calendar-booking__layout,
+	.tsc-calendar-booking__contact {
+		grid-template-columns: 1fr;
+		gap: 3rem;
+	}
+
+	.tsc-calendar-booking__narrative h1 {
+		max-width: 34rem;
+	}
+
+	.tsc-calendar-booking__card {
+		position: static;
+	}
+
+	.tsc-calendar-booking__contact {
+		gap: 1.5rem;
+	}
+}
+
+@media (max-width: 47.99rem) {
+	.tsc-calendar-booking__intro {
+		padding: 8rem 1.5rem 4.5rem;
+	}
+
+	.tsc-calendar-booking__channels {
+		grid-template-columns: 1fr;
+	}
+
+	.tsc-calendar-booking__card {
+		margin-inline: -0.5rem;
+		padding: 2rem 1.5rem;
+	}
+}
+
+/* ---------------------------------------------------------- a pair of items
+ * The imaging section carries two investigations where the cardiology section
+ * above it lists four, so it sets them abreast with one rule between them
+ * rather than repeating that ledger of rows. The columns are padded instead of
+ * gapped so the rule falls on the centre line; stacked, it lies down between
+ * them. Used on the diagnostics page.
+ */
+.tsc-pair__item + .tsc-pair__item {
+	margin-top: 3rem;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 22%, transparent);
+	padding-top: 3rem;
+}
+
+@media (min-width: 48rem) {
+	.tsc-pair {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.tsc-pair__item:first-child {
+		padding-right: clamp(2rem, 4vw, 3.5rem);
+	}
+
+	.tsc-pair__item + .tsc-pair__item {
+		margin-top: 0;
+		border-top: 0;
+		border-left: 1px solid color-mix(in oklab, var(--bronze) 22%, transparent);
+		padding-top: 0;
+		padding-left: clamp(2rem, 4vw, 3.5rem);
+	}
+}
+
+/* -------------------------------------------------- related service cards
+ * The two cards that close the service pages were inert. Their border and
+ * background were set inline, which no stylesheet rule can override, so the
+ * card itself could not answer the pointer however many hover utilities were
+ * hung on it — only the small "View the service" line responded. Moving those
+ * two properties into this class is what makes a hover state possible at all.
+ *
+ * The gesture is the approach slider's, so the two card types behave alike:
+ * a short lift, the border warming, and a bronze rule drawing itself along the
+ * top edge. No overflow clipping here, since that rule is deliberately drawn a
+ * pixel outside the box so it sits over the border rather than inside it.
+ */
+
+.tsc-related-card {
+	position: relative;
+	border: 1px solid color-mix(in oklab, var(--bronze) 20%, transparent);
+	background: var(--background);
+	transition: border-color 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		box-shadow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-related-card::after {
+	content: "";
+	position: absolute;
+	top: -1px;
+	left: -1px;
+	height: 1px;
+	width: 0;
+	background: var(--bronze);
+	transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-related-card:hover,
+.tsc-related-card:focus-visible {
+	transform: translateY(-6px);
+	border-color: color-mix(in oklab, var(--bronze) 42%, transparent);
+	box-shadow: 0 30px 70px color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+.tsc-related-card:hover::after,
+.tsc-related-card:focus-visible::after {
+	width: calc(100% + 2px);
+}
+
+/* The CTA warms to bronze with the card. This lived on the markup as a
+ * group-hover utility that was never compiled into the frozen Tailwind
+ * bundle, sitting behind an inline colour that would have outranked it
+ * anyway, so the line had never once changed on hover. */
+.tsc-related-card__cta {
+	color: var(--ink);
+	transition: color 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-related-card:hover .tsc-related-card__cta,
+.tsc-related-card:focus-visible .tsc-related-card__cta,
+.tsc-condition-card:hover .tsc-related-card__cta,
+.tsc-condition-card:focus-visible .tsc-related-card__cta {
+	color: var(--bronze);
+}
+
+/* The arrow steps forward with the lift. */
+.tsc-related-card__arrow {
+	display: inline-block;
+	transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-related-card:hover .tsc-related-card__arrow,
+.tsc-related-card:focus-visible .tsc-related-card__arrow,
+.tsc-condition-card:hover .tsc-related-card__arrow,
+.tsc-condition-card:focus-visible .tsc-related-card__arrow {
+	transform: translateX(0.35rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-related-card,
+	.tsc-related-card::after,
+	.tsc-related-card__arrow {
+		transition-duration: 0.01ms;
+	}
+
+	.tsc-related-card:hover,
+	.tsc-related-card:focus-visible {
+		transform: none;
+	}
+}
+
+/* ------------------------------------------------------ methodology pillars
+ * The four homepage pillars already drew a rule along their bottom edge on
+ * hover, so they were half way to the related-service gesture; they now lift
+ * and cast the same shadow with it. The rule is bronze rather than champagne
+ * so both sections read alike — champagne is a pale gold that all but
+ * disappeared against the near-white card.
+ *
+ * The lift lives here rather than in a utility class because each card carried
+ * an inline transform from the original export — part of a reveal animation no
+ * script ever drove — and an inline style outranks any stylesheet rule. That
+ * dead transform is stripped from the markup.
+ *
+ * These cards are not links, so there is no focus state to mirror.
+ */
+
+.tsc-pillar {
+	transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+		box-shadow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-pillar:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 30px 70px color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tsc-pillar {
+		transition-duration: 0.01ms;
+	}
+
+	.tsc-pillar:hover {
+		transform: none;
+	}
+}
+
+/* ------------------------------------------------------- service page hero
+ * The hero anchors its content to the bottom of a tall frame, which relied on
+ * the inner column taking the section's full height via `h-full`. That never
+ * resolved: the column sized itself to its own content, sat at the TOP of the
+ * frame instead of the bottom, and on narrow screens — where the heading wraps
+ * onto four lines — ran up under the fixed header, burying the breadcrumb and
+ * the first line of the heading behind it.
+ *
+ * Stretching the column as a flex item gives it the section's height without
+ * depending on a percentage. Using min-height rather than a fixed height lets
+ * the hero grow when the content is taller than the frame, instead of the
+ * overflow being clipped, and the top padding keeps the content clear of the
+ * header once it has grown.
+ */
+
+.tsc-service-hero {
+	display: flex;
+	min-height: max(620px, 86vh);
+}
+
+.tsc-service-hero__inner {
+	flex: 1 1 auto;
+	padding-top: 8.5rem;
+}
+
+/* ------------------------------------------------------- methodology pillars
+ * Each card was pinned to 24rem with its contents pushed to the far edges, so a
+ * card whose title fitted on one line carried the leftover as a void through
+ * its middle. And because the shortest of the four titles fitted on one line
+ * where the others wrapped, no two paragraphs began at the same height.
+ *
+ * The cards now take their height from the grid row, which holds the four level
+ * without inventing space. Where the wrapping happens — four across — the title
+ * reserves the two lines it needs, so every paragraph starts level; at one and
+ * two across every title fits on a single line and nothing is reserved.
+ *
+ * A hairline now carries the eye from the title to the description, in place of
+ * the 2.5rem of nothing that used to separate them.
+ */
+
+.tsc-pillar__title {
+	margin-top: 1.75rem;
+}
+
+.tsc-pillar__body {
+	margin-top: 1.6rem;
+	padding-top: 1.6rem;
+	border-top: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+@media (min-width: 64rem) {
+	.tsc-pillar__title {
+		/* Two lines of its own leading, so a title that fits on one holds the
+		   same block as a title that wraps. */
+		min-height: 2.3em;
+	}
+}
+
+/* ------------------------------------------------------------ CookieYes
+ * CookieYes provides the consent state, preference centre and audit trail.
+ * These restrained overrides bring its UI into the clinic's visual system.
+ */
+
+.cky-consent-container {
+	right: 1rem !important;
+	bottom: 1rem !important;
+	left: 1rem !important;
+	width: auto !important;
+	max-width: none !important;
+}
+
+.cky-consent-bar {
+	border: 1px solid color-mix(in oklab, var(--bronze) 35%, transparent) !important;
+	border-radius: 0 !important;
+	box-shadow: 0 1.25rem 4rem color-mix(in oklab, var(--foreground) 12%, transparent) !important;
+	padding: 1.25rem 1.5rem !important;
+}
+
+.cky-notice {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	max-width: 90rem;
+	margin: 0 auto;
+}
+
+.cky-title,
+.cky-preference-title {
+	font-family: var(--font-serif) !important;
+	font-size: 1.25rem !important;
+	font-weight: 300 !important;
+}
+
+.cky-notice-group {
+	display: flex !important;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	flex: 1 1 auto;
+}
+
+.cky-notice-des {
+	max-width: 45rem;
+	font-size: 0.78rem !important;
+	line-height: 1.65 !important;
+}
+
+.cky-notice-des a,
+.cky-notice-des a:visited,
+.cky-notice-des a:hover,
+.cky-notice-des a:focus-visible {
+	color: var(--bronze) !important;
+	text-decoration: underline;
+	text-decoration-color: var(--bronze) !important;
+	text-underline-offset: 0.2em;
+}
+
+.cky-notice-btn-wrapper {
+	display: flex !important;
+	flex: 0 0 auto;
+	gap: 0.7rem;
+	margin: 0 !important;
+}
+
+.cky-btn {
+	min-height: 2.75rem;
+	border-radius: 0 !important;
+	padding: 0.7rem 1.05rem !important;
+	font-size: 0.6rem !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+.cky-btn:hover,
+.cky-btn:focus-visible {
+	border-color: var(--foreground) !important;
+	background: var(--foreground) !important;
+	color: var(--background) !important;
+}
+
+.cky-preference-center {
+	border-radius: 0 !important;
+}
+
+.cky-btn-revisit-wrapper {
+	width: auto !important;
+	height: auto !important;
+	border: 1px solid var(--border);
+	border-radius: 0 !important;
+	padding: 0.55rem !important;
+}
+
+.cky-btn-revisit img {
+	width: 1.15rem !important;
+	height: 1.15rem !important;
+}
+
+@media (max-width: 63.99rem) {
+	.cky-notice,
+	.cky-notice-group {
+		display: block !important;
+	}
+
+	.cky-notice-des {
+		margin-top: 0.45rem;
+	}
+
+	.cky-notice-btn-wrapper {
+		margin-top: 1rem !important;
+	}
+}
+
+@media (max-width: 47.99rem) {
+	.cky-consent-container {
+		right: 0.75rem !important;
+		bottom: 0.75rem !important;
+		left: 0.75rem !important;
+	}
+
+	.cky-consent-bar {
+		max-height: calc(100dvh - 1.5rem);
+		overflow-y: auto;
+		padding: 1.15rem !important;
+	}
+
+	.cky-notice-btn-wrapper {
+		display: grid !important;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.6rem;
+	}
+
+	.cky-notice-btn-wrapper .cky-btn {
+		width: 100% !important;
+		margin: 0 !important;
+		white-space: nowrap;
+	}
+}
+
+/* Conditions we treat — local page prototype. */
+.tsc-conditions-hero {
+	min-height: 42rem;
+	height: min(86svh, 58rem);
+}
+
+.tsc-conditions-hero__veil {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(90deg, color-mix(in oklab, var(--ink) 82%, transparent) 0%, color-mix(in oklab, var(--ink) 56%, transparent) 44%, transparent 82%),
+		color-mix(in oklab, var(--ink) 16%, transparent);
+}
+
+.tsc-conditions-hero__fade {
+	position: absolute;
+	inset: auto 0 0;
+	height: 4.5rem;
+	background: linear-gradient(
+		180deg,
+		color-mix(in oklab, var(--background) 0%, transparent) 0%,
+		color-mix(in oklab, var(--background) 2%, transparent) 24%,
+		color-mix(in oklab, var(--background) 7%, transparent) 40%,
+		color-mix(in oklab, var(--background) 15%, transparent) 53%,
+		color-mix(in oklab, var(--background) 28%, transparent) 64%,
+		color-mix(in oklab, var(--background) 47%, transparent) 75%,
+		color-mix(in oklab, var(--background) 69%, transparent) 85%,
+		color-mix(in oklab, var(--background) 88%, transparent) 93%,
+		var(--background) 100%
+	);
+	pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+	.tsc-conditions-hero__fade {
+		height: 6rem;
+	}
+}
+
+.tsc-conditions-hero__inner {
+	height: 100%;
+	justify-content: center;
+	padding-top: 8rem;
+	padding-bottom: 4rem;
+}
+
+.tsc-conditions-primary {
+	padding: 6rem 0 7rem;
+	overflow: hidden;
+}
+
+.tsc-conditions-primary__heading {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 3rem;
+}
+
+.tsc-conditions-primary__heading h2 {
+	font-size: 3.1rem;
+}
+
+/* Layout only: the buttons themselves carry .tsc-slider__btn, so the arrows on
+   the conditions shelf behave exactly as the sliders on the homepage do. */
+.tsc-conditions-primary__controls {
+	flex-shrink: 0;
+}
+
+.tsc-conditions-carousel {
+	position: relative;
+	margin-top: 4rem;
+}
+
+.tsc-conditions-carousel::before {
+	content: none;
+}
+
+.tsc-conditions-track {
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+	scroll-behavior: smooth;
+	scroll-padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+	scroll-snap-type: x mandatory;
+	overscroll-behavior-x: contain;
+	scrollbar-width: none;
+}
+
+.tsc-conditions-track::-webkit-scrollbar {
+	display: none;
+}
+
+.tsc-condition-card {
+	display: flex;
+	flex: 0 0 26.25rem;
+	min-height: 17rem;
+	flex-direction: column;
+	justify-content: space-between;
+	border-top: 1px solid var(--border);
+	border-right: 1px solid var(--border);
+	border-bottom: 1px solid var(--border);
+	padding: 3rem 2.5rem;
+	scroll-snap-align: start;
+	transition: background-color 500ms ease;
+}
+
+.tsc-condition-card:first-child {
+	border-left: 1px solid var(--border);
+}
+
+.tsc-condition-card:hover {
+	background: color-mix(in oklab, var(--stone-warm) 24%, transparent);
+}
+
+.tsc-condition-card h3 {
+	max-width: 13ch;
+	color: var(--ink);
+	font-family: var(--font-serif);
+	font-size: 2rem;
+	font-weight: 300;
+	line-height: 1.05;
+	transition: color 500ms ease;
+}
+
+.tsc-condition-card:hover h3 {
+	color: var(--bronze);
+}
+
+.tsc-condition-card p {
+	max-width: 27ch;
+	margin-top: 1.25rem;
+	color: var(--muted-foreground);
+	font-size: 0.9rem;
+	line-height: 1.9;
+}
+
+.tsc-condition-card__cta {
+	padding-top: 2rem;
+	font-size: 0.66rem;
+	text-transform: uppercase;
+	letter-spacing: 0.28em;
+}
+
+.tsc-conditions-track__end {
+	flex: 0 0 max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+}
+
+.tsc-conditions-related {
+	padding: 6rem 0 7rem;
+	background: var(--charcoal);
+}
+
+.tsc-conditions-related__heading {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 3rem;
+}
+
+.tsc-conditions-related__heading > p {
+	max-width: 24rem;
+	color: color-mix(in oklab, var(--background) 62%, transparent);
+	font-size: 0.875rem;
+	line-height: 1.95;
+}
+
+.tsc-conditions-related__heading h2 {
+	font-size: 3rem;
+}
+
+.tsc-conditions-related__grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 1px;
+	margin-top: 4rem;
+	background: color-mix(in oklab, var(--champagne) 22%, transparent);
+}
+
+.tsc-conditions-related__link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+
+.tsc-conditions-related__grid article {
+	height: 100%;
+	min-height: 18rem;
+	padding: 2.5rem;
+	background: var(--charcoal);
+	transition: background-color 450ms ease;
+}
+
+.tsc-conditions-related__grid h3 {
+	margin-top: 0;
+	color: var(--background);
+	font-family: var(--font-serif);
+	font-size: 1.45rem;
+	font-weight: 300;
+	line-height: 1.15;
+	transition: color 450ms ease;
+}
+
+.tsc-conditions-related__grid p {
+	margin-top: 1rem;
+	color: color-mix(in oklab, var(--background) 58%, transparent);
+	font-size: 0.83rem;
+	line-height: 1.9;
+}
+
+.tsc-conditions-related__link:hover article,
+.tsc-conditions-related__link:focus-visible article {
+	background: color-mix(in oklab, var(--charcoal) 92%, var(--bronze));
+}
+
+.tsc-conditions-related__link:hover h3,
+.tsc-conditions-related__link:focus-visible h3 {
+	color: var(--champagne);
+}
+
+.tsc-conditions-related__link:focus-visible {
+	outline: 1px solid var(--champagne);
+	outline-offset: 3px;
+}
+
+/* The hub closer is the same dark band as Get Started / the condition page
+ * closer. The older centred pale treatment is gone. */
+.tsc-conditions-cta h2 {
+	font-weight: 300;
+}
+
+.tsc-conditions-cta a[href^="mailto:"] {
+	color: inherit;
+	text-decoration: none;
+	transition: color 300ms ease;
+}
+
+.tsc-conditions-cta a[href^="mailto:"]:hover {
+	color: var(--champagne);
+}
+
+@media (max-width: 63.99rem) {
+	.tsc-conditions-related__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 47.99rem) {
+	.tsc-conditions-hero {
+		min-height: 44rem;
+		height: 92svh;
+	}
+
+	.tsc-conditions-hero__veil {
+		background:
+			linear-gradient(90deg, color-mix(in oklab, var(--ink) 84%, transparent), color-mix(in oklab, var(--ink) 48%, transparent)),
+			color-mix(in oklab, var(--ink) 18%, transparent);
+	}
+
+	.tsc-conditions-hero__inner {
+		padding-top: 6rem;
+		padding-bottom: 3rem;
+	}
+
+	.tsc-conditions-primary,
+	.tsc-conditions-related {
+		padding: 5rem 0;
+	}
+
+	.tsc-conditions-primary__heading,
+	.tsc-conditions-related__heading {
+		display: block;
+	}
+
+	.tsc-conditions-primary__heading h2 {
+		font-size: 2.3rem;
+	}
+
+	.tsc-conditions-related__heading h2 {
+		font-size: 2.2rem;
+	}
+
+	.tsc-conditions-primary__controls {
+		display: none;
+	}
+
+	.tsc-conditions-related__heading > p {
+		margin-top: 2rem;
+	}
+
+	.tsc-conditions-carousel {
+		margin-top: 3rem;
+	}
+
+	.tsc-condition-card {
+		flex-basis: 82vw;
+		min-height: 15rem;
+		padding: 2.5rem 2rem;
+	}
+
+	.tsc-condition-card h3 {
+		font-size: 1.75rem;
+	}
+
+	.tsc-conditions-related__grid {
+		grid-template-columns: minmax(0, 1fr);
+		margin-top: 3rem;
+	}
+
+	.tsc-conditions-related__grid article {
+		min-height: auto;
+		padding: 2.25rem;
+	}
+
+	.tsc-conditions-cta {
+		padding: 0;
+	}
+}
+
+a.tsc-condition-card {
+	text-decoration: none;
+	color: inherit;
+}
+
+a.tsc-condition-card h3 {
+	text-decoration: none;
+}
+
+/* ------------------------------------------------------------- condition page
+ * An individual condition is long-form copy, so the page is set as bands
+ * rather than one column: an overview split, symptoms as cards, treatment as
+ * numbered steps, and a closing band of clinic details. The frozen Tailwind
+ * bundle carries none of the grid, sticky or counter utilities this needs.
+ */
+
+.tsc-cond-eyebrow {
+	font-size: 0.62rem;
+	font-weight: 500;
+	letter-spacing: 0.34em;
+	text-transform: uppercase;
+	color: var(--bronze);
+}
+
+/* --------------------------------------------------------------- hero
+ * A hub page opens on a photograph because it is a destination. A single
+ * condition opens on the page's own paper, centred: the reader came for an
+ * answer, and a full-height image is a screen of scrolling between them and
+ * the first line of it.
+ */
+
+.tsc-cond-hero {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	border-bottom: 1px solid color-mix(in oklab, var(--bronze) 16%, transparent);
+}
+
+.tsc-cond-hero__glow {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(58% 70% at 50% 0%, color-mix(in oklab, var(--champagne) 42%, transparent) 0%, transparent 68%),
+		radial-gradient(40% 55% at 88% 12%, color-mix(in oklab, var(--champagne) 22%, transparent) 0%, transparent 70%);
+}
+
+.tsc-cond-hero__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 9.5rem 0 4rem;
+}
+
+.tsc-cond-hero__crumb {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 0.75rem;
+	font-size: 0.62rem;
+	text-transform: uppercase;
+	letter-spacing: 0.32em;
+	color: var(--bronze);
+}
+
+.tsc-cond-hero__crumb a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.tsc-cond-hero__title {
+	margin: 2.25rem 0 0;
+	max-width: 24ch;
+	font-family: var(--font-serif);
+	font-size: clamp(2.5rem, 1.4rem + 3.6vw, 4.5rem);
+	font-weight: 300;
+	line-height: 1.02;
+	letter-spacing: -0.02em;
+	color: var(--ink);
+	text-wrap: balance;
+}
+
+.tsc-cond-hero__title em {
+	font-style: italic;
+	color: color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+.tsc-cond-hero__standfirst {
+	margin: 1.75rem auto 0;
+	max-width: 44rem;
+	font-size: 1.04rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-cond-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+	margin-top: 2.5rem;
+}
+
+.tsc-cond-hero__secondary {
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	letter-spacing: 0.3em;
+	color: var(--ink);
+	text-decoration: none;
+	transition: color 400ms ease;
+}
+
+.tsc-cond-hero__secondary:hover {
+	color: var(--bronze);
+}
+
+/* Who wrote the clinical copy, said at the top rather than only in the small
+   print at the foot of the page. */
+/* The credit reads as one line at every width, so the type and its tracking
+   shrink with the viewport rather than the line breaking into a stack. */
+.tsc-cond-hero__meta {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: clamp(0.2rem, 0.7vw, 0.9rem);
+	margin-top: 3rem;
+	padding-top: 2rem;
+	width: max-content;
+	max-width: 100%;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 20%, transparent);
+	/* The tracking is what costs the width: it goes first, then the type. */
+	font-size: min(0.66rem, 1.95vw);
+	text-transform: uppercase;
+	letter-spacing: clamp(0px, 0.35vw - 0.09rem, 0.145rem);
+	white-space: nowrap;
+	color: var(--muted-foreground);
+}
+
+/* A longer reviewer name or a review date no longer fits on one line, so on
+   narrower screens the reviewer takes a line of its own above the rest. */
+@media (max-width: 63.99rem) {
+	.tsc-cond-hero__meta--stacked {
+		flex-wrap: wrap;
+		row-gap: 0.9rem;
+		width: auto;
+	}
+
+	.tsc-cond-hero__meta--stacked .tsc-cond-hero__review {
+		flex-basis: 100%;
+		text-align: center;
+	}
+
+	.tsc-cond-hero__meta--stacked .tsc-cond-hero__review-dot {
+		display: none;
+	}
+}
+
+.tsc-cond-hero__meta a {
+	color: var(--ink);
+	text-decoration: none;
+	border-bottom: 1px solid color-mix(in oklab, var(--bronze) 45%, transparent);
+	padding-bottom: 0.1rem;
+	transition: color 400ms ease, border-color 400ms ease;
+}
+
+.tsc-cond-hero__meta a:hover {
+	color: var(--bronze);
+	border-color: var(--bronze);
+}
+
+@media (min-width: 48rem) {
+	.tsc-cond-hero__inner {
+		padding: 12rem 0 5.5rem;
+	}
+}
+
+/* The chapter bar pins under the header, so a heading arriving from an anchor
+   has to clear both, and the sticky headings inside the bands have to sit
+   below the bar rather than under it. */
+.tsc-cond-chapters {
+	top: 6rem;
+}
+
+.tsc-cond-band,
+.tsc-cond-close {
+	scroll-margin-top: 9.5rem;
+}
+
+.tsc-cond .tsc-faq__sticky,
+.tsc-cond .tsc-cond-split__aside {
+	top: 11rem;
+}
+
+.tsc-cond-band {
+	padding: 4.5rem 0;
+	border-bottom: 1px solid color-mix(in oklab, var(--bronze) 14%, transparent);
+}
+
+.tsc-cond-band--stone {
+	background: var(--stone-warm);
+}
+
+/* A still between two bands: full measure, cropped as a window rather than
+ * a card, so it reads as a room the page has opened onto. */
+.tsc-cond-break {
+	position: relative;
+	height: clamp(18rem, 48vw, 32rem);
+	margin: 0;
+	overflow: hidden;
+	background: var(--ink);
+}
+
+.tsc-cond-break img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 62%;
+}
+
+.tsc-cond h2 {
+	margin: 1.25rem 0 0;
+	font-family: var(--font-serif);
+	font-size: clamp(1.9rem, 1.2rem + 1.8vw, 2.7rem);
+	font-weight: 300;
+	line-height: 1.1;
+	letter-spacing: -0.01em;
+	color: var(--ink);
+}
+
+.tsc-cond-split {
+	display: grid;
+	gap: 2.5rem;
+}
+
+.tsc-cond-split__prose p {
+	margin: 0 0 1.15rem;
+	max-width: 44rem;
+	font-size: 1.02rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-cond-split__prose p:last-child {
+	margin-bottom: 0;
+}
+
+.tsc-cond-lead {
+	font-family: var(--font-serif);
+	font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem) !important;
+	line-height: 1.55 !important;
+	color: var(--ink) !important;
+}
+
+/* --------------------------------------------------------------------- cards */
+
+.tsc-cond-head h2 {
+	max-width: 22ch;
+}
+
+.tsc-cond-head__intro {
+	margin: 1.5rem 0 0;
+	max-width: 44rem;
+	font-size: 1.02rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.page-brain-health-longevity #diagnosis .tsc-cond-head__intro,
+.page-brain-health-longevity #treatment .tsc-cond-head__intro {
+	max-width: none;
+}
+
+/* The symptoms shelf: the same scroll-snap track as the conditions carousel on
+ * the hub pages, so the two read as one gesture. The track is deliberately
+ * outside the page's max width — it runs to the right edge of the window so
+ * the row is visibly unfinished and asks to be pushed. */
+
+.tsc-cond-band--carousel {
+	overflow: hidden;
+}
+
+/* The still sits inside the symptoms band and covers the right half,
+ * dissolving into the dark brown used on Get Started / Book so the heading
+ * and cards keep the left. */
+.tsc-cond-band--photo,
+.tsc-cond-band--photo.tsc-cond-band--stone {
+	position: relative;
+	background: #1a1712;
+	border-bottom-color: color-mix(in oklab, var(--champagne) 18%, transparent);
+}
+
+.tsc-cond-band--photo > *:not(.tsc-cond-band__photo) {
+	position: relative;
+	z-index: 1;
+}
+
+.tsc-cond-band__photo {
+	position: absolute;
+	inset: 0 0 0 50%;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.tsc-cond-band__photo img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 58% 48%;
+}
+
+.tsc-cond-band__photo::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		90deg,
+		#1a1712 0%,
+		color-mix(in oklab, #1a1712 78%, transparent) 22%,
+		transparent 48%
+	);
+}
+
+.tsc-cond-band--photo .tsc-cond-head--carousel {
+	max-width: 36rem;
+}
+
+.tsc-cond-band--photo .tsc-cond-head--carousel h2,
+.tsc-cond-band--photo h2 {
+	color: oklch(0.94 0.008 75);
+}
+
+.tsc-cond-band--photo .tsc-cond-split__prose p,
+.tsc-cond-band--photo .tsc-cond-head__intro {
+	color: oklch(0.9 0.008 75 / 0.72);
+}
+
+.tsc-cond-band--photo .tsc-cond-lead {
+	color: oklch(0.94 0.008 75) !important;
+}
+
+/* Pages without a symptoms shelf put the still behind the heading column. */
+.tsc-cond-band--photo-start .tsc-cond-band__photo {
+	inset: 0 50% 0 0;
+}
+
+.tsc-cond-band--photo-start .tsc-cond-band__photo::after {
+	background: linear-gradient(
+		270deg,
+		#1a1712 0%,
+		color-mix(in oklab, #1a1712 78%, transparent) 22%,
+		transparent 48%
+	);
+}
+
+.tsc-cond-band--photo-start .tsc-cond-split__prose {
+	position: relative;
+	z-index: 1;
+}
+
+.tsc-cond-band--photo .tsc-slider__btn {
+	color: oklch(0.94 0.008 75);
+	border-color: oklch(0.94 0.008 75 / 0.35);
+}
+
+.tsc-cond-band--photo .tsc-slider__btn::before {
+	background: oklch(0.94 0.008 75);
+}
+
+.tsc-cond-band--photo .tsc-slider__btn:hover:not(:disabled) {
+	color: #1a1712;
+	border-color: oklch(0.94 0.008 75);
+}
+
+.tsc-cond-band--photo .tsc-slider__rail {
+	background: oklch(0.94 0.008 75 / 0.22);
+}
+
+@media (max-width: 47.99rem) {
+	/* Stay a background — the phone treatment used to pull the still out of
+	 * the band and stack it as a strip above the heading, which cropped
+	 * badly and no longer read as the same section. */
+	.tsc-cond-band__photo,
+	.tsc-cond-band--photo-start .tsc-cond-band__photo {
+		position: absolute;
+		inset: 0;
+		width: auto;
+		height: auto;
+	}
+
+	.tsc-cond-band__photo img {
+		object-position: 68% 32%;
+	}
+
+	.tsc-cond-band__photo::after,
+	.tsc-cond-band--photo-start .tsc-cond-band__photo::after {
+		background: linear-gradient(
+			180deg,
+			color-mix(in oklab, #1a1712 30%, transparent) 0%,
+			color-mix(in oklab, #1a1712 68%, transparent) 42%,
+			#1a1712 74%
+		);
+	}
+
+	.tsc-cond-band--photo .tsc-cond-head--carousel {
+		max-width: none;
+	}
+}
+
+.tsc-cond-head--carousel {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2rem;
+}
+
+/* Layout only, as above: .tsc-slider__nav and .tsc-slider__btn do the work. */
+.tsc-cond-controls {
+	flex-shrink: 0;
+}
+
+.tsc-cond-carousel {
+	position: relative;
+	margin-top: 3.5rem;
+}
+
+.tsc-cond-carousel__track {
+	display: flex;
+	align-items: stretch;
+	gap: 1.25rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+	scroll-behavior: smooth;
+	scroll-padding-left: max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+	scroll-snap-type: x mandatory;
+	overscroll-behavior-x: contain;
+	scrollbar-width: none;
+}
+
+.tsc-cond-carousel__track::-webkit-scrollbar {
+	display: none;
+}
+
+.tsc-cond-carousel__end {
+	flex: 0 0 max(1.5rem, calc((100vw - 1440px) / 2 + 3rem));
+}
+
+/* Each symptom is its own card — filled, bordered and shadowed — rather than a
+ * cell divided from its neighbour by a single hairline. Shared edges work for
+ * the hub carousel, where a large serif title anchors each cell; a paragraph of
+ * body copy needs the card drawn around it to be read as one. */
+.tsc-cond-slide {
+	display: flex;
+	flex: 0 0 21rem;
+	flex-direction: column;
+	padding: 2.5rem 2.25rem;
+	border: 1px solid color-mix(in oklab, var(--bronze) 22%, transparent);
+	background: var(--background);
+	scroll-snap-align: start;
+	transition: border-color 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.tsc-cond-slide:hover {
+	border-color: color-mix(in oklab, var(--bronze) 45%, transparent);
+}
+
+/* The numeral sits above its own rule, which is what gives the card a head. */
+.tsc-cond-slide span {
+	display: block;
+	margin-bottom: 1.5rem;
+	padding-bottom: 1.1rem;
+	border-bottom: 1px solid color-mix(in oklab, var(--bronze) 22%, transparent);
+	font-family: var(--font-serif);
+	font-size: 1.5rem;
+	line-height: 1;
+	letter-spacing: 0.04em;
+	color: var(--bronze);
+}
+
+.tsc-cond-slide p {
+	margin: 0;
+	font-size: 0.95rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-cond-cards {
+	display: grid;
+	gap: 1px;
+	margin-top: 3rem;
+	background: color-mix(in oklab, var(--bronze) 18%, transparent);
+	border: 1px solid color-mix(in oklab, var(--bronze) 18%, transparent);
+}
+
+.tsc-cond-cards article {
+	padding: 2.25rem 2rem;
+	background: var(--background);
+	transition: background-color 500ms ease;
+}
+
+.tsc-cond-band--stone .tsc-cond-cards article {
+	background: var(--stone-warm);
+}
+
+.tsc-cond-cards article:hover {
+	background: color-mix(in oklab, var(--champagne) 45%, var(--background));
+}
+
+.tsc-cond-cards span {
+	display: block;
+	margin-bottom: 1.1rem;
+	font-family: var(--font-serif);
+	font-size: 0.95rem;
+	letter-spacing: 0.1em;
+	color: var(--bronze);
+}
+
+.tsc-cond-cards p {
+	margin: 0;
+	font-size: 0.97rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+/* --------------------------------------------------------------------- steps */
+
+.tsc-cond-steps {
+	display: grid;
+	gap: 2.5rem;
+	margin: 3rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.tsc-cond-steps li {
+	padding-top: 1.75rem;
+	border-top: 1px solid color-mix(in oklab, var(--bronze) 28%, transparent);
+}
+
+.tsc-cond-steps__number {
+	display: block;
+	font-family: var(--font-serif);
+	font-size: 0.95rem;
+	letter-spacing: 0.1em;
+	color: var(--bronze);
+}
+
+.tsc-cond-steps h3 {
+	margin: 0.9rem 0 1rem;
+	font-family: var(--font-serif);
+	font-size: 1.4rem;
+	font-weight: 400;
+	line-height: 1.25;
+	color: var(--ink);
+}
+
+.tsc-cond-steps p {
+	margin: 0 0 0.9rem;
+	font-size: 0.97rem;
+	line-height: 1.85;
+	color: var(--muted-foreground);
+}
+
+.tsc-cond-steps p:last-child {
+	margin-bottom: 0;
+}
+
+/* ------------------------------------------------------------------- onward */
+
+/* The onward links carry the same card as related services elsewhere on the
+ * site, only shorter: these rows are a title and nothing else, so the card is
+ * sized to the title rather than padded out to hold a paragraph that the
+ * source document never wrote. */
+
+.tsc-cond-onward {
+	border-bottom: 0;
+}
+
+.tsc-cond-onward__head h2 {
+	margin: 1.1rem 0 0;
+	max-width: 20ch;
+	font-family: var(--font-serif);
+	font-size: clamp(1.9rem, 1.2rem + 1.8vw, 2.7rem);
+	font-weight: 300;
+	line-height: 1.08;
+	color: var(--ink);
+}
+
+.tsc-cond-onward__head h2 span {
+	font-style: italic;
+	color: color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+.tsc-cond-onward__group {
+	margin-top: 3.5rem;
+}
+
+.tsc-cond-onward__label {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+	margin-bottom: 1.75rem;
+}
+
+.tsc-cond-onward__label span {
+	font-size: 0.62rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.34em;
+	color: var(--bronze);
+	white-space: nowrap;
+}
+
+.tsc-cond-onward__label::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: color-mix(in oklab, var(--bronze) 22%, transparent);
+}
+
+/* The rule is generated content and so comes last in the box tree; the arrows
+   are ordered past it to sit at the far end of the row rather than beside the
+   label. */
+.tsc-cond-onward__label .tsc-cond-controls {
+	order: 1;
+}
+
+/* A short set fills the measure: three cards across the page rather than three
+   cards and an empty third of the window. */
+.tsc-cond-onward__grid {
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+/* The shelf carries its own borders, so the cards need a gap between them
+   where the symptoms slides share an edge. The vertical padding is room for
+   the card to lift on hover without the track clipping it. */
+.tsc-cond-onward__carousel {
+	margin-top: 0;
+}
+
+.tsc-cond-onward__track .tsc-cond-tile {
+	flex: 0 0 17.5rem;
+	height: auto;
+	scroll-snap-align: start;
+}
+
+.tsc-cond-tile {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 2.25rem 2.25rem 2rem;
+	text-decoration: none;
+}
+
+/* No cast shadow on these, as on the symptom cards: the border warming to
+   bronze and the arrow stepping forward carry the hover on their own, and a
+   shadow inside a scrolling shelf is clipped by the track anyway. */
+.tsc-cond-tile.tsc-related-card:hover,
+.tsc-cond-tile.tsc-related-card:focus-visible {
+	transform: none;
+	box-shadow: none;
+}
+
+.tsc-cond-tile--plain {
+	border: 1px solid color-mix(in oklab, var(--bronze) 14%, transparent);
+	background: color-mix(in oklab, var(--background) 60%, transparent);
+}
+
+.tsc-cond-tile__kicker {
+	font-size: 0.6rem;
+	text-transform: uppercase;
+	letter-spacing: 0.32em;
+	color: var(--bronze);
+}
+
+.tsc-cond-tile h3 {
+	margin: 1.15rem 0 0;
+	font-family: var(--font-serif);
+	font-size: 1.32rem;
+	font-weight: 300;
+	line-height: 1.28;
+	color: var(--ink);
+}
+
+.tsc-cond-tile__cta {
+	margin-top: auto;
+	padding-top: 2rem;
+	font-size: 0.66rem;
+	text-transform: uppercase;
+	letter-spacing: 0.28em;
+}
+
+/* ------------------------------------------------------------------ closing */
+
+/* The same dark closing band as Get Started on the About page. */
+
+.tsc-cond-close h2 {
+	font-weight: 300;
+	color: oklch(0.94 0.008 75);
+}
+
+.tsc-cond-close a[href^="mailto:"] {
+	color: inherit;
+	text-decoration: none;
+	transition: color 300ms ease;
+}
+
+.tsc-cond-close a[href^="mailto:"]:hover,
+.tsc-cond-close a[href^="tel:"]:hover {
+	color: var(--champagne);
+}
+
+.tsc-cond-close__note {
+	margin: 1rem 0 0;
+	padding-top: 2.25rem;
+	width: 100%;
+	max-width: none;
+	border-top: 1px solid oklch(0.94 0.008 75 / 0.16);
+	font-size: 0.78rem;
+	line-height: 1.9;
+	color: oklch(0.9 0.008 75 / 0.5);
+}
+
+@media (min-width: 48rem) {
+	.tsc-cond-band {
+		padding: 6rem 0;
+	}
+
+	.tsc-cond-cards {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.tsc-cond-head--carousel {
+		flex-direction: row;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 3rem;
+	}
+
+	.tsc-cond-slide {
+		flex: 0 0 24rem;
+		padding: 2.75rem 2.5rem;
+	}
+
+	.tsc-cond-steps {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 3rem 3.5rem;
+	}
+
+	.tsc-cond-onward__track .tsc-cond-tile {
+		flex-basis: 21rem;
+	}
+
+	.tsc-cond-onward__group {
+		margin-top: 4.5rem;
+	}
+}
+
+@media (min-width: 64rem) {
+	.tsc-cond-split {
+		grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+		gap: 5rem;
+	}
+
+	/* The heading holds its place beside a long run of copy. Sticky is set on
+	 * the grid item itself with align-self: start — a sticky child of a column
+	 * that had been collapsed to its own height by align-items: start has no
+	 * room to travel, which is why the heading used to scroll away. */
+	.tsc-cond-split__aside {
+		position: sticky;
+		top: 8.5rem;
+		align-self: start;
+	}
+
+	.tsc-cond-cards {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+}
+
+/* Press badge on the homepage journey picture. Sits above the cross-fading
+ * images, which are absolutely positioned in the same frame. */
+.tsc-press-badge {
+	position: absolute;
+	left: 1rem;
+	bottom: 1rem;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.55rem;
+	padding: 0.85rem 1.1rem 0.95rem;
+	background: color-mix(in oklab, var(--background) 92%, transparent);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 10px 30px color-mix(in oklab, var(--foreground) 10%, transparent);
+	color: var(--muted-foreground);
+	text-decoration: none;
+}
+
+.tsc-press-badge__label {
+	font-size: 0.6rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+
+.tsc-press-badge__logo {
+	display: block;
+	width: 12.5rem;
+	height: auto;
+}
+
+@media (min-width: 48rem) {
+	.tsc-press-badge {
+		left: 1.5rem;
+		bottom: 1.5rem;
+		padding: 1rem 1.35rem 1.1rem;
+	}
+
+	.tsc-press-badge__logo {
+		width: 15.5rem;
+	}
+}
