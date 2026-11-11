@@ -44,7 +44,11 @@ async function shoot(context, url) {
   });
   await page.addStyleTag({ content: "html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important} video,iframe{visibility:hidden!important}" });
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  await page.waitForFunction(() => window.scrollY === 0);
+  // Some pages keep nudging the scroll position after load; retry a few times rather than fail.
+  for (let i = 0; i < 10 && (await page.evaluate(() => window.scrollY)) !== 0; i++) {
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    await page.waitForTimeout(200);
+  }
   await page.waitForTimeout(500);
   const buffer = await page.screenshot({ fullPage: true });
   await page.close();
