@@ -1,5 +1,5 @@
 // Screenshots every page on the live site and on the local build, at four widths, and reports the
-// share of pixels that differ. Run the build first and serve it: `pnpm build && pnpm preview --port 4329`.
+// share of pixels that differ. Run the build first and serve it: `pnpm build && pnpm start -p 4329`.
 //   node scripts/serve-reference.mjs 4330 &
 //   node scripts/compare.mjs [local-origin] [only-path] [reference-origin]
 // Motion is reduced on both sides (the site settles at once), videos and third-party frames are

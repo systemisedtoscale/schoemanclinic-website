@@ -1,7 +1,9 @@
 node_modules/
-dist/
-.astro/
+.next/
+next-env.d.ts
+*.tsbuildinfo
 compare/
+scripts/.tmp/
 .DS_Store
 .env*
 !.env.example

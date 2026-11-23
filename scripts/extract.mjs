@@ -1,12 +1,15 @@
 // Turns the downloaded pages (scrape/raw) into the site's data:
-//   src/data/pages/<slug>.json  head, body classes and body of each page, with the shared header and
-//                               footer replaced by markers
-//   scrape/shared/Header.html, Footer.html   the shared header and footer (checked identical on every page)
+//   src/data/pages/<slug>.json  each page's SEO tags, the styles and scripts it loads, and its <main>
+//                               (see scripts/lib/page-shape.mjs; the rest is in src/components)
+//   scrape/shared/Header.html, Footer.html   the live header and footer (checked identical on every page),
+//                               to compare with src/components/layout/Header.tsx and Footer.tsx
+// It overwrites src/data/pages: edits made there since are lost.
 // Links and files on the live domain become root-relative so the site works on any domain; the SEO
 // tags (canonical, Open Graph, JSON-LD) keep the real domain.
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parseHTML } from "linkedom";
+import { shapePage } from "./lib/page-shape.mjs";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const RAW = join(ROOT, "scrape/raw");
@@ -14,6 +17,12 @@ const OUT = join(ROOT, "src/data/pages");
 
 const HEADER_MARK = "<!--SC:HEADER-->";
 const FOOTER_MARK = "<!--SC:FOOTER-->";
+
+// Mistakes in the live markup, put right here. diagnostics: a stray </div> in #conditions closes <main>
+// and the page shell early, so the browser pulls the sections after it and the footer out of both.
+const FIXES = {
+  diagnostics: [['</div></section>\n\n<section id="fees"', '</section>\n\n<section id="fees"']],
+};
 
 function relative(text) {
   return text
@@ -88,22 +97,18 @@ async function main() {
     footer = f[0];
     body = body.slice(0, fIndex) + FOOTER_MARK + body.slice(fIndex + f[0].length);
     body = body.replace(h[0], HEADER_MARK);
+    for (const [from, to] of FIXES[slug] ?? []) {
+      if (!body.includes(from)) throw new Error(`${slug}: the fix for ${from.slice(0, 40)} no longer applies`);
+      body = body.replace(from, to);
+    }
 
-    await writeFile(join(OUT, `${slug}.json`), JSON.stringify({ path: slugToPath.get(slug) ?? `/${slug}/`, lang, bodyClass, head, body }));
+    const page = shapePage({ path: slugToPath.get(slug) ?? `/${slug}/`, lang, bodyClass, head, body });
+    await writeFile(join(OUT, `${slug}.json`), JSON.stringify(page, null, 2) + "\n");
   }
-  // The live header and footer, for comparison. src/components/Header.html and Footer.html are the
-  // site's own copies (with the portal login added); they are created from these only the first time.
+  // The live header and footer, for comparison with the components.
   await mkdir(join(ROOT, "scrape/shared"), { recursive: true });
   await writeFile(join(ROOT, "scrape/shared/Header.html"), header + "\n");
   await writeFile(join(ROOT, "scrape/shared/Footer.html"), footer + "\n");
-  await mkdir(join(ROOT, "src/components"), { recursive: true });
-  for (const [name, html] of [["Header.html", header], ["Footer.html", footer]]) {
-    try {
-      await readFile(join(ROOT, "src/components", name));
-    } catch {
-      await writeFile(join(ROOT, "src/components", name), html + "\n");
-    }
-  }
   console.log(`${files.length} pages extracted`);
 }
 
