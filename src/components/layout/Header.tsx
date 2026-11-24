@@ -1,6 +1,7 @@
 import { PORTAL_LOGIN_URL } from "@/config/links";
+import { isMenu, NAVIGATION, type NavLink, type NavMenu } from "@/config/navigation";
 
-/** The fixed site header: logo, mega menu, search, Patient Login and the mobile menu button. */
+/** The fixed site header: logo, main navigation (mega menu), search, Patient Portal, booking and the menu button. */
 export function Header() {
   return (
     <header className="fixed top-0 inset-x-0 z-[80] isolate text-foreground">
@@ -25,123 +26,10 @@ export function Header() {
               style={{ height: "3.2rem" }}
             />
           </a>
-          <div className="hidden items-center gap-9 text-[0.7rem] uppercase tracking-[0.26em] xl:flex">
-            <button
-              aria-expanded="false"
-              aria-haspopup="true"
-              className="group relative inline-flex items-center gap-1.5 uppercase tracking-[0.26em]"
-              data-mega-trigger="approach"
-              type="button"
-            >
-              <span className="mega-trigger-label transition-colors duration-500 group-hover:text-[color:var(--bronze)]">
-                Approach
-              </span>
-              <svg aria-hidden="true" className="mega-caret" fill="none" height="9" viewBox="0 0 10 10" width="9">
-                <path
-                  d="M2 3.5 5 6.5 8 3.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.2"
-                ></path>
-              </svg>
-              <span
-                aria-hidden="true"
-                className="mega-underline absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </button>
-            <button
-              aria-expanded="false"
-              aria-haspopup="true"
-              className="group relative inline-flex items-center gap-1.5 uppercase tracking-[0.26em]"
-              data-mega-trigger="services"
-              type="button"
-            >
-              <span className="mega-trigger-label transition-colors duration-500 group-hover:text-[color:var(--bronze)]">
-                Services
-              </span>
-              <svg aria-hidden="true" className="mega-caret" fill="none" height="9" viewBox="0 0 10 10" width="9">
-                <path
-                  d="M2 3.5 5 6.5 8 3.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.2"
-                ></path>
-              </svg>
-              <span
-                aria-hidden="true"
-                className="mega-underline absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </button>
-            <button
-              aria-expanded="false"
-              aria-haspopup="true"
-              className="group relative inline-flex items-center gap-1.5 uppercase tracking-[0.26em]"
-              data-mega-trigger="conditions"
-              type="button"
-            >
-              <span className="mega-trigger-label transition-colors duration-500 group-hover:text-[color:var(--bronze)]">
-                Conditions
-              </span>
-              <svg aria-hidden="true" className="mega-caret" fill="none" height="9" viewBox="0 0 10 10" width="9">
-                <path
-                  d="M2 3.5 5 6.5 8 3.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.2"
-                ></path>
-              </svg>
-              <span
-                aria-hidden="true"
-                className="mega-underline absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </button>
-            <a className="group relative inline-flex items-center" href="/specialists/">
-              <span className="transition-colors duration-500 group-hover:text-[color:var(--bronze)]">Specialists</span>
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </a>
-            <button
-              aria-expanded="false"
-              aria-haspopup="true"
-              className="group relative inline-flex items-center gap-1.5 uppercase tracking-[0.26em]"
-              data-mega-trigger="the-clinic"
-              type="button"
-            >
-              <span className="mega-trigger-label transition-colors duration-500 group-hover:text-[color:var(--bronze)]">
-                The Clinic
-              </span>
-              <svg aria-hidden="true" className="mega-caret" fill="none" height="9" viewBox="0 0 10 10" width="9">
-                <path
-                  d="M2 3.5 5 6.5 8 3.5"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.2"
-                ></path>
-              </svg>
-              <span
-                aria-hidden="true"
-                className="mega-underline absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </button>
-            <a className="group relative inline-flex items-center" href="/journal/">
-              <span className="transition-colors duration-500 group-hover:text-[color:var(--bronze)]">Journal</span>
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-                style={{ background: "var(--bronze)" }}
-              ></span>
-            </a>
+          <div className="tsc-header-nav hidden items-center gap-9 whitespace-nowrap text-[0.7rem] uppercase tracking-[0.26em] xl:flex">
+            {NAVIGATION.map((item) =>
+              isMenu(item) ? <MegaTrigger key={item.key} menu={item} /> : <NavLinkItem key={item.href} link={item} />,
+            )}
           </div>
           <div className="flex items-center gap-3 md:gap-5">
             <button
@@ -164,11 +52,11 @@ export function Header() {
             </button>
             <a
               href={PORTAL_LOGIN_URL}
-              aria-label="Patient Login"
-              title="Patient Login"
-              className="hidden md:grid place-items-center h-9 w-9 rounded-full transition-colors duration-500 hover:text-[color:var(--bronze)]"
+              aria-label="Patient Portal"
+              className="tsc-header-portal group inline-flex h-9 items-center gap-2 whitespace-nowrap text-[0.65rem] uppercase tracking-[0.28em] transition-colors duration-500 hover:text-[color:var(--bronze)]"
             >
               <svg
+                aria-hidden="true"
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
@@ -180,6 +68,7 @@ export function Header() {
                 <circle cx="12" cy="8" r="4"></circle>
                 <path d="M4 20c1.6-3.6 4.6-5.5 8-5.5s6.4 1.9 8 5.5"></path>
               </svg>
+              <span className="hidden md:inline">Patient Portal</span>
             </a>
             <a
               href="/book/"
@@ -193,7 +82,7 @@ export function Header() {
                 style={{ background: "var(--bronze)" }}
               ></span>
               <span className="relative z-10 transition-colors duration-500 group-hover:text-[color:var(--background)]">
-                <span className="hidden md:inline">Book a </span>
+                <span className="tsc-header-cta__book hidden md:inline">Book a </span>
                 Discovery Call
               </span>
             </a>
@@ -218,173 +107,87 @@ export function Header() {
         </nav>
         <div id="mega" className="mega" role="region" aria-label="Site menu">
           <div className="mega-inner">
-            <div className="mega-panel" data-mega-panel="approach">
-              <div className="mega-grid">
-                <div className="mega-col mega-lead">
-                  <span className="mega-eyebrow">Approach</span>
-                  <h3 className="mega-title">
-                    A considered
-                    <br /> standard of care
-                  </h3>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">The Practice</span>
-                  <a className="mega-link" href="/about/">
-                    <span className="mega-link-label">About Us</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/methodology/">
-                    <span className="mega-link-label">Our Methodology</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/pricing/">
-                    <span className="mega-link-label">Pricing</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">Considering Us</span>
-                  <a className="mega-link" href="/faqs/">
-                    <span className="mega-link-label">FAQs</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="https://form.typeform.com/to/Q98AOXB0" target="_blank" rel="noopener">
-                    <span className="mega-link-label">Request Prescription</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/testimonials/">
-                    <span className="mega-link-label">Patient Stories</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="mega-panel" data-mega-panel="services">
-              <div className="mega-grid">
-                <div className="mega-col mega-lead">
-                  <span className="mega-eyebrow">Services</span>
-                  <h3 className="mega-title">
-                    Three services,
-                    <br /> one unified plan
-                  </h3>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">Core Services</span>
-                  <a className="mega-link" href="/hormone-health/">
-                    <span className="mega-link-label">Hormone Health {"&"} Optimisation</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/longevity-functional/">
-                    <span className="mega-link-label">Longevity {"&"} Functional Medicine</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/diagnostics/">
-                    <span className="mega-link-label">Diagnostics {"&"} Supportive Services</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="mega-panel" data-mega-panel="conditions">
-              <div className="mega-grid">
-                <div className="mega-col mega-lead">
-                  <span className="mega-eyebrow">Conditions</span>
-                  <h3 className="mega-title">
-                    Root causes,
-                    <br /> not symptoms
-                  </h3>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">Conditions We Treat</span>
-                  <a className="mega-link" href="/hormonal-health/">
-                    <span className="mega-link-label">Hormonal Health</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/metabolic-health/">
-                    <span className="mega-link-label">Metabolic Health</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/digestive-health/">
-                    <span className="mega-link-label">Digestive Health</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">Related Areas</span>
-                  <a className="mega-link" href="/neurological-health/">
-                    <span className="mega-link-label">Neurological Health</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/longevity/">
-                    <span className="mega-link-label">Longevity</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="mega-panel" data-mega-panel="the-clinic">
-              <div className="mega-grid">
-                <div className="mega-col mega-lead">
-                  <span className="mega-eyebrow">The Clinic</span>
-                  <h3 className="mega-title">
-                    Two clinics,
-                    <br /> one standard
-                  </h3>
-                </div>
-                <div className="mega-col mega-list">
-                  <span className="mega-eyebrow">Locations</span>
-                  <a className="mega-link" href="/clinic/harley-street/">
-                    <span className="mega-link-label">Harley Street</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/clinic/wimbledon/">
-                    <span className="mega-link-label">Wimbledon</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                  <a className="mega-link" href="/clinic/virtual-appointments/">
-                    <span className="mega-link-label">Virtual Appointments</span>
-                    <span aria-hidden="true" className="mega-arrow">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            {NAVIGATION.filter(isMenu).map((menu) => (
+              <MegaPanel key={menu.key} menu={menu} />
+            ))}
           </div>
         </div>
       </div>
     </header>
+  );
+}
+
+const underline =
+  "absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 group-hover:scale-x-100";
+
+/** A top-level menu: opens its mega panel (site.js matches data-mega-trigger to data-mega-panel). */
+function MegaTrigger({ menu }: { menu: NavMenu }) {
+  return (
+    <button
+      aria-expanded="false"
+      aria-haspopup="true"
+      className="group relative inline-flex items-center gap-1.5 uppercase tracking-[0.26em]"
+      data-mega-trigger={menu.key}
+      type="button"
+    >
+      <span className="mega-trigger-label transition-colors duration-500 group-hover:text-[color:var(--bronze)]">
+        {menu.label}
+      </span>
+      <svg aria-hidden="true" className="mega-caret" fill="none" height="9" viewBox="0 0 10 10" width="9">
+        <path
+          d="M2 3.5 5 6.5 8 3.5"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.2"
+        ></path>
+      </svg>
+      <span aria-hidden="true" className={`mega-underline ${underline}`} style={{ background: "var(--bronze)" }}></span>
+    </button>
+  );
+}
+
+/** A top-level link without a dropdown. */
+function NavLinkItem({ link }: { link: NavLink }) {
+  return (
+    <a className="group relative inline-flex items-center" href={link.href}>
+      <span className="transition-colors duration-500 group-hover:text-[color:var(--bronze)]">{link.label}</span>
+      <span aria-hidden="true" className={underline} style={{ background: "var(--bronze)" }}></span>
+    </a>
+  );
+}
+
+/** A menu's mega panel: its heading, then a column of links per group. */
+function MegaPanel({ menu }: { menu: NavMenu }) {
+  return (
+    <div className="mega-panel" data-mega-panel={menu.key}>
+      <div className="mega-grid">
+        <div className="mega-col mega-lead">
+          <span className="mega-eyebrow">{menu.label}</span>
+          <h3 className="mega-title">
+            {menu.title[0]}
+            <br /> {menu.title[1]}
+          </h3>
+        </div>
+        {menu.columns.map((column) => (
+          <div key={column.heading} className="mega-col mega-list">
+            <span className="mega-eyebrow">{column.heading}</span>
+            {column.links.map((link) => (
+              <a
+                key={link.href}
+                className="mega-link"
+                href={link.href}
+                {...(link.external ? { target: "_blank", rel: "noopener" } : {})}
+              >
+                <span className="mega-link-label">{link.label}</span>
+                <span aria-hidden="true" className="mega-arrow">
+                  →
+                </span>
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

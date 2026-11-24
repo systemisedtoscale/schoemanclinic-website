@@ -1,6 +1,7 @@
 import { Suspense, type ReactNode } from "react";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import "@/styles/site-additions.css";
 import type { PageData } from "@/lib/pages";
 import { Analytics } from "@/components/head/Analytics";
 import { SeoTags } from "@/components/head/SeoTags";

@@ -1,4 +1,5 @@
-import { PORTAL_LOGIN_URL } from "@/config/links";
+import { PORTAL_LOGIN_URL, REPEAT_PRESCRIPTION_URL } from "@/config/links";
+import type { NavLink } from "@/config/navigation";
 
 /** The site footer. site.js turns its columns into accordions on small screens. */
 export function Footer() {
@@ -109,91 +110,31 @@ export function Footer() {
               </ul>
             </div>
           </div>
-          <div className="tsc-foot__col">
-            <div className="text-[0.65rem] uppercase tracking-[0.32em] text-[color:var(--bronze)]">Approach</div>
-            <div className="tsc-foot__panel">
-              <ul className="mt-6 space-y-3 text-sm text-[color:var(--muted-foreground)]">
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/about/">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/specialists/">
-                    Specialists
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/methodology/">
-                    Our Methodology
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/pricing/">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/faqs/">
-                    FAQs
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/testimonials/">
-                    Patient Stories
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-[color:var(--bronze)] transition-colors"
-                    href="https://form.typeform.com/to/Q98AOXB0"
-                  >
-                    Request Prescription
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="tsc-foot__col">
-            <div className="text-[0.65rem] uppercase tracking-[0.32em] text-[color:var(--bronze)]">Explore</div>
-            <div className="tsc-foot__panel">
-              <ul className="mt-6 space-y-3 text-sm text-[color:var(--muted-foreground)]">
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/clinic/harley-street/">
-                    Harley Street
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/clinic/wimbledon/">
-                    Wimbledon
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className="hover:text-[color:var(--bronze)] transition-colors"
-                    href="/clinic/virtual-appointments/"
-                  >
-                    Virtual Appointments
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/journal/">
-                    Journal
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href="/contact/">
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a className="hover:text-[color:var(--bronze)] transition-colors" href={PORTAL_LOGIN_URL}>
-                    Patient Login
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <FooterColumn
+            heading="About"
+            links={[
+              { label: "About Us", href: "/about/" },
+              { label: "Our Methodology", href: "/methodology/" },
+              { label: "Specialists", href: "/specialists/" },
+              { label: "Patient Stories", href: "/testimonials/" },
+              { label: "Harley Street", href: "/clinic/harley-street/" },
+              { label: "Wimbledon", href: "/clinic/wimbledon/" },
+              { label: "Virtual Appointments", href: "/clinic/virtual-appointments/" },
+              { label: "Insights", href: "/journal/" },
+            ]}
+          />
+          <FooterColumn
+            heading="Patients"
+            links={[
+              { label: "New Patients", href: "/new-patients/" },
+              { label: "Book a Follow-up", href: "/existing-patients/" },
+              { label: "Pricing", href: "/pricing/" },
+              { label: "FAQs", href: "/faqs/" },
+              { label: "Repeat Prescription", href: REPEAT_PRESCRIPTION_URL, external: true },
+              { label: "Patient Portal", href: PORTAL_LOGIN_URL },
+              { label: "Contact", href: "/contact/" },
+            ]}
+          />
           <div className="tsc-foot__contact-col">
             <div className="text-[0.65rem] uppercase tracking-[0.32em] text-[color:var(--bronze)]">Contact</div>
             <div className="tsc-foot__contact">
@@ -239,5 +180,29 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+/** A column of footer links. On small screens site.js turns its heading into an accordion toggle. */
+function FooterColumn({ heading, links }: { heading: string; links: NavLink[] }) {
+  return (
+    <div className="tsc-foot__col">
+      <div className="text-[0.65rem] uppercase tracking-[0.32em] text-[color:var(--bronze)]">{heading}</div>
+      <div className="tsc-foot__panel">
+        <ul className="mt-6 space-y-3 text-sm text-[color:var(--muted-foreground)]">
+          {links.map((link) => (
+            <li key={link.href}>
+              <a
+                className="hover:text-[color:var(--bronze)] transition-colors"
+                href={link.href}
+                {...(link.external ? { target: "_blank", rel: "noopener" } : {})}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

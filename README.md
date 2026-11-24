@@ -57,7 +57,8 @@ node scripts/extract.mjs    # rebuild src/data/pages from scrape/raw (overwrites
 
 ## What differs from the live site
 
-- **Patient Login**: a person icon beside search in the header (desktop), and a "Patient Login" link in the mobile menu and in the footer's Explore column. All go to `PORTAL_LOGIN_URL`.
+- **Navigation** (`src/config/navigation.ts`, shared by the header's mega menu and the mobile menu): Approach and The Clinic are one "About" menu; Conditions comes before Services; a new "Patients" menu gathers New Patients, Pricing, FAQs, Book a Follow-up, Repeat Prescription and Patient Portal; "Journal" reads "Insights" (the address stays `/journal/`, the listing's title is "Insights & Research"). The footer's columns follow the same groups. Repeat Prescription goes to the Typeform until the portal takes those requests (`REPEAT_PRESCRIPTION_URL` in `src/config/links.ts`). `compare-text.mjs` reports these menu links as differences on every page.
+- **Styles for the additions** are in `src/styles/site-additions.css`: the theme's Tailwind build is frozen, so only the classes the live site used exist.
 - **No WordPress**: feeds, the REST API, oEmbed and admin are gone. Old sitemap and feed addresses redirect.
 - **Cookie banner**: the CookieYes (Cookie Law Info) plugin's front end is kept as it is (GPL), so the banner, preferences and revisit button look and behave the same, and analytics still load only after consent. It makes no calls to WordPress.
 - **Diagnostics page**: a stray `</div>` in the live markup closed the page's `<main>` early; it is fixed here (see `FIXES` in `scripts/extract.mjs`).

@@ -1,4 +1,5 @@
 import { PORTAL_LOGIN_URL } from "@/config/links";
+import { isMenu, NAVIGATION, type NavMenu } from "@/config/navigation";
 
 /** The full-screen menu opened by the header's menu button (site.js). */
 export function MobileMenu() {
@@ -27,120 +28,17 @@ export function MobileMenu() {
           alt="The Schoeman Clinic"
         />{" "}
         <nav className="tsc-menu__nav" aria-label="Primary">
-          <div className="tsc-menu__group">
-            <button aria-controls="tsc-menu-approach" aria-expanded="false" className="tsc-menu__toggle" type="button">
-              <span>Approach</span>
-              <span aria-hidden="true" className="tsc-menu__plus"></span>
-            </button>
-            <div className="tsc-menu__sub" id="tsc-menu-approach">
-              <div className="tsc-menu__sub-inner">
-                <a className="tsc-menu__sublink" href="/about/">
-                  About Us
-                </a>
-                <a className="tsc-menu__sublink" href="/methodology/">
-                  Our Methodology
-                </a>
-                <a className="tsc-menu__sublink" href="/pricing/">
-                  Pricing
-                </a>
-                <a className="tsc-menu__sublink" href="/faqs/">
-                  FAQs
-                </a>
-                <a
-                  className="tsc-menu__sublink"
-                  href="https://form.typeform.com/to/Q98AOXB0"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  Request Prescription
-                </a>
-                <a className="tsc-menu__sublink" href="/testimonials/">
-                  Patient Stories
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="tsc-menu__group">
-            <button aria-controls="tsc-menu-services" aria-expanded="false" className="tsc-menu__toggle" type="button">
-              <span>Services</span>
-              <span aria-hidden="true" className="tsc-menu__plus"></span>
-            </button>
-            <div className="tsc-menu__sub" id="tsc-menu-services">
-              <div className="tsc-menu__sub-inner">
-                <a className="tsc-menu__sublink" href="/hormone-health/">
-                  Hormone Health {"&"} Optimisation
-                </a>
-                <a className="tsc-menu__sublink" href="/longevity-functional/">
-                  Longevity {"&"} Functional Medicine
-                </a>
-                <a className="tsc-menu__sublink" href="/diagnostics/">
-                  Diagnostics {"&"} Supportive Services
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="tsc-menu__group">
-            <button
-              aria-controls="tsc-menu-conditions"
-              aria-expanded="false"
-              className="tsc-menu__toggle"
-              type="button"
-            >
-              <span>Conditions</span>
-              <span aria-hidden="true" className="tsc-menu__plus"></span>
-            </button>
-            <div className="tsc-menu__sub" id="tsc-menu-conditions">
-              <div className="tsc-menu__sub-inner">
-                <a className="tsc-menu__sublink" href="/hormonal-health/">
-                  Hormonal Health
-                </a>
-                <a className="tsc-menu__sublink" href="/metabolic-health/">
-                  Metabolic Health
-                </a>
-                <a className="tsc-menu__sublink" href="/digestive-health/">
-                  Digestive Health
-                </a>
-                <a className="tsc-menu__sublink" href="/neurological-health/">
-                  Neurological Health
-                </a>
-                <a className="tsc-menu__sublink" href="/longevity/">
-                  Longevity
-                </a>
-              </div>
-            </div>
-          </div>
-          <a className="tsc-menu__nav-link" href="/specialists/">
-            Specialists
-          </a>
-          <div className="tsc-menu__group">
-            <button
-              aria-controls="tsc-menu-the-clinic"
-              aria-expanded="false"
-              className="tsc-menu__toggle"
-              type="button"
-            >
-              <span>The Clinic</span>
-              <span aria-hidden="true" className="tsc-menu__plus"></span>
-            </button>
-            <div className="tsc-menu__sub" id="tsc-menu-the-clinic">
-              <div className="tsc-menu__sub-inner">
-                <a className="tsc-menu__sublink" href="/clinic/harley-street/">
-                  Harley Street
-                </a>
-                <a className="tsc-menu__sublink" href="/clinic/wimbledon/">
-                  Wimbledon
-                </a>
-                <a className="tsc-menu__sublink" href="/clinic/virtual-appointments/">
-                  Virtual Appointments
-                </a>
-              </div>
-            </div>
-          </div>
-          <a className="tsc-menu__nav-link" href="/journal/">
-            Journal
-          </a>
+          {NAVIGATION.map((item) =>
+            isMenu(item) ? (
+              <MenuGroup key={item.key} menu={item} />
+            ) : (
+              <a key={item.href} className="tsc-menu__nav-link" href={item.href}>
+                {item.label}
+              </a>
+            ),
+          )}
           <a className="tsc-menu__nav-link" href={PORTAL_LOGIN_URL}>
-            Patient Login
+            Patient Portal
           </a>
         </nav>
         <nav className="tsc-menu__social" aria-label="Social media">
@@ -195,6 +93,35 @@ export function MobileMenu() {
             <path d="m20 20-3.5-3.5"></path>
           </svg>{" "}
         </a>{" "}
+      </div>
+    </div>
+  );
+}
+
+/** A menu that folds out (site.js toggles aria-expanded; one group open at a time). */
+function MenuGroup({ menu }: { menu: NavMenu }) {
+  const id = `tsc-menu-${menu.key}`;
+  return (
+    <div className="tsc-menu__group">
+      <button aria-controls={id} aria-expanded="false" className="tsc-menu__toggle" type="button">
+        <span>{menu.label}</span>
+        <span aria-hidden="true" className="tsc-menu__plus"></span>
+      </button>
+      <div className="tsc-menu__sub" id={id}>
+        <div className="tsc-menu__sub-inner">
+          {menu.columns.flatMap((column) =>
+            column.links.map((link) => (
+              <a
+                key={link.href}
+                className="tsc-menu__sublink"
+                href={link.href}
+                {...(link.external ? { target: "_blank", rel: "noopener" } : {})}
+              >
+                {link.label}
+              </a>
+            )),
+          )}
+        </div>
       </div>
     </div>
   );

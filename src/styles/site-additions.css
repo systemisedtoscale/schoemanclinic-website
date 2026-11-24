@@ -1,0 +1,48 @@
+/*
+ * Styles for what this site adds to the live theme. The theme's CSS (public/wp-content/themes/
+ * schoeman-clinic/assets) is a frozen Tailwind build: only the classes the live site used exist, so
+ * new layout rules go here, written like custom.css's own.
+ */
+
+/* ------------------------------------------------------------ header nav
+ * The bar gained the Patient Portal button, labelled. To keep clear space around the links: the logo
+ * never gives way, between xl and 90rem the links close up further than custom.css's 1.5rem and the
+ * CTA reads "Discovery Call" as it does on phones, and above that the links sit a little closer than
+ * gap-9.
+ */
+header nav > a:first-child {
+  flex-shrink: 0;
+}
+
+@media (min-width: 80rem) and (max-width: 89.999rem) {
+  header nav > .tsc-header-nav.xl\:flex {
+    gap: 1rem;
+  }
+
+  .tsc-header-cta__book.md\:inline {
+    display: none;
+  }
+}
+
+@media (min-width: 90rem) {
+  header nav > .tsc-header-nav.xl\:flex {
+    gap: 1.6rem;
+  }
+}
+
+/* The portal button is an icon on phones, and the label joins it from md. */
+.tsc-header-portal svg {
+  flex-shrink: 0;
+}
+
+/* The narrowest laptops: the bar's side margins give a little too. */
+@media (min-width: 80rem) and (max-width: 84.999rem) {
+  header nav.md\:px-12 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  header nav > .tsc-header-nav.xl\:flex {
+    gap: 0.85rem;
+  }
+}
