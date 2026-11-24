@@ -57,7 +57,10 @@ node scripts/extract.mjs    # rebuild src/data/pages from scrape/raw (overwrites
 
 ## What differs from the live site
 
+- **Patient Portal**: a labelled button beside search in the header (an icon on phones), and links in the Patients menu, the mobile menu and the footer. All go to `PORTAL_LOGIN_URL`.
 - **Navigation** (`src/config/navigation.ts`, shared by the header's mega menu and the mobile menu): Approach and The Clinic are one "About" menu; Conditions comes before Services; a new "Patients" menu gathers New Patients, Pricing, FAQs, Book a Follow-up, Repeat Prescription and Patient Portal; "Journal" reads "Insights" (the address stays `/journal/`, the listing's title is "Insights & Research"). The footer's columns follow the same groups. Repeat Prescription goes to the Typeform until the portal takes those requests (`REPEAT_PRESCRIPTION_URL` in `src/config/links.ts`). `compare-text.mjs` reports these menu links as differences on every page.
+- **Share images**: each page has its own 1200×630 PNG (`/og/<page>.png`), made at build time by `src/app/og/[...slug]/route.tsx` from the page's title, in the site's type (Cormorant Garamond and Inter, from `@fontsource`) and colours. `src/lib/og.ts` puts it in the page's `og:image` and `twitter:image` in place of WordPress's shared WebP. The URLs use the production domain, so link previews only work once the site is live there.
+- **SEO fixes**: the Insights listing's pages 2 and 3 have their own titles; three titles over 60 characters were shortened, and descriptions that WordPress had cut off mid-sentence with "…" were rewritten to under 155; the sitemap gives each page's last-modified date.
 - **Styles for the additions** are in `src/styles/site-additions.css`: the theme's Tailwind build is frozen, so only the classes the live site used exist.
 - **No WordPress**: feeds, the REST API, oEmbed and admin are gone. Old sitemap and feed addresses redirect.
 - **Cookie banner**: the CookieYes (Cookie Law Info) plugin's front end is kept as it is (GPL), so the banner, preferences and revisit button look and behave the same, and analytics still load only after consent. It makes no calls to WordPress.
