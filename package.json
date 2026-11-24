@@ -4,19 +4,30 @@
   "type": "module",
   "packageManager": "pnpm@10.33.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "mirror": "node scripts/mirror.mjs",
     "compare": "node scripts/compare.mjs"
   },
-  "dependencies": {
-    "astro": "^5.18.2"
-  },
   "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "linkedom": "^0.18.15",
     "pixelmatch": "^6.0.0",
     "playwright": "1.49.1",
-    "pngjs": "^7.0.0"
+    "pngjs": "^7.0.0",
+    "prettier": "^3.10.1",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.1.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }
