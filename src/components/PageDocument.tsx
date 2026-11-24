@@ -1,4 +1,6 @@
 import { Suspense, type ReactNode } from "react";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { PageData } from "@/lib/pages";
 import { Analytics } from "@/components/head/Analytics";
 import { SeoTags } from "@/components/head/SeoTags";
@@ -11,6 +13,7 @@ import { MobileMenu } from "@/components/layout/MobileMenu";
 import { Preloader } from "@/components/layout/Preloader";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { VideoModal } from "@/components/layout/VideoModal";
+import { LeadConnectorForm } from "@/components/scripts/LeadConnectorForm";
 import { SearchCatalog } from "@/components/scripts/SearchCatalog";
 import { ThemeScripts } from "@/components/scripts/ThemeScripts";
 
@@ -44,10 +47,15 @@ export function PageDocument({ page, children }: { page: PageData; children: Rea
         <VideoModal />
         <CookieBannerTemplate />
         <SearchCatalog />
+        {page.scripts.includes("ghl-form") && <LeadConnectorForm />}
         {/* Its own boundary, last in the page: React hydrates boundaries in order, so the scripts start
             only after everything above them (Next's metadata included) has hydrated. */}
         <Suspense>
           <ThemeScripts scripts={page.scripts} />
+          {/* Vercel Web Analytics and Speed Insights: cookieless, so they need no consent. They report
+              only on Vercel deployments. */}
+          <VercelAnalytics />
+          <SpeedInsights />
         </Suspense>
       </body>
     </html>

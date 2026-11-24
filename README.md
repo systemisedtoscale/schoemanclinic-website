@@ -70,7 +70,7 @@ Next steps: turn the page sections into React components with Tailwind compiled 
 
 ## Deploying
 
-Vercel, as a Next.js project (build `pnpm build`). Point `theschoemanclinic.com` at it only when the clinic is ready to switch off WordPress. Third-party forms (LeadConnector), bookings (LeadConnector, Semble), Typeform and Google Maps are embedded with their original IDs.
+Vercel, as a Next.js project (build `pnpm build`). `vercel.json` sets the framework to Next.js, because the Vercel project was first set up for the Astro build (output `dist`); once this is on `main`, set the project's Framework Preset to Next.js and clear any Output Directory override in Project Settings → Build and Deployment. Vercel Web Analytics and Speed Insights are in the page (`PageDocument`); turn both on in the project's Analytics and Speed Insights tabs on Vercel, or they collect nothing. They use no cookies, so they run without consent, unlike Google Analytics and the Meta pixel. Point `theschoemanclinic.com` at it only when the clinic is ready to switch off WordPress. Third-party forms (LeadConnector), bookings (LeadConnector, Semble), Typeform and Google Maps are embedded with their original IDs.
 
 ## Missing assets
 

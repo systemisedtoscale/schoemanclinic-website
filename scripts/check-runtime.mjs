@@ -19,7 +19,8 @@ async function check(path) {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("console", (m) => m.type() === "error" && !IGNORE.test(m.text()) && errors.push(m.text()));
-  page.on("response", (r) => r.url().startsWith(ORIGIN) && r.status() >= 400 && r.url() !== ORIGIN + path && errors.push(`${r.status()} ${r.url()}`));
+  // /_vercel/ (Web Analytics, Speed Insights) is served only on Vercel deployments.
+  page.on("response", (r) => r.url().startsWith(ORIGIN) && r.status() >= 400 && r.url() !== ORIGIN + path && !r.url().startsWith(`${ORIGIN}/_vercel/`) && errors.push(`${r.status()} ${r.url()}`));
   // Not "load": the hero video and third-party embeds can hold it back for a long time.
   await page.goto(ORIGIN + path, { waitUntil: "domcontentloaded", timeout: 60000 });
   await page.waitForTimeout(2000);

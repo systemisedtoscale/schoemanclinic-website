@@ -1,0 +1,5 @@
+# Byte-for-byte copies of the live site, and generated data.
+src/inline/
+src/data/
+public/
+scrape/
