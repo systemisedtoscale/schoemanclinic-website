@@ -3,6 +3,7 @@ import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/site-additions.css";
 import type { PageData } from "@/lib/pages";
+import { seoWithShareImage } from "@/lib/og";
 import { Analytics } from "@/components/head/Analytics";
 import { SeoTags } from "@/components/head/SeoTags";
 import { AppIcons, SiteIcons } from "@/components/head/SiteIcons";
@@ -28,7 +29,7 @@ export function PageDocument({ page, children }: { page: PageData; children: Rea
     <html lang={page.lang} suppressHydrationWarning>
       <head>
         <SiteIcons />
-        <SeoTags tags={page.seo} />
+        <SeoTags tags={seoWithShareImage(page)} />
         <Analytics />
         <WordPressStyles styles={page.wordpressStyles} />
         <ThemeStyles styles={page.themeStyles} />
